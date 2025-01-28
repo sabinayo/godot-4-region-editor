@@ -5,6 +5,7 @@ signal empty_container()
 signal textures_requested()
 signal texture_selected(data: Dictionary)
 signal texture_deleted()
+signal texture_added()
 
 var _editable_texture: PackedScene = preload("editable_texture.tscn")
 
@@ -30,6 +31,10 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 	add_textures(data["files"])
 
 
+func get_textures_count() -> void:
+	return %Container.get_child_count()
+
+
 func add_textures(files: PackedStringArray) -> void:
 	for file_path: String in files:
 		if not (file_path.get_extension() in recognized_extensions):
@@ -44,6 +49,7 @@ func add_textures(files: PackedStringArray) -> void:
 		editable_texture.selected.connect(_on_editable_texture_selected)
 		editable_texture.icon = texture
 		editable_texture.text = texture_name
+		texture_added.emit()
 	
 	%AddTextures.visible = %Container.get_child_count() == 0
 

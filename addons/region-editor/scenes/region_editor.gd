@@ -67,6 +67,7 @@ func _on_sort_item_selected(index: int) -> void:
 
 func _on_texture_container_texture_selected(data: Dictionary) -> void:
 	%TextureEditor.show()
+	%ToggleTexturesDock.show()
 	%SortTextures.show()
 	%DeleteTexture.show()
 	%TexturesOptions.alignment = HBoxContainer.ALIGNMENT_END
@@ -78,6 +79,7 @@ func _on_texture_container_textures_requested() -> void:
 
 func _on_texture_container_empty_container() -> void:
 	%TextureEditor.hide()
+	%ToggleTexturesDock.hide()
 	%SortTextures.hide()
 	%DeleteTexture.hide()
 	%TexturesOptions.alignment = HBoxContainer.ALIGNMENT_CENTER
@@ -85,6 +87,11 @@ func _on_texture_container_empty_container() -> void:
 
 func _on_texture_container_texture_deleted() -> void:
 	%TextureEditor.hide()
+	%ToggleTexturesDock.hide()
+
+
+func _on_texture_container_texture_added() -> void:
+	pass
 
 
 func _on_texture_region_editor_requested(sprite: Sprite2D, requester: NodePath) -> void:
@@ -155,3 +162,7 @@ func _on_file_dialog_files_selected(requester: NodePath, paths: PackedStringArra
 			%TextureContainer.add_textures(paths)
 	
 	_file_sytem_action = FileSystemActions.NONE
+
+
+func _on_toggle_textures_dock_toggled(toggled_on: bool) -> void:
+	%TexturesDock.visible = not toggled_on
