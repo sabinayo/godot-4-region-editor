@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c6kp61y0ycsji"]
+[gd_scene load_steps=23 format=3 uid="uid://c6kp61y0ycsji"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_editor.gd" id="1_ckiwb"]
 [ext_resource type="Texture2D" uid="uid://vflovc0o4aq6" path="res://addons/region-editor/icons/Remove.svg" id="1_ut1lj"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dkc6oqbeijd2o" path="res://addons/region-editor/scenes/texture_setup.tscn" id="6_316gy"]
 [ext_resource type="PackedScene" uid="uid://dr6xso5j2umfq" path="res://addons/region-editor/scenes/region_previewer_container.tscn" id="7_2ci81"]
 [ext_resource type="Texture2D" uid="uid://ci3g21olaqo8p" path="res://addons/region-editor/icons/GuiVisibilityVisible.svg" id="7_q5hbu"]
+[ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="8_8bmli"]
 [ext_resource type="PackedScene" uid="uid://cou3we204lm21" path="res://addons/region-editor/scenes/region_properties.tscn" id="8_1804p"]
 [ext_resource type="Texture2D" uid="uid://coh8isxl7ays5" path="res://addons/region-editor/icons/GuiVisibilityHidden.svg" id="8_rgkar"]
 [ext_resource type="Texture2D" uid="uid://2ttaukdgul27" path="res://addons/region-editor/icons/ThemeSelectAll.svg" id="9_eh8dr"]
@@ -137,56 +138,85 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SplitContainer" type="SplitContainer" parent="vbox/HSplitContainer/TextureEditor"]
+[node name="VBoxContainer" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor"]
 layout_mode = 2
 
-[node name="vbox" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer"]
+[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox"]
+[node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox"]
 layout_mode = 2
 text = "Setup:"
 
-[node name="TextureSetup" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox" instance=ExtResource("6_316gy")]
+[node name="ToggleTextureSetupDock" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+toggle_mode = true
+texture_normal = ExtResource("2_jiod4")
+texture_pressed = ExtResource("3_deusd")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureSetupFastActions" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AddRegion" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox/TextureSetupFastActions"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+tooltip_text = "Add Region"
+texture_normal = ExtResource("8_8bmli")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HSplitContainer" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureSetup" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer" instance=ExtResource("6_316gy")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 size_flags_vertical = 3
 
-[node name="Setup" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer"]
+[node name="HSplitContainer" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="hbox" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup"]
+[node name="hbox" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox"]
+[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 
-[node name="RegionsLabel" type="Label" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox"]
+[node name="RegionsLabel" type="Label" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Regions: 0"
 
-[node name="scont" type="ScrollContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox"]
+[node name="scont" type="ScrollContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 follow_focus = true
 
-[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont"]
+[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 2
 
-[node name="Label2" type="Label" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox"]
+[node name="Label2" type="Label" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox"]
 layout_mode = 2
 text = "Actions: "
 
-[node name="ToggleRegionNames" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox"]
+[node name="ToggleRegionNames" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -198,7 +228,7 @@ texture_pressed = ExtResource("8_rgkar")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SelectAllRegions" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox"]
+[node name="SelectAllRegions" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -209,76 +239,78 @@ texture_normal = ExtResource("9_eh8dr")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SelectedRegionsLabel" type="Label" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox"]
+[node name="SelectedRegionsLabel" type="Label" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 text = "0 / 0"
 
-[node name="hsplitcont" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox"]
+[node name="hsplitcont" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RegionPreviewerContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont" instance=ExtResource("7_2ci81")]
+[node name="RegionPreviewerContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont" instance=ExtResource("7_2ci81")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RegionPropertiesDock" type="PanelContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont"]
+[node name="RegionPropertiesDock" type="PanelContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="vbox" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock"]
+[node name="vbox" type="VBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox"]
+[node name="hbox" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox"]
 layout_mode = 2
 
-[node name="close" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
+[node name="close" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 texture_normal = ExtResource("10_g6a71")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
+[node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
 layout_mode = 2
 text = "Region Properties:"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
+[node name="HBoxContainer" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
 layout_mode = 2
 
-[node name="RegionProperties" parent="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox" instance=ExtResource("8_1804p")]
+[node name="RegionProperties" parent="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox" instance=ExtResource("8_1804p")]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_epqgv")
 
-[connection signal="resource_picker_retrieved" from="." to="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" method="_on_region_editor_resource_picker_retrieved"]
-[connection signal="texture_region_edited" from="." to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_texture_region_edited"]
+[connection signal="resource_picker_retrieved" from="." to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" method="_on_region_editor_resource_picker_retrieved"]
+[connection signal="texture_region_edited" from="." to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_texture_region_edited"]
 [connection signal="toggled" from="vbox/Hbox/ToggleTexturesDock" to="." method="_on_toggle_textures_dock_toggled"]
 [connection signal="empty_container" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="." method="_on_texture_container_empty_container"]
 [connection signal="texture_added" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="." method="_on_texture_container_texture_added"]
 [connection signal="texture_deleted" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="." method="_on_texture_container_texture_deleted"]
 [connection signal="texture_selected" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="." method="_on_texture_container_texture_selected"]
-[connection signal="texture_selected" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" method="_on_texture_selected"]
+[connection signal="texture_selected" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" method="_on_texture_selected"]
 [connection signal="textures_requested" from="vbox/HSplitContainer/TexturesDock/TextureContainer" to="." method="_on_texture_container_textures_requested"]
 [connection signal="pressed" from="vbox/HSplitContainer/TexturesDock/TexturesOptions/DeleteTexture" to="." method="_on_delete_texture"]
 [connection signal="pressed" from="vbox/HSplitContainer/TexturesDock/TexturesOptions/add" to="." method="_on_add_texture"]
 [connection signal="item_selected" from="vbox/HSplitContainer/TexturesDock/TexturesOptions/SortTextures" to="." method="_on_sort_item_selected"]
-[connection signal="resource_picker_requested" from="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" to="." method="_on_resource_picker_requested"]
-[connection signal="texture_changed" from="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_changed"]
-[connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" to="." method="_on_texture_region_editor_requested"]
-[connection signal="texture_renamed" from="vbox/HSplitContainer/TextureEditor/SplitContainer/vbox/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_renamed"]
-[connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox/ToggleRegionNames" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
-[connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/scont/hbox/SelectAllRegions" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" method="_on_select_all_regions"]
-[connection signal="dragged" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" method="_on_hsplitcont_dragged"]
-[connection signal="region_edition_requested" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_edition_requested"]
-[connection signal="region_selected" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_selected"]
-[connection signal="visibility_changed" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_dock_visibility_changed"]
-[connection signal="pressed" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox/close" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock" method="hide"]
-[connection signal="property_updated" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_property_updated"]
-[connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="." method="_on_texture_region_editor_requested"]
+[connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox/ToggleTextureSetupDock" to="." method="_on_toggle_texture_setup_dock_toggled"]
+[connection signal="pressed" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/hbox/TextureSetupFastActions/AddRegion" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" method="_on_add_region"]
+[connection signal="resource_picker_requested" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" to="." method="_on_resource_picker_requested"]
+[connection signal="texture_changed" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_changed"]
+[connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" to="." method="_on_texture_region_editor_requested"]
+[connection signal="texture_renamed" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_renamed"]
+[connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox/ToggleRegionNames" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
+[connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox/SelectAllRegions" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_select_all_regions"]
+[connection signal="dragged" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_hsplitcont_dragged"]
+[connection signal="region_edition_requested" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_edition_requested"]
+[connection signal="region_selected" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_selected"]
+[connection signal="visibility_changed" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_dock_visibility_changed"]
+[connection signal="pressed" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox/close" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock" method="hide"]
+[connection signal="property_updated" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_property_updated"]
+[connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/VBoxContainer/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="." method="_on_texture_region_editor_requested"]

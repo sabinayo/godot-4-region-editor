@@ -15,11 +15,16 @@ func set_data(new: Dictionary) -> void:
 	_temp_sprite.region_enabled = true
 	_temp_sprite.region_rect = data["region_rect"]
 	%CopyRectData.tooltip_text = var_to_str(data["region_rect"])
+	%CopyResourcePath.tooltip_text = data["base_texture"]
 	_update_preview()
 
 
 func _on_copy_rect_data_pressed() -> void:
 	DisplayServer.clipboard_set(var_to_str(data["region_rect"]))
+
+
+func _on_copy_resource_path_pressed() -> void:
+	DisplayServer.clipboard_set(data["base_texture"])
 
 
 func _on_name_text_changed(new_text: String) -> void:
@@ -31,6 +36,8 @@ func _on_name_text_changed(new_text: String) -> void:
 func _on_name_text_submitted(new_text: String) -> void:
 	if not new_text.is_valid_filename():
 		%Name.text = data["name"]
+	else:
+		property_updated.emit(data.duplicate())
 
 
 func _on_update_rect_pressed() -> void:

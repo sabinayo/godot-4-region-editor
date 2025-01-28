@@ -60,7 +60,7 @@ func _on_region_edition_requested(data: Dictionary) -> void:
 
 func _on_region_properties_property_updated(data: Dictionary) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
-	preview.set_data(data)
+	preview.set_data(data, display_regions_names)
 
 
 func _ready() -> void:

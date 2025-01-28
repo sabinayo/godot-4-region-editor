@@ -166,3 +166,8 @@ func _on_file_dialog_files_selected(requester: NodePath, paths: PackedStringArra
 
 func _on_toggle_textures_dock_toggled(toggled_on: bool) -> void:
 	%TexturesDock.visible = not toggled_on
+
+
+func _on_toggle_texture_setup_dock_toggled(toggled_on: bool) -> void:
+	%TextureSetup.visible = not toggled_on
+	%TextureSetupFastActions.visible = toggled_on
