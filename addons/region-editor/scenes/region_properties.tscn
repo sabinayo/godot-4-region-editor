@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://cou3we204lm21"]
+
+[ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
+[ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
+[ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="2_v37xj"]
+
+[node name="RegionProperties" type="PanelContainer"]
+offset_right = 180.0
+offset_bottom = 78.0
+script = ExtResource("1_tpmds")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="mcont" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="vbox" type="VBoxContainer" parent="mcont"]
+layout_mode = 2
+
+[node name="hbox" type="HBoxContainer" parent="mcont/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcont/vbox/hbox"]
+layout_mode = 2
+text = "Name: "
+
+[node name="Name" type="LineEdit" parent="mcont/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UpdateRect" type="Button" parent="mcont/vbox"]
+layout_mode = 2
+text = "Update"
+icon = ExtResource("1_41hcm")
+expand_icon = true
+
+[node name="CopyRectData" type="Button" parent="mcont/vbox"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Copy Rect Data"
+icon = ExtResource("2_v37xj")
+icon_alignment = 2
+
+[connection signal="text_changed" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
+[connection signal="pressed" from="mcont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
+[connection signal="pressed" from="mcont/vbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]

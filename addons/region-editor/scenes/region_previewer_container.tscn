@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr6xso5j2umfq"]
+
+[ext_resource type="Script" path="res://addons/region-editor/scenes/region_previewer_container.gd" id="1_d0xkp"]
+
+[node name="RegionPreviewerContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(50, 0)
+offset_right = 266.0
+offset_bottom = 319.0
+size_flags_vertical = 3
+script = ExtResource("1_d0xkp")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 2
+
+[node name="Container" type="GridContainer" parent="."]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5

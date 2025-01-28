@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp41nscv33sa6"]
+
+[ext_resource type="Script" path="res://addons/region-editor/scenes/editable_texture.gd" id="1_la1i2"]
+[ext_resource type="Texture2D" uid="uid://d2al6v0xqecvv" path="res://addons/region-editor/icons/Sort.svg" id="1_ru35c"]
+
+[node name="EditableTexture" type="Button"]
+custom_minimum_size = Vector2(200, 100)
+offset_right = 166.0
+offset_bottom = 100.0
+text = "Sort.svg"
+icon = ExtResource("1_ru35c")
+text_overrun_behavior = 3
+clip_text = true
+expand_icon = true
+script = ExtResource("1_la1i2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+offset_right = 100.0
+offset_bottom = 100.0
+texture = ExtResource("1_ru35c")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 104.0
+offset_right = 166.0
+offset_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Sort.svg"
+vertical_alignment = 1

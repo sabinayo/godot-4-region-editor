@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dykd2a4vxcafi"]
+
+[ext_resource type="Script" path="res://addons/region-editor/scenes/region_previewer.gd" id="1_d0xkp"]
+
+[node name="RegionPreviewer" type="Button"]
+custom_minimum_size = Vector2(50, 50)
+offset_right = 75.0
+offset_bottom = 59.0
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_d0xkp")
