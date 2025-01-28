@@ -111,7 +111,6 @@ popup/item_1/id = 1
 
 [node name="TextureEditor" type="PanelContainer" parent="HSplitContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -149,11 +148,10 @@ layout_mode = 2
 text = "Regions:"
 
 [node name="hbox" type="HBoxContainer" parent="HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/hbox"]
+[node name="ToggleNames" type="Button" parent="HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hbox/hbox"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0

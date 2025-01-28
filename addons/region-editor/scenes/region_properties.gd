@@ -21,6 +21,7 @@ func _on_copy_rect_data_pressed() -> void:
 
 func _on_name_text_changed(new_text: String) -> void:
 	data["name"] = new_text
+	property_updated.emit(data)
 
 
 func _on_update_rect_pressed() -> void:
@@ -31,3 +32,4 @@ func _on_update_rect_pressed() -> void:
 func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePath) -> void:
 	if requester == get_path():
 		data["region_rect"] = sprite.region_rect
+		property_updated.emit(data)

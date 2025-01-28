@@ -1,7 +1,8 @@
 @tool
 extends PanelContainer
 
-signal region_selected()
+signal region_selected(data: Dictionary)
+signal region_names_visibility_changed(visibles: bool)
 
 const MINIMUM_PREVIEW_SIZE: int = 50
 const previewer: PackedScene = preload("region_previewer.tscn")
@@ -17,6 +18,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 	var preview: Button = previewer.instantiate()
 	%Container.add_child(preview)
 	preview.selected.connect(_on_region_selected)
+	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 	
 	var preview_id: int = preview.get_index()
 	
@@ -39,7 +41,6 @@ func _on_region_selected(data: Dictionary) -> void:
 func _on_region_properties_property_updated(data: Dictionary) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
 	preview.set_data(data)
-
 
 
 func _ready() -> void:
@@ -81,3 +82,7 @@ func _on_region_properties_dock_visibility_changed() -> void:
 	await get_tree().process_frame # Size not always updated here.
 	await get_tree().process_frame # Size Updated.
 	update_previewers_display()
+
+
+func _on_toggle_regions_names_visibility(toggled_on: bool) -> void:
+	region_names_visibility_changed.emit(toggled_on)
