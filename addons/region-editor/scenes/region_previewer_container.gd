@@ -26,11 +26,11 @@ func add_region_from(sprite: Sprite2D) -> void:
 	
 	var image: Image = sprite.texture.get_image().get_region(sprite.region_rect)
 	preview.icon = ImageTexture.create_from_image(image)
-	preview.data = data
+	preview.set_data(data)
 
 
-func _on_region_selected() -> void:
-	region_selected.emit()
+func _on_region_selected(data: Dictionary) -> void:
+	region_selected.emit(data)
 
 
 func _ready() -> void:
