@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cou3we204lm21"]
+[gd_scene load_steps=8 format=3 uid="uid://cou3we204lm21"]
 
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
+[ext_resource type="Texture2D" uid="uid://dkunqhsasdi1r" path="res://addons/region-editor/icons/FileAccess.svg" id="2_13fl6"]
 [ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="2_v37xj"]
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="4_0ho3a"]
 
@@ -105,6 +106,13 @@ text = "Name: "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Export" type="Button" parent="mcont/vbox"]
+layout_mode = 2
+text = "Export"
+icon = ExtResource("2_13fl6")
+icon_alignment = 2
+expand_icon = true
 
 [node name="UpdateRect" type="Button" parent="mcont/vbox"]
 layout_mode = 2

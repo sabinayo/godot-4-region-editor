@@ -12,7 +12,16 @@ script = ExtResource("1_d0xkp")
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
 
-[node name="Container" type="GridContainer" parent="."]
+[node name="scont" type="ScrollContainer" parent="."]
+layout_mode = 2
+follow_focus = true
+
+[node name="vbox" type="VBoxContainer" parent="scont"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Container" type="GridContainer" parent="scont/vbox"]
 unique_name_in_owner = true
 clip_contents = true
 custom_minimum_size = Vector2(50, 0)

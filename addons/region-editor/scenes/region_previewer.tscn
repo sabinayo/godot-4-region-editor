@@ -2,12 +2,25 @@
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_previewer.gd" id="1_d0xkp"]
 
-[node name="RegionPreviewer" type="Button"]
+[node name="RegionPreviewer" type="HBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d0xkp")
+
+[node name="Selector" type="CheckBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Select"
+
+[node name="Previewer" type="Button" parent="."]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(130, 50)
-offset_right = 75.0
-offset_bottom = 59.0
+layout_mode = 2
+tooltip_text = "Edit Properties"
 text_overrun_behavior = 3
 clip_text = true
 icon_alignment = 1
 expand_icon = true
-script = ExtResource("1_d0xkp")
+
+[connection signal="toggled" from="Selector" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="Previewer" to="." method="_on_previewer_pressed"]
