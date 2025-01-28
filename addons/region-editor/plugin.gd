@@ -79,17 +79,16 @@ func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 		EditorInterface.edit_node(null)
 
 
-func _on_resource_picker_requested(sprite: Sprite2D) -> void:
+func _on_resource_picker_requested(sprite: Sprite2D, property: String) -> void:
 	inspector_plugin.editor_resource_picker_retrieved.connect(
 		func (resource_picker: EditorResourcePicker) -> void:
 			region_editor.editor_resource_picker_set(resource_picker)
-			inspector_plugin.resource_picker_retrieval = false
 	, CONNECT_ONE_SHOT)
 	
 	# Temporaly edit the sprite to let Inpector plugin retrieve the EditorRegionEditor
 	# Then edit the last edited object (if one) in the inspector
 	var last_edited_object: Object = EditorInterface.get_inspector().get_edited_object()
-	inspector_plugin.resource_picker_retrieval = true
+	inspector_plugin.property_for_resource_picker_retrieval = property
 	EditorInterface.edit_node(sprite)
 	inspector_plugin.retrieve_resource_picker()
 	

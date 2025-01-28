@@ -9,7 +9,7 @@ signal get_from_file_system(
 )
 
 ## Only used by the plugin.
-signal resource_picker_requested(sprite: Sprite2D)
+signal resource_picker_requested(sprite: Sprite2D, property: String)
 signal resource_picker_retrieved(resource_picker: EditorResourcePicker, requester: NodePath)
 ## Only used by the plugin.
 signal texture_region_editor_requested(sprite: Sprite2D)
@@ -109,9 +109,9 @@ func set_texture_region_as_edited(sprite: Sprite2D) -> void:
 	_texture_region_editor_requester = ^""
 
 
-func _on_resource_picker_requested(sprite: Sprite2D, requester: NodePath) -> void:
+func _on_resource_picker_requested(sprite: Sprite2D, property: String, requester: NodePath) -> void:
 	_resource_picker_requester = requester
-	resource_picker_requested.emit(sprite)
+	resource_picker_requested.emit(sprite, property)
 
 
 func editor_resource_picker_set(node: EditorResourcePicker) -> void:

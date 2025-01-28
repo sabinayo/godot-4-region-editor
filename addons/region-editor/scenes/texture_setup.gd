@@ -5,10 +5,15 @@ signal texture_renamed(new_name: String)
 signal texture_changed(new: Texture2D)
 
 ## Used to create a resource picker for the texture.
-signal resource_picker_requested(sprite: Sprite2D, requester: NodePath)
-
+signal resource_picker_requested(sprite: Sprite2D, property: String, requester: NodePath)
 ## Used to display the Godot Texture Region Editor Node.
 signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
+
+
+enum  ResourcePickerRequests {
+	TEXTURE,
+	MATERIAL,
+}
 
 var _edited_texture: Texture2D = null
 # Used to display Godot Texture Region Editor.
@@ -56,7 +61,7 @@ func _on_texture_selected(data: Dictionary) -> void:
 	%TextureName.text = data["texture_name"]
 	
 	if %TextureEditor.get_child_count() == 1:
-		resource_picker_requested.emit(_temp_sprite, get_path())
+		resource_picker_requested.emit(_temp_sprite, "texture", get_path())
 
 
 func _on_texture_name_text_changed(new_text: String) -> void:

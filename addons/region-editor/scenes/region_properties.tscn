@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cou3we204lm21"]
+[gd_scene load_steps=8 format=3 uid="uid://cou3we204lm21"]
 
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
 [ext_resource type="Texture2D" uid="uid://dkunqhsasdi1r" path="res://addons/region-editor/icons/FileAccess.svg" id="2_13fl6"]
 [ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="2_v37xj"]
-[ext_resource type="Texture2D" uid="uid://dr3y2hhgytfdk" path="res://addons/region-editor/icons/PagePrevious.svg" id="3_ji21g"]
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="4_0ho3a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mtlqy"]
@@ -119,31 +118,36 @@ expand_icon = true
 [node name="VBoxContainer" type="VBoxContainer" parent="mcont/vbox"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="mcont/vbox/VBoxContainer"]
+[node name="Button" type="CheckBox" parent="mcont/vbox/VBoxContainer"]
 layout_mode = 2
-text = "Rendering"
-icon = ExtResource("3_ji21g")
-alignment = 0
+text = "Edit Rendering"
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="mcont/vbox/VBoxContainer"]
+[node name="Rendering" type="PanelContainer" parent="mcont/vbox/VBoxContainer"]
+visible = false
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/VBoxContainer"]
+[node name="Panel" type="Panel" parent="mcont/vbox/VBoxContainer/Rendering"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="vbox" type="VBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering"]
+layout_mode = 2
+
+[node name="hbox" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox"]
 layout_mode = 2
 text = "modulate: "
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="mcont/vbox/VBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/VBoxContainer"]
+[node name="hbox2" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering/vbox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox2"]
 layout_mode = 2
 text = "Material: "
 
@@ -184,6 +188,7 @@ tile_set = SubResource("TileSet_h1ivx")
 
 [connection signal="text_changed" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
 [connection signal="text_submitted" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
+[connection signal="toggled" from="mcont/vbox/VBoxContainer/Button" to="mcont/vbox/VBoxContainer/Rendering" method="set_visible"]
 [connection signal="pressed" from="mcont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
 [connection signal="pressed" from="mcont/vbox/hbox2/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
 [connection signal="pressed" from="mcont/vbox/hbox2/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]

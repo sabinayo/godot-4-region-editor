@@ -7,7 +7,7 @@ signal editor_resource_picker_retrieved()
 var undo_redo: EditorUndoRedoManager
 var rect_editor_enabler: CheckBox
 var resource_picker_detector: Control
-var resource_picker_retrieval: bool = false
+var property_for_resource_picker_retrieval: String = ""
 
 
 func _init(editor_undo_redo_manager: EditorUndoRedoManager) -> void:
@@ -23,7 +23,7 @@ func _parse_property(
 	hint_type: PropertyHint, hint_string: String,
 	usage_flags: int, wide: bool
 ) -> bool:
-	if name == "texture" and resource_picker_retrieval:
+	if name == property_for_resource_picker_retrieval:
 		resource_picker_detector = Control.new()
 		add_custom_control(resource_picker_detector)
 		resource_picker_detector.hide()
@@ -66,8 +66,10 @@ func retrieve_texture_region_editor() -> void:
 
 
 func retrieve_resource_picker() -> void:
-	if not resource_picker_retrieval:
+	if not property_for_resource_picker_retrieval:
 		return
+	
+	property_for_resource_picker_retrieval = ""
 	
 	var parent = resource_picker_detector.get_parent()
 	#parent.print_tree_pretty()# Uncomment to the the node tree
