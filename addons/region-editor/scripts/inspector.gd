@@ -1,8 +1,8 @@
+@tool
 extends EditorInspectorPlugin
 
 signal editor_plugin_texture_region_retrieved()
 signal editor_resource_picker_retrieved()
-
 
 var undo_redo: EditorUndoRedoManager
 var rect_editor_enabler: CheckBox
@@ -15,7 +15,7 @@ func _init(editor_undo_redo_manager: EditorUndoRedoManager) -> void:
 
 
 func _can_handle(object: Object) -> bool:
-	return object is Sprite2D
+	return object is Sprite2D or object is Resource
 
 
 func _parse_property(
@@ -23,7 +23,6 @@ func _parse_property(
 	hint_type: PropertyHint, hint_string: String,
 	usage_flags: int, wide: bool
 ) -> bool:
-	
 	if name == "texture" and resource_picker_retrieval:
 		resource_picker_detector = Control.new()
 		add_custom_control(resource_picker_detector)
@@ -33,7 +32,7 @@ func _parse_property(
 
 
 func _parse_group(object: Object, group: String) -> void:
-	var sprite := object as Sprite2D
+	#var sprite := object as Sprite2D
 	
 	if group == "Region":
 		rect_editor_enabler = CheckBox.new()
@@ -53,17 +52,16 @@ func _parse_group(object: Object, group: String) -> void:
 		add_custom_control(rect_editor_enabler)
 
 
-## Used buy the plugin to get the Godot EditorPluginTextureRegion
+## Used by the plugin to get the Godot EditorPluginTextureRegion
 func retrieve_texture_region_editor() -> void:
 	# Get the "Edit Region" Button
 	var vbox: VBoxContainer = rect_editor_enabler.get_parent()
-	#vbox.print_tree_pretty()# Uncomment to the the node tree
+	#vbox.print_tree_pretty()# Uncomment to see the node tree
 	var edit_region_btn = vbox.get_child(-2)
 	
 	# Pass the callable to the plugin.
 	var edit_texture_region_func: Callable = edit_region_btn.get_signal_connection_list(&"pressed")[0]["callable"]
 	var texture_region_editor: Object = edit_texture_region_func.get_object()
-	#print(texture_region_editor.get_property_list())
 	editor_plugin_texture_region_retrieved.emit(edit_texture_region_func)
 
 
@@ -75,3 +73,4 @@ func retrieve_resource_picker() -> void:
 	#parent.print_tree_pretty()# Uncomment to the the node tree
 	var resource_picker: EditorResourcePicker = parent.get_child(1).get_child(0)
 	editor_resource_picker_retrieved.emit(resource_picker.duplicate())
+	resource_picker_detector.queue_free()

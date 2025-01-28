@@ -65,18 +65,18 @@ func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 			# Retrieve TextureRegionEditor closure.
 			undo_redo.history_changed.connect(
 				func () -> void:
-					print("new region: ", sprite.region_rect)
 					region_editor.set_texture_region_as_edited(sprite)
 			, CONNECT_ONE_SHOT)
 	, CONNECT_ONE_SHOT)
 	
-	
-	# Temporaly edit the sprite to let Inpector plugin retrieve the EditorRegionEditor
-	# Then edit the last edited object (if one) in the inspector
 	var last_edited_object: Object = EditorInterface.get_inspector().get_edited_object()
 	EditorInterface.edit_node(sprite)
 	inspector_plugin.retrieve_texture_region_editor()
-	EditorInterface.edit_node(last_edited_object)
+	
+	if last_edited_object is Node:
+		EditorInterface.edit_node(last_edited_object)
+	else:
+		EditorInterface.edit_node(null)
 
 
 func _on_resource_picker_requested(sprite: Sprite2D) -> void:
@@ -92,7 +92,11 @@ func _on_resource_picker_requested(sprite: Sprite2D) -> void:
 	inspector_plugin.resource_picker_retrieval = true
 	EditorInterface.edit_node(sprite)
 	inspector_plugin.retrieve_resource_picker()
-	EditorInterface.edit_node(last_edited_object)
+	
+	if last_edited_object is Node:
+		EditorInterface.edit_node(last_edited_object)
+	else:
+		EditorInterface.edit_node(null)
 
 
 func get_from_file_system(

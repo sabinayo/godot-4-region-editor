@@ -18,8 +18,11 @@ func add_region_from(sprite: Sprite2D) -> void:
 	%Container.add_child(preview)
 	preview.selected.connect(_on_region_selected)
 	
+	var preview_id: int = preview.get_index()
+	
 	var data: Dictionary = {
-		"name": "RegionRect_%s" % preview.get_index(),
+		"name": "RegionRect_%s" % (preview_id + 1),
+		"id": preview_id,
 		"region_rect": sprite.region_rect,
 		"base_texture": sprite.texture.resource_path,
 	}
@@ -31,6 +34,12 @@ func add_region_from(sprite: Sprite2D) -> void:
 
 func _on_region_selected(data: Dictionary) -> void:
 	region_selected.emit(data)
+
+
+func _on_region_properties_property_updated(data: Dictionary) -> void:
+	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
+	preview.set_data(data)
+
 
 
 func _ready() -> void:
