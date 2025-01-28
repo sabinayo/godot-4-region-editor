@@ -113,7 +113,7 @@ func editor_resource_picker_set(node: EditorResourcePicker) -> void:
 
 func _on_region_previewer_container_region_selected(data: Dictionary) -> void:
 	%RegionPropertiesDock.show()
-	%RegionPropertiesDock.set_data(data)
+	%RegionProperties.set_data(data)
 
 
 func _on_file_dialog_dir_selected(requester: NodePath, dir: String) -> void:

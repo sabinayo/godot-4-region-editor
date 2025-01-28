@@ -214,6 +214,7 @@ layout_mode = 2
 text = "Region Properties:"
 
 [node name="RegionProperties" parent="HSplitContainer/TextureEditor/SplitContainer/Setup/hbox/hsplitcont/RegionPropertiesDock/vbox" instance=ExtResource("8_1804p")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
