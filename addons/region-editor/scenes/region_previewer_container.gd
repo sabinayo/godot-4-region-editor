@@ -4,7 +4,7 @@ extends PanelContainer
 signal region_selected(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
 
-const MINIMUM_PREVIEW_SIZE: int = 50
+const MINIMUM_PREVIEW_SIZE: int = 130
 const previewer: PackedScene = preload("region_previewer.tscn")
 
 var _temp_sprite: Sprite2D = Sprite2D.new()

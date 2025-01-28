@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_previewer_container.gd" id="1_d0xkp"]
 
 [node name="RegionPreviewerContainer" type="PanelContainer"]
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(130, 0)
 offset_right = 266.0
 offset_bottom = 319.0
 size_flags_vertical = 3

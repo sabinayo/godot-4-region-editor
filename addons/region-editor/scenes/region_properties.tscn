@@ -113,15 +113,24 @@ icon = ExtResource("1_41hcm")
 expand_icon = true
 
 [node name="CopyRectData" type="Button" parent="mcont/vbox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
 text = "Copy Rect Data"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
+[node name="Preview" type="TextureRect" parent="mcont/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_h1ivx")
 
 [connection signal="text_changed" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
+[connection signal="text_submitted" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
 [connection signal="pressed" from="mcont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
 [connection signal="pressed" from="mcont/vbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]

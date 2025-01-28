@@ -6,6 +6,7 @@ signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
 signal property_updated(data: Dictionary)
 
 var data: Dictionary = {}
+
 var _temp_sprite: Sprite2D = Sprite2D.new()
 
 func set_data(new: Dictionary) -> void:
@@ -13,6 +14,8 @@ func set_data(new: Dictionary) -> void:
 	%Name.text = data["name"]
 	_temp_sprite.region_enabled = true
 	_temp_sprite.region_rect = data["region_rect"]
+	%CopyRectData.tooltip_text = var_to_str(data["region_rect"])
+	_update_preview()
 
 
 func _on_copy_rect_data_pressed() -> void:
@@ -20,8 +23,14 @@ func _on_copy_rect_data_pressed() -> void:
 
 
 func _on_name_text_changed(new_text: String) -> void:
-	data["name"] = new_text
-	property_updated.emit(data)
+	if new_text.is_valid_filename():
+		data["name"] = new_text
+		property_updated.emit(data.duplicate())
+
+
+func _on_name_text_submitted(new_text: String) -> void:
+	if not new_text.is_valid_filename():
+		%Name.text = data["name"]
 
 
 func _on_update_rect_pressed() -> void:
@@ -32,4 +41,11 @@ func _on_update_rect_pressed() -> void:
 func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePath) -> void:
 	if requester == get_path():
 		data["region_rect"] = sprite.region_rect
-		property_updated.emit(data)
+		%CopyRectData.tooltip_text = var_to_str(data["region_rect"])
+		property_updated.emit(data.duplicate())
+		_update_preview()
+
+
+func _update_preview() -> void:
+	var image: Image = load(data["base_texture"]).get_image()
+	%Preview.texture = ImageTexture.create_from_image(image.get_region(data["region_rect"]))
