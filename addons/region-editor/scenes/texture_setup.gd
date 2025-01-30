@@ -66,19 +66,19 @@ func add_resource_picker(node: EditorResourcePicker) -> void:
 
 
 func _on_texture_resource_picker_resource_changed(resource: Resource) -> void:
-	if resource is Material:
-		_edited_material = resource
-	else:
-		_material_resource_picker.edited_resource = _edited_material
-
-
-func _on_material_resource_picker_resource_changed(resource: Resource) -> void:
 	if resource is Texture2D:
 		texture_changed.emit(resource)
 		_edited_texture = resource
 		_temp_sprite.texture = resource
 	else:
 		_texture_resource_picker.edited_resource = _temp_sprite.texture
+
+
+func _on_material_resource_picker_resource_changed(resource: Resource) -> void:
+	if resource is Material:
+		_edited_material = resource
+	else:
+		_material_resource_picker.edited_resource = _edited_material
 
 
 func _on_add_region() -> void:

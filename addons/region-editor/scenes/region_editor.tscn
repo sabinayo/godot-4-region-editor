@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c6kp61y0ycsji"]
+[gd_scene load_steps=26 format=3 uid="uid://c6kp61y0ycsji"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_editor.gd" id="1_ckiwb"]
 [ext_resource type="Texture2D" uid="uid://vflovc0o4aq6" path="res://addons/region-editor/icons/Remove.svg" id="1_ut1lj"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://coh8isxl7ays5" path="res://addons/region-editor/icons/GuiVisibilityHidden.svg" id="8_rgkar"]
 [ext_resource type="Texture2D" uid="uid://2ttaukdgul27" path="res://addons/region-editor/icons/ThemeSelectAll.svg" id="9_eh8dr"]
 [ext_resource type="Texture2D" uid="uid://lounnd68a2s5" path="res://addons/region-editor/icons/Close.svg" id="10_g6a71"]
+[ext_resource type="Texture2D" uid="uid://drjsik3nb3ve7" path="res://addons/region-editor/icons/Edit.svg" id="15_vfhx7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc4oc"]
 
@@ -317,6 +318,18 @@ visible = false
 layout_mode = 2
 text = "0 / 0"
 
+[node name="EditMultipleRegions" type="TextureButton" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Edit Selected Regions"
+texture_normal = ExtResource("15_vfhx7")
+ignore_texture_size = true
+stretch_mode = 5
+
 [node name="hsplitcont" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -347,7 +360,7 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
 layout_mode = 2
-text = "Region Properties:  resolution: 1920x1080 disk: %s mb"
+text = "Region Properties:"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
 layout_mode = 2
@@ -383,6 +396,7 @@ tile_set = SubResource("TileSet_epqgv")
 [connection signal="texture_renamed" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_renamed"]
 [connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox/ToggleRegionNames" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
 [connection signal="toggled" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox/SelectAllRegions" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_select_all_regions"]
+[connection signal="pressed" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hbox/scont/hbox/EditMultipleRegions" to="." method="_on_edit_multiple_regions_pressed"]
 [connection signal="dragged" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_hsplitcont_dragged"]
 [connection signal="region_deleted" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_deleted"]
 [connection signal="region_edition_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_edition_requested"]

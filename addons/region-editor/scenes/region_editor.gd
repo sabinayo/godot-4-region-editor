@@ -124,6 +124,8 @@ func editor_resource_picker_set(node: EditorResourcePicker) -> void:
 
 func _on_region_previewer_container_region_selected(is_selected: bool, region_id: int) -> void:
 	_update_regions_numb()
+	
+	%EditMultipleRegions.visible = %RegionPreviewerContainer.selected_regions.size() > 1
 
 
 func _update_regions_numb() -> void:
@@ -131,13 +133,21 @@ func _update_regions_numb() -> void:
 	%RegionsLabel.text = "Regions: %s" % %RegionPreviewerContainer.region_count 
 	
 	# Selected regions
-	var selected_regions: int = %RegionPreviewerContainer.selected_regions
+	var selected_regions: int = %RegionPreviewerContainer.selected_regions.size()
 	
 	%SelectedRegionsLabel.visible = selected_regions > 0
 	%SelectedRegionsLabel.text = "%s / %s" % [
 		selected_regions,
 		%RegionPreviewerContainer.region_count
 	]
+
+
+func _on_edit_multiple_regions_pressed() -> void:
+	%RegionPropertiesDock.show()
+	%RegionProperties.edit_multiple_regions(
+		true,
+		%RegionPreviewerContainer.get_selected_regions_data()
+	)
 
 
 func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:
@@ -150,6 +160,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 func _on_region_previewer_container_region_edition_requested(data: Dictionary) -> void:
 	edited_region_id = data["id"]
 	%RegionPropertiesDock.show()
+	%RegionProperties.edit_multiple_regions(false, [] as Array[Dictionary])
 	%RegionProperties.set_data(data)
 
 

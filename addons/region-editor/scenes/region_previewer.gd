@@ -19,6 +19,10 @@ func set_data(new: Dictionary, display_name: bool = true, selected: bool = false
 	}, true))
 
 
+func get_data() -> Dictionary:
+	return _data.duplicate()
+
+
 func update_data(from: Dictionary) -> void:
 	# Get the new image if update.
 	var stored_rect: Rect2 = _data.get("region_rect", Rect2())
@@ -46,7 +50,7 @@ func update_data(from: Dictionary) -> void:
 	%Preview.texture_filter = _data["texture_filter"]
 	%Preview.texture_repeat = _data["texture_repeat"]
 	
-	data_updated.emit(_data.duplicate())
+	data_updated.emit(get_data())
 
 
 func select(is_selected: bool) -> void:
@@ -75,7 +79,7 @@ func _update_name_visibility(name_visible: bool) -> void:
 
 
 func _on_previewer_pressed() -> void:
-	edition_requested.emit(_data.duplicate())
+	edition_requested.emit(get_data())
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
