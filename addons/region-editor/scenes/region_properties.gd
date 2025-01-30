@@ -2,8 +2,17 @@
 extends PanelContainer
 
 ## Used to display the Godot Texture Region Editor Node.
+signal file_system_requested(
+	requester: NodePath,
+	title: String, filters: PackedStringArray,
+	file_mode: EditorFileDialog.FileMode,
+	access: EditorFileDialog.Access)
 signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
 signal property_updated(data: Dictionary)
+
+const VALID_IMAGES_EXTENSIONS_FOR_EXPORT: PackedStringArray = [
+	"*.png", "*.jpg", "*.exr", "*.webp",
+]
 
 @export var _hidden_on_multiple_edition: Array[NodePath]
 
@@ -92,8 +101,11 @@ func _on_modulate_color_changed(color: Color) -> void:
 
 
 func _on_export_pressed() -> void:
-	%RegionsExportDialog.set_data(_edited_regions_data)
-	%ExportDialog.popup_centered()
+	if _multiple_edition:
+		%RegionsExportDialog.set_data(_edited_regions_data)
+		%ExportDialog.popup_centered()
+	else:
+		%ExportSingleRegion.popup_centered()
 
 
 func _on_export_dialog_canceled() -> void:
@@ -101,4 +113,24 @@ func _on_export_dialog_canceled() -> void:
 
 
 func _on_export_dialog_confirmed() -> void:
+	file_system_requested.emit(
+		get_path(), "Save Image",
+		VALID_IMAGES_EXTENSIONS_FOR_EXPORT,
+		EditorFileDialog.FileMode.FILE_MODE_SAVE_FILE,
+		EditorFileDialog.Access.ACCESS_FILESYSTEM,
+	)
 	%RegionsExportDialog.export()
+
+
+func _on_region_editor_file_dialog_file_selected(requester: NodePath, path: String) -> void:
+	if requester != get_path():
+		return
+	
+	%viewport.size_2d_override = %Preview.size
+	await RenderingServer.frame_post_draw
+	var t = %viewport.get_texture()
+	var image: Image = t.get_image()
+	var extension: String = path.get_extension()
+	
+	if "*." + extension in VALID_IMAGES_EXTENSIONS_FOR_EXPORT:
+		image.call(&"save_%s" % extension, path)

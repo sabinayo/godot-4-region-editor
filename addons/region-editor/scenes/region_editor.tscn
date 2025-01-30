@@ -307,6 +307,7 @@ layout_mode = 2
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_epqgv")
 
+[connection signal="file_dialog_file_selected" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_file_dialog_file_selected"]
 [connection signal="resource_picker_retrieved" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" method="_on_region_editor_resource_picker_retrieved"]
 [connection signal="texture_region_edited" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_texture_region_edited"]
 [connection signal="toggled" from="vbox/Hbox/ToggleTexturesDock" to="." method="_on_toggle_textures_dock_toggled"]
@@ -341,5 +342,6 @@ tile_set = SubResource("TileSet_epqgv")
 [connection signal="region_updated" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_updated"]
 [connection signal="visibility_changed" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_dock_visibility_changed"]
 [connection signal="pressed" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox/close" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock" method="hide"]
+[connection signal="file_system_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="." method="request_file_system"]
 [connection signal="property_updated" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_region_properties_property_updated"]
 [connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" to="." method="_on_texture_region_editor_requested"]

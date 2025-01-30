@@ -15,9 +15,9 @@ signal resource_picker_retrieved(resource_picker: EditorResourcePicker, requeste
 signal texture_region_editor_requested(sprite: Sprite2D)
 signal texture_region_edited(sprite: Sprite2D, requester: NodePath)
 
-signal file_dialog_dir_selected(dir: String)
-signal file_dialog_file_selected(path: String)
-signal file_dialog_files_selected(paths: PackedStringArray)
+signal file_dialog_dir_selected(requester: NodePath, dir: String)
+signal file_dialog_file_selected(requester: NodePath, path: String)
+signal file_dialog_files_selected(requester: NodePath, paths: PackedStringArray)
 
 ## Used to know for which purpose file/dir/files are picked.
 enum FileSystemActions {
