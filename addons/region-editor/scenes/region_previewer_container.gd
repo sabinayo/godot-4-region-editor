@@ -28,6 +28,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 	%Container.add_child(preview)
 	region_count += 1
 	preview.selected.connect(_on_region_selected)
+	preview.data_updated.connect(_on_region_data_updated)
 	preview.edition_requested.connect(_on_region_edition_requested)
 	preview.deletion_request.connect(_on_region_deletion_requested)
 	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
@@ -40,6 +41,8 @@ func add_region_from(sprite: Sprite2D) -> void:
 		"region_rect": sprite.region_rect,
 		"base_texture": sprite.texture.resource_path,
 		"modulate": sprite.modulate,
+		"texture_filter": sprite.texture_filter,
+		"texture_repeat": sprite.texture_repeat,
 	}
 	
 	preview.set_data(data, _display_regions_names, _select_all_regions)
@@ -136,3 +139,7 @@ func _on_select_all_regions(are_selected: bool) -> void:
 func set_data_from_texture_setup(data: Dictionary) -> void:
 	for region: RegionEditorRegionPreviewer in %Container.get_children():
 		region.update_data(data)
+
+
+func _on_resized() -> void:
+	update_previewers_display()

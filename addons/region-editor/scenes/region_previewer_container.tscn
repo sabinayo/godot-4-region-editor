@@ -30,3 +30,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
+
+[connection signal="resized" from="." to="." method="_on_resized"]

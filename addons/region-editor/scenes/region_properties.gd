@@ -32,6 +32,10 @@ func _on_copy_resource_path_pressed() -> void:
 	DisplayServer.clipboard_set(data["base_texture"])
 
 
+func _on_copy_image_pressed() -> void:
+	DisplayServer.clipboard_set(var_to_str(%Preview.texture))
+
+
 func _on_name_text_changed(new_text: String) -> void:
 	if new_text.is_valid_filename():
 		data["name"] = new_text
@@ -39,6 +43,7 @@ func _on_name_text_changed(new_text: String) -> void:
 
 
 func _on_name_text_submitted(new_text: String) -> void:
+	return
 	if not new_text.is_valid_filename():
 		%Name.text = data["name"]
 	else:
@@ -62,6 +67,7 @@ func _update_preview() -> void:
 	var image: Image = load(data["base_texture"]).get_image()
 	%Preview.texture = ImageTexture.create_from_image(image.get_region(data["region_rect"]))
 	%Preview.modulate = data["modulate"]
+
 
 func _on_modulate_color_changed(color: Color) -> void:
 	if _updating: return

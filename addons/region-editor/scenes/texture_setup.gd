@@ -30,8 +30,8 @@ var _material_resource_picker: EditorResourcePicker
 var _texture_data: Dictionary = {
 	"modulate": Color.WHITE,
 	"self_modulate": Color.WHITE,
-	"filter": TextureFilter.TEXTURE_FILTER_NEAREST,
-	"repeat": TextureRepeat.TEXTURE_REPEAT_DISABLED,
+	"texture_filter": TextureFilter.TEXTURE_FILTER_NEAREST,
+	"texture_repeat": TextureRepeat.TEXTURE_REPEAT_DISABLED,
 }
 var _updating: bool = false
 
@@ -108,14 +108,14 @@ func _on_texture_selected(data: Dictionary) -> void:
 
 func _on_texture_filter_selected(index: int) -> void:
 	var filter: int = index + 1
-	_texture_data["filter"] = filter
+	_texture_data["texture_filter"] = filter
 	_temp_sprite.texture_filter = filter
 	texture_data_updated.emit(_texture_data)
 
 
 func _on_texture_repeat_selected(index: int) -> void:
 	var repeat: int = index + 1
-	_texture_data["repeat"] = repeat
+	_texture_data["texture_repeat"] = repeat
 	_temp_sprite.texture_repeat = repeat
 	texture_data_updated.emit(_texture_data)
 

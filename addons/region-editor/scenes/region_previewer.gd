@@ -43,6 +43,8 @@ func update_data(from: Dictionary) -> void:
 	preview_name = %PrewiewName.text
 	_update_name_visibility(_data["display_name"])
 	%Selector.button_pressed = _data["selected"]
+	%Preview.texture_filter = _data["texture_filter"]
+	%Preview.texture_repeat = _data["texture_repeat"]
 	
 	data_updated.emit(_data.duplicate())
 
