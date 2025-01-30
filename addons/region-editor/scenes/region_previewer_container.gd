@@ -1,8 +1,11 @@
 @tool
+class_name RegionEditorRegionPreviewersContainer
+
 extends PanelContainer
 
 signal region_selected(is_selected: bool, region_id: int)
 signal region_updated(data: Dictionary)
+signal region_added()
 signal region_deleted(was_edited: bool, region_id: int)
 signal region_edition_requested(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
@@ -36,6 +39,7 @@ func add_regions(datas: Array[Dictionary]) -> void:
 		preview.deletion_request.connect(_on_region_deletion_requested)
 		region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 		preview.set_data(data)
+		region_added.emit()
 
 
 func add_region_from(sprite: Sprite2D) -> void:
@@ -64,6 +68,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 	}
 	
 	preview.set_data(data, _display_regions_names, _select_all_regions)
+	region_added.emit()
 
 
 func get_selected_regions_data() -> Array[Dictionary]:

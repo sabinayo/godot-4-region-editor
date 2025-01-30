@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b34ms68cu307b"]
+[gd_scene load_steps=4 format=3 uid="uid://b34ms68cu307b"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/regions_export_dialog.gd" id="1_rrdy8"]
+[ext_resource type="PackedScene" uid="uid://c7lefalft3kk8" path="res://addons/region-editor/scenes/regions_container_global_commands.tscn" id="2_h5bvd"]
 [ext_resource type="PackedScene" uid="uid://dr6xso5j2umfq" path="res://addons/region-editor/scenes/region_previewer_container.tscn" id="2_ymnnb"]
 
 [node name="RegionsExportDialog" type="PanelContainer"]
@@ -24,8 +25,11 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="RegionsContainerGlobalCommands" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_h5bvd")]
 layout_mode = 2
+regions_container_path = NodePath("../RegionPreviewerContainer")
+refresh_connections = false
+multiple_edition = false
 
 [node name="RegionPreviewerContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_ymnnb")]
 unique_name_in_owner = true
@@ -60,3 +64,9 @@ text = "Enumaration: "
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter a name..."
+
+[connection signal="all_regions_selection_requested" from="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_select_all_regions"]
+[connection signal="toggle_regions_names_visibility_requested" from="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
+[connection signal="region_added" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_added"]
+[connection signal="region_deleted" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
+[connection signal="region_selected" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]

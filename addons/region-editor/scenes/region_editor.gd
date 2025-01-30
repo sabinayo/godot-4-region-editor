@@ -107,7 +107,6 @@ func set_texture_region_as_edited(sprite: Sprite2D) -> void:
 	
 	if _texture_region_editor_requester == %TextureSetup.get_path():
 		%RegionPreviewerContainer.add_region_from(sprite)
-		_update_regions_numb()
 	
 	_texture_region_editor_requester = ^""
 
@@ -122,26 +121,6 @@ func editor_resource_picker_set(node: EditorResourcePicker) -> void:
 	_resource_picker_requester = ^""
 
 
-func _on_region_previewer_container_region_selected(is_selected: bool, region_id: int) -> void:
-	_update_regions_numb()
-	
-	%EditMultipleRegions.visible = %RegionPreviewerContainer.selected_regions.size() > 1
-
-
-func _update_regions_numb() -> void:
-	# Regions numb
-	%RegionsLabel.text = "Regions: %s" % %RegionPreviewerContainer.region_count 
-	
-	# Selected regions
-	var selected_regions: int = %RegionPreviewerContainer.selected_regions.size()
-	
-	%SelectedRegionsLabel.visible = selected_regions > 0
-	%SelectedRegionsLabel.text = "%s / %s" % [
-		selected_regions,
-		%RegionPreviewerContainer.region_count
-	]
-
-
 func _on_edit_multiple_regions_pressed() -> void:
 	%RegionPropertiesDock.show()
 	%RegionProperties.edit_multiple_regions(
@@ -151,8 +130,6 @@ func _on_edit_multiple_regions_pressed() -> void:
 
 
 func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:
-	_update_regions_numb()
-	
 	if region_id == edited_region_id:
 		%RegionPropertiesDock.hide()
 
