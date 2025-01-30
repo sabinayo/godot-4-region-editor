@@ -1,12 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkc6oqbeijd2o"]
+[gd_scene load_steps=3 format=3 uid="uid://dkc6oqbeijd2o"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/texture_setup.gd" id="1_tm8dm"]
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="3_e880m"]
-[ext_resource type="Texture2D" uid="uid://bknubkna4onbt" path="res://addons/region-editor/icons/Save.svg" id="3_prp1w"]
 
 [node name="TextureSetup" type="PanelContainer"]
-offset_right = 208.0
-offset_bottom = 130.0
+offset_right = 224.0
+offset_bottom = 245.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_tm8dm")
 
 [node name="Panel" type="Panel" parent="."]
@@ -22,65 +23,121 @@ theme_override_constants/margin_bottom = 8
 [node name="pcont" type="PanelContainer" parent="mcont"]
 layout_mode = 2
 
-[node name="vbox" type="VBoxContainer" parent="mcont/pcont"]
+[node name="scont" type="ScrollContainer" parent="mcont/pcont"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="vbox" type="VBoxContainer" parent="mcont/pcont/scont"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="hbox" type="HBoxContainer" parent="mcont/pcont/vbox"]
+[node name="hbox" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/pcont/vbox/hbox"]
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox"]
 layout_mode = 2
 text = "Name: "
 
-[node name="TextureName" type="LineEdit" parent="mcont/pcont/vbox/hbox"]
+[node name="TextureName" type="LineEdit" parent="mcont/pcont/scont/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TextureEditor" type="HBoxContainer" parent="mcont/pcont/vbox"]
+[node name="TextureEditor" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "[Texture2D] object to use."
 
-[node name="Label" type="Label" parent="mcont/pcont/vbox/TextureEditor"]
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/TextureEditor"]
 layout_mode = 2
 text = "Texture: "
 
-[node name="AddRegion" type="Button" parent="mcont/pcont/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox2"]
+layout_mode = 2
+text = "Modulate: "
+
+[node name="Modulate" type="ColorPickerButton" parent="mcont/pcont/scont/vbox/hbox2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+
+[node name="hbox3" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
+layout_mode = 2
+tooltip_text = "See CanvasItem.TextureFilter"
+
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Filter: "
+vertical_alignment = 1
+
+[node name="TextureFilter" type="OptionButton" parent="mcont/pcont/scont/vbox/hbox3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+selected = 0
+fit_to_longest_item = false
+item_count = 6
+popup/item_0/text = "Nearest"
+popup/item_1/text = "Linear"
+popup/item_1/id = 1
+popup/item_2/text = "Nearest Mipmap"
+popup/item_2/id = 2
+popup/item_3/text = "Linear Mipmap"
+popup/item_3/id = 3
+popup/item_4/text = "Nearest Mipmap Anisotropic"
+popup/item_4/id = 4
+popup/item_5/text = "Linear Mipmap Anisotropic"
+popup/item_5/id = 5
+
+[node name="hbox5" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
+layout_mode = 2
+tooltip_text = "See CanvasItem.TextureRepeat"
+
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox5"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Repeat: "
+vertical_alignment = 1
+
+[node name="TextureRepeat" type="OptionButton" parent="mcont/pcont/scont/vbox/hbox5"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 3
+popup/item_0/text = "Disabled"
+popup/item_1/text = "Enabled"
+popup/item_1/id = 1
+popup/item_2/text = "Mirror"
+popup/item_2/id = 2
+
+[node name="MaterialEditor" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/MaterialEditor"]
+layout_mode = 2
+text = "Material: "
+
+[node name="AddRegion" type="Button" parent="mcont/pcont/scont/vbox"]
 layout_mode = 2
 text = "Add region"
 icon = ExtResource("3_e880m")
 expand_icon = true
 
-[node name="hbox4" type="HBoxContainer" parent="mcont/pcont/vbox"]
-visible = false
-layout_mode = 2
-alignment = 2
-
-[node name="save" type="TextureButton" parent="mcont/pcont/vbox/hbox4"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-texture_normal = ExtResource("3_prp1w")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="hbox2" type="HBoxContainer" parent="mcont/pcont/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="mcont/pcont/vbox/hbox2"]
-layout_mode = 2
-text = "modulate: "
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="mcont/pcont/vbox/hbox2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="hbox3" type="HBoxContainer" parent="mcont/pcont/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="mcont/pcont/vbox/hbox3"]
-layout_mode = 2
-text = "Material: "
-
-[connection signal="text_changed" from="mcont/pcont/vbox/hbox/TextureName" to="." method="_on_texture_name_text_changed"]
-[connection signal="pressed" from="mcont/pcont/vbox/AddRegion" to="." method="_on_add_region"]
+[connection signal="text_changed" from="mcont/pcont/scont/vbox/hbox/TextureName" to="." method="_on_texture_name_text_changed"]
+[connection signal="color_changed" from="mcont/pcont/scont/vbox/hbox2/Modulate" to="." method="_on_modulate_color_changed"]
+[connection signal="item_selected" from="mcont/pcont/scont/vbox/hbox3/TextureFilter" to="." method="_on_texture_filter_selected"]
+[connection signal="item_selected" from="mcont/pcont/scont/vbox/hbox5/TextureRepeat" to="." method="_on_texture_repeat_selected"]
+[connection signal="pressed" from="mcont/pcont/scont/vbox/AddRegion" to="." method="_on_add_region"]

@@ -3,31 +3,47 @@ class_name RegionEditorRegionPreviewer
 
 extends HBoxContainer
 
-signal selected(is_selected: bool)
+signal selected(is_selected: bool, index: int)
+signal deletion_request(index: int)
 signal edition_requested(data: Dictionary)
 
 var data: Dictionary = {}
 var preview_name: String
 
 
-func set_data(new: Dictionary, display_name: bool = true) -> void:
+func set_data(new: Dictionary, display_name: bool = true, selected: bool = false) -> void:
 	# Get the new image if update.
 	if not data.get("region_rect", Rect2()).is_equal_approx(new["region_rect"]):
 		var image: Image = load(new["base_texture"]).get_image().get_region(new["region_rect"])
-		%Previewer.icon = ImageTexture.create_from_image(image)
+		%Preview.texture = ImageTexture.create_from_image(image)
+	
 	
 	data = new
-	%Previewer.text = data["name"]
-	preview_name = %Previewer.text
+	%Preview.modulate = data["modulate"]
+	%PrewiewName.text = data["name"]
+	preview_name = %PrewiewName.text
 	
 	_on_text_visibility_toggled(display_name)
+	%Selector.set_pressed_no_signal(selected)
+
+
+func select(is_selected: bool) -> void:
+	%Selector.button_pressed = is_selected
+
+
+func delete() -> void:
+	%Delete.button_pressed = true
+
+
+func is_selected() -> bool:
+	return %Selector.button_pressed
 
 
 func _on_text_visibility_toggled(toggled_on: bool) -> void:
 	if not toggled_on:
-		%Previewer.text = preview_name
+		%PrewiewName.text = preview_name
 	else:
-		%Previewer.text = ""
+		%PrewiewName.text = ""
 
 
 func _on_previewer_pressed() -> void:
@@ -35,8 +51,8 @@ func _on_previewer_pressed() -> void:
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	selected.emit(toggled_on)
+	selected.emit(toggled_on, get_index())
 
 
-func select(is_selected: bool) -> void:
-	%Selector.button_pressed = is_selected
+func _on_delete_pressed() -> void:
+	deletion_request.emit(get_index())

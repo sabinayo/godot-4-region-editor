@@ -69,10 +69,9 @@ func retrieve_resource_picker() -> void:
 	if not property_for_resource_picker_retrieval:
 		return
 	
-	property_for_resource_picker_retrieval = ""
-	
 	var parent = resource_picker_detector.get_parent()
 	#parent.print_tree_pretty()# Uncomment to the the node tree
 	var resource_picker: EditorResourcePicker = parent.get_child(1).get_child(0)
-	editor_resource_picker_retrieved.emit(resource_picker.duplicate())
+	editor_resource_picker_retrieved.emit(resource_picker.duplicate(0))
 	resource_picker_detector.queue_free()
+	property_for_resource_picker_retrieval = ""

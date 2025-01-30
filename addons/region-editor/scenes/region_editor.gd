@@ -25,6 +25,9 @@ enum FileSystemActions {
 	ADDING_TEXTURES,
 }
 
+
+var edited_region_id: int = -1
+
 var _file_sytem_action: FileSystemActions = FileSystemActions.NONE
 var _resource_picker_requester: NodePath = ^""
 var _texture_region_editor_requester: NodePath = ^""
@@ -104,7 +107,7 @@ func set_texture_region_as_edited(sprite: Sprite2D) -> void:
 	
 	if _texture_region_editor_requester == %TextureSetup.get_path():
 		%RegionPreviewerContainer.add_region_from(sprite)
-		%RegionsLabel.text = "Regions: %s" % %RegionPreviewerContainer.get_region_count()
+		_update_regions_numb()
 	
 	_texture_region_editor_requester = ^""
 
@@ -119,17 +122,33 @@ func editor_resource_picker_set(node: EditorResourcePicker) -> void:
 	_resource_picker_requester = ^""
 
 
-func _on_region_previewer_container_region_selected(is_selected: bool) -> void:
+func _on_region_previewer_container_region_selected(is_selected: bool, region_id: int) -> void:
+	_update_regions_numb()
+
+
+func _update_regions_numb() -> void:
+	# Regions numb
+	%RegionsLabel.text = "Regions: %s" % %RegionPreviewerContainer.region_count 
+	
+	# Selected regions
 	var selected_regions: int = %RegionPreviewerContainer.selected_regions
 	
 	%SelectedRegionsLabel.visible = selected_regions > 0
 	%SelectedRegionsLabel.text = "%s / %s" % [
 		selected_regions,
-		%RegionPreviewerContainer.get_region_count()
+		%RegionPreviewerContainer.region_count
 	]
 
 
+func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:
+	_update_regions_numb()
+	
+	if region_id == edited_region_id:
+		%RegionPropertiesDock.hide()
+
+
 func _on_region_previewer_container_region_edition_requested(data: Dictionary) -> void:
+	edited_region_id = data["id"]
 	%RegionPropertiesDock.show()
 	%RegionProperties.set_data(data)
 
@@ -171,3 +190,7 @@ func _on_toggle_textures_dock_toggled(toggled_on: bool) -> void:
 func _on_toggle_texture_setup_dock_toggled(toggled_on: bool) -> void:
 	%TextureSetup.visible = not toggled_on
 	%TextureSetupFastActions.visible = toggled_on
+
+
+func _on_texture_setup_texture_data_updated(data: Dictionary) -> void:
+	%ChangeTextureColor.color = data["modulate"]

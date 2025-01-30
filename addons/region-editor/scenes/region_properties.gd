@@ -8,15 +8,20 @@ signal property_updated(data: Dictionary)
 var data: Dictionary = {}
 
 var _temp_sprite: Sprite2D = Sprite2D.new()
+var _updating: bool = false
+
 
 func set_data(new: Dictionary) -> void:
+	_updating = true
 	data = new
 	%Name.text = data["name"]
 	_temp_sprite.region_enabled = true
 	_temp_sprite.region_rect = data["region_rect"]
+	%Modulate.color = data["modulate"]
 	%CopyRectData.tooltip_text = var_to_str(data["region_rect"])
 	%CopyResourcePath.tooltip_text = data["base_texture"]
 	_update_preview()
+	_updating = false
 
 
 func _on_copy_rect_data_pressed() -> void:
@@ -56,3 +61,11 @@ func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePa
 func _update_preview() -> void:
 	var image: Image = load(data["base_texture"]).get_image()
 	%Preview.texture = ImageTexture.create_from_image(image.get_region(data["region_rect"]))
+	%Preview.modulate = data["modulate"]
+
+func _on_modulate_color_changed(color: Color) -> void:
+	if _updating: return
+	
+	data["modulate"] = color
+	%Preview.modulate = color
+	property_updated.emit(data.duplicate())

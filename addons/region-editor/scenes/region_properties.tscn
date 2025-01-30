@@ -78,8 +78,8 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_mtlqy")
 
 [node name="RegionProperties" type="PanelContainer"]
-offset_right = 180.0
-offset_bottom = 78.0
+offset_right = 268.0
+offset_bottom = 353.0
 size_flags_vertical = 3
 script = ExtResource("1_tpmds")
 
@@ -93,74 +93,129 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="vbox" type="VBoxContainer" parent="mcont"]
+[node name="scont" type="ScrollContainer" parent="mcont"]
+layout_mode = 2
+follow_focus = true
+
+[node name="vbox" type="VBoxContainer" parent="mcont/scont"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="mcont/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="mcont/vbox/hbox"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/hbox"]
 layout_mode = 2
 text = "Name: "
 
-[node name="Name" type="LineEdit" parent="mcont/vbox/hbox"]
+[node name="Name" type="LineEdit" parent="mcont/scont/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Export" type="Button" parent="mcont/vbox"]
+[node name="Export" type="Button" parent="mcont/scont/vbox"]
 layout_mode = 2
 text = "Export"
 icon = ExtResource("2_13fl6")
 icon_alignment = 2
 expand_icon = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="mcont/vbox"]
+[node name="vbox2" type="VBoxContainer" parent="mcont/scont/vbox"]
 layout_mode = 2
 
-[node name="Button" type="CheckBox" parent="mcont/vbox/VBoxContainer"]
-layout_mode = 2
-text = "Edit Rendering"
-expand_icon = true
-
-[node name="Rendering" type="PanelContainer" parent="mcont/vbox/VBoxContainer"]
-visible = false
+[node name="hbox2" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="mcont/vbox/VBoxContainer/Rendering"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox2"]
 layout_mode = 2
+text = "Modulate: "
 
-[node name="vbox" type="VBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering"]
-layout_mode = 2
-
-[node name="hbox" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox"]
-layout_mode = 2
-text = "modulate: "
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox"]
+[node name="Modulate" type="ColorPickerButton" parent="mcont/scont/vbox/vbox2/hbox2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
 
-[node name="hbox2" type="HBoxContainer" parent="mcont/vbox/VBoxContainer/Rendering/vbox"]
+[node name="hbox3" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+layout_mode = 2
+tooltip_text = "See CanvasItem.TextureFilter"
+
+[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Filter: "
+vertical_alignment = 1
+
+[node name="TextureFilter" type="OptionButton" parent="mcont/scont/vbox/vbox2/hbox3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text_overrun_behavior = 3
+selected = 0
+fit_to_longest_item = false
+item_count = 7
+popup/item_0/text = "Inherit"
+popup/item_1/text = "Nearest"
+popup/item_1/id = 1
+popup/item_2/text = "Linear"
+popup/item_2/id = 2
+popup/item_3/text = "Nearest Mipmap"
+popup/item_3/id = 3
+popup/item_4/text = "Linear Mipmap"
+popup/item_4/id = 4
+popup/item_5/text = "Nearest Mipmap Anisotropic"
+popup/item_5/id = 5
+popup/item_6/text = "Linear Mipmap Anisotropic"
+popup/item_6/id = 6
+
+[node name="hbox5" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+layout_mode = 2
+tooltip_text = "See CanvasItem.TextureRepeat"
+
+[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox5"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Repeat: "
+vertical_alignment = 1
+
+[node name="TextureRepeat" type="OptionButton" parent="mcont/scont/vbox/vbox2/hbox5"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 4
+popup/item_0/text = "Inherit"
+popup/item_1/text = "Disabled"
+popup/item_1/id = 1
+popup/item_2/text = "Enabled"
+popup/item_2/id = 2
+popup/item_3/text = "Mirror"
+popup/item_3/id = 3
+
+[node name="MaterialEditor" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/vbox/VBoxContainer/Rendering/vbox/hbox2"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/MaterialEditor"]
 layout_mode = 2
 text = "Material: "
 
-[node name="UpdateRect" type="Button" parent="mcont/vbox"]
+[node name="UpdateRect" type="Button" parent="mcont/scont/vbox"]
 layout_mode = 2
 text = "Update"
 icon = ExtResource("1_41hcm")
 expand_icon = true
 
-[node name="hbox2" type="HBoxContainer" parent="mcont/vbox"]
+[node name="commands" type="ScrollContainer" parent="mcont/scont/vbox"]
+custom_minimum_size = Vector2(0, 31)
+layout_mode = 2
+follow_focus = true
+
+[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/commands"]
 layout_mode = 2
 
-[node name="CopyRectData" type="Button" parent="mcont/vbox/hbox2"]
+[node name="CopyRectData" type="Button" parent="mcont/scont/vbox/commands/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
@@ -168,7 +223,7 @@ text = "Rect"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="CopyResourcePath" type="Button" parent="mcont/vbox/hbox2"]
+[node name="CopyResourcePath" type="Button" parent="mcont/scont/vbox/commands/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
@@ -176,8 +231,9 @@ text = "Texture Path"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="Preview" type="TextureRect" parent="mcont/vbox"]
+[node name="Preview" type="TextureRect" parent="mcont/scont/vbox"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 expand_mode = 1
@@ -186,9 +242,9 @@ stretch_mode = 5
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_h1ivx")
 
-[connection signal="text_changed" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
-[connection signal="text_submitted" from="mcont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
-[connection signal="toggled" from="mcont/vbox/VBoxContainer/Button" to="mcont/vbox/VBoxContainer/Rendering" method="set_visible"]
-[connection signal="pressed" from="mcont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
-[connection signal="pressed" from="mcont/vbox/hbox2/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
-[connection signal="pressed" from="mcont/vbox/hbox2/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]
+[connection signal="text_changed" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
+[connection signal="text_submitted" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
+[connection signal="color_changed" from="mcont/scont/vbox/vbox2/hbox2/Modulate" to="." method="_on_modulate_color_changed"]
+[connection signal="pressed" from="mcont/scont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
+[connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
+[connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]

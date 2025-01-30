@@ -1,26 +1,22 @@
 @tool
 extends PanelContainer
 
-signal region_selected(is_selected: bool)
+signal region_selected(is_selected: bool, region_id: int)
+signal region_deleted(was_edited: bool, region_id: int)
 signal region_edition_requested(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
 
-const MINIMUM_PREVIEW_SIZE: int = 130
+const MINIMUM_PREVIEW_SIZE: int = 160
 const previewer: PackedScene = preload("region_previewer.tscn")
+
+var region_count: int = 0
+var selected_regions: int = 0
+var edited_region: int = -1
 
 var _temp_sprite: Sprite2D = Sprite2D.new()
 var _update_previewers_display: bool = false
-
-var selected_regions: int = 0
-var display_regions_names: bool = false
-
-
-func get_region_count() -> int:
-	return %Container.get_child_count()
-
-
-func get_selected_region_count() -> int:
-	return %Container.get_child_count()
+var _display_regions_names: bool = false
+var _select_all_regions: bool = false
 
 
 func add_region_from(sprite: Sprite2D) -> void:
@@ -29,8 +25,10 @@ func add_region_from(sprite: Sprite2D) -> void:
 	
 	var preview: RegionEditorRegionPreviewer = previewer.instantiate()
 	%Container.add_child(preview)
+	region_count += 1
 	preview.selected.connect(_on_region_selected)
 	preview.edition_requested.connect(_on_region_edition_requested)
+	preview.deletion_request.connect(_on_region_deletion_requested)
 	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 	
 	var preview_id: int = preview.get_index()
@@ -40,27 +38,41 @@ func add_region_from(sprite: Sprite2D) -> void:
 		"id": preview_id,
 		"region_rect": sprite.region_rect,
 		"base_texture": sprite.texture.resource_path,
+		"modulate": sprite.modulate,
 	}
 	
-	preview.set_data(data, display_regions_names)
+	preview.set_data(data, _display_regions_names, _select_all_regions)
 
 
-func _on_region_selected(is_selected: bool) -> void:
+func _on_region_deletion_requested(region_id: int) -> void:
+	var preview: RegionEditorRegionPreviewer = %Container.get_child(region_id)
+	
+	if preview.is_selected():
+		selected_regions -= 1
+	
+	preview.queue_free()
+	region_count -= 1
+	region_deleted.emit(region_id == edited_region, region_id)
+	edited_region = -1
+
+
+func _on_region_selected(is_selected: bool, region_id: int) -> void:
 	if is_selected:
 		selected_regions += 1
 	else:
 		selected_regions -= 1
 	
-	region_selected.emit(is_selected)
+	region_selected.emit(is_selected, region_id)
 
 
 func _on_region_edition_requested(data: Dictionary) -> void:
+	edited_region = data["id"]
 	region_edition_requested.emit(data)
 
 
 func _on_region_properties_property_updated(data: Dictionary) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
-	preview.set_data(data, display_regions_names)
+	preview.set_data(data, _display_regions_names, _select_all_regions)
 
 
 func _ready() -> void:
@@ -105,10 +117,12 @@ func _on_region_properties_dock_visibility_changed() -> void:
 
 
 func _on_toggle_regions_names_visibility(toggled_on: bool) -> void:
-	display_regions_names = toggled_on
+	_display_regions_names = toggled_on
 	region_names_visibility_changed.emit(toggled_on)
 
 
 func _on_select_all_regions(are_selected: bool) -> void:
+	_select_all_regions = are_selected
+	
 	for region: RegionEditorRegionPreviewer in %Container.get_children():
 		region.select(are_selected)
