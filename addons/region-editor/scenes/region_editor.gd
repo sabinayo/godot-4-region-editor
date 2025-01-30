@@ -153,6 +153,11 @@ func _on_region_previewer_container_region_edition_requested(data: Dictionary) -
 	%RegionProperties.set_data(data)
 
 
+func _on_region_previewer_container_region_updated(data: Dictionary) -> void:
+	if data["id"] == edited_region_id and %RegionPropertiesDock.visible:
+		%RegionProperties.set_data(data)
+
+
 func _on_file_dialog_dir_selected(requester: NodePath, dir: String) -> void:
 	file_dialog_dir_selected.emit(requester, dir)
 	
@@ -193,4 +198,14 @@ func _on_toggle_texture_setup_dock_toggled(toggled_on: bool) -> void:
 
 
 func _on_texture_setup_texture_data_updated(data: Dictionary) -> void:
-	%ChangeTextureColor.color = data["modulate"]
+	if %ChangeTextureModulate.color != data["modulate"]:
+		%RegionPreviewerContainer.set_data_from_texture_setup(data)
+	
+	%ChangeTextureModulate.color = data["modulate"]
+	%ChangeTextureSelfModulate.color = data["self_modulate"]
+
+
+func _on_change_texture_modulate(color: Color) -> void:
+	%RegionPreviewerContainer.set_data_from_texture_setup({
+		"modulate": color
+	})

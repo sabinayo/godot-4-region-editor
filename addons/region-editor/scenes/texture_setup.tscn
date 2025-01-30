@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="3_e880m"]
 
 [node name="TextureSetup" type="PanelContainer"]
-offset_right = 224.0
+custom_minimum_size = Vector2(260, 0)
+offset_right = 260.0
 offset_bottom = 245.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -49,7 +50,7 @@ size_flags_horizontal = 3
 [node name="TextureEditor" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "[Texture2D] object to use."
+tooltip_text = "Texture2D object to use."
 
 [node name="Label" type="Label" parent="mcont/pcont/scont/vbox/TextureEditor"]
 layout_mode = 2
@@ -57,12 +58,34 @@ text = "Texture: "
 
 [node name="hbox2" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
 layout_mode = 2
+tooltip_text = "The color applied to both new and existing regions.
+Unlike 'Self Modulate,' which only affects newly created regions."
 
 [node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox2"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "Modulate: "
 
 [node name="Modulate" type="ColorPickerButton" parent="mcont/pcont/scont/vbox/hbox2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+
+[node name="hbox4" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
+layout_mode = 2
+tooltip_text = "The color applied to newly created regions.
+This property does not affect existing regions, unlike 'Modulate,' which affects both new and existing regions.
+Overrides 'Modulate' for newly created regions if different from '#ffffff'."
+
+[node name="Label" type="Label" parent="mcont/pcont/scont/vbox/hbox4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Self Modulate: "
+
+[node name="SelfModulate" type="ColorPickerButton" parent="mcont/pcont/scont/vbox/hbox4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -138,6 +161,7 @@ expand_icon = true
 
 [connection signal="text_changed" from="mcont/pcont/scont/vbox/hbox/TextureName" to="." method="_on_texture_name_text_changed"]
 [connection signal="color_changed" from="mcont/pcont/scont/vbox/hbox2/Modulate" to="." method="_on_modulate_color_changed"]
+[connection signal="color_changed" from="mcont/pcont/scont/vbox/hbox4/SelfModulate" to="." method="_on_self_modulate_color_changed"]
 [connection signal="item_selected" from="mcont/pcont/scont/vbox/hbox3/TextureFilter" to="." method="_on_texture_filter_selected"]
 [connection signal="item_selected" from="mcont/pcont/scont/vbox/hbox5/TextureRepeat" to="." method="_on_texture_repeat_selected"]
 [connection signal="pressed" from="mcont/pcont/scont/vbox/AddRegion" to="." method="_on_add_region"]

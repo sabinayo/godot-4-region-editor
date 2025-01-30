@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr3y2hhgytfdk"
-path="res://.godot/imported/PagePrevious.svg-2f0113510db0296f0e046916db27a181.ctex"
+uid="uid://c62i0is2oymqt"
+path="res://.godot/imported/Unlock.svg-51d4f7f8b7d50979b864a455221b7b18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/region-editor/icons/PagePrevious.svg"
-dest_files=["res://.godot/imported/PagePrevious.svg-2f0113510db0296f0e046916db27a181.ctex"]
+source_file="res://addons/region-editor/icons/Unlock.svg"
+dest_files=["res://.godot/imported/Unlock.svg-51d4f7f8b7d50979b864a455221b7b18.ctex"]
 
 [params]
 

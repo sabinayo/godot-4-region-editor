@@ -29,6 +29,7 @@ var _material_resource_picker: EditorResourcePicker
 
 var _texture_data: Dictionary = {
 	"modulate": Color.WHITE,
+	"self_modulate": Color.WHITE,
 	"filter": TextureFilter.TEXTURE_FILTER_NEAREST,
 	"repeat": TextureRepeat.TEXTURE_REPEAT_DISABLED,
 }
@@ -85,7 +86,11 @@ func _on_add_region() -> void:
 		return
 	
 	_temp_sprite.texture = _edited_texture
-	_temp_sprite.modulate = %Modulate.color
+	_temp_sprite.modulate = %SelfModulate.color
+	
+	if %SelfModulate.color == Color.WHITE:
+		_temp_sprite.modulate = %Modulate.color
+	
 	_temp_sprite.texture_filter = %TextureFilter.selected
 	_temp_sprite.texture_repeat = %TextureRepeat.selected
 	texture_region_editor_requested.emit(_temp_sprite, get_path())
@@ -99,14 +104,6 @@ func _on_texture_selected(data: Dictionary) -> void:
 	if %TextureEditor.get_child_count() == 1:
 		_resource_picker_request = ResourcePickerRequests.TEXTURE
 		resource_picker_requested.emit(_temp_sprite, "texture", get_path())
-
-
-func _on_modulate_color_changed(color: Color) -> void:
-	_texture_data["modulate"] = color
-	_temp_sprite.modulate = color
-	
-	if not _updating:
-		texture_data_updated.emit(_texture_data)
 
 
 func _on_texture_filter_selected(index: int) -> void:
@@ -127,6 +124,31 @@ func _on_texture_name_text_changed(new_text: String) -> void:
 	texture_renamed.emit(new_text)
 
 
-func _on_change_texture_color_color_changed(color: Color) -> void:
+func _on_change_texture_modulate(color: Color) -> void:
 	_updating = true
 	%Modulate.color = color
+
+
+func _on_modulate_color_changed(color: Color) -> void:
+	_texture_data["modulate"] = color
+	_temp_sprite.modulate = color
+	
+	if not _updating:
+		texture_data_updated.emit(_texture_data)
+	
+	_updating = false
+
+
+func _on_change_texture_self_modulate(color: Color) -> void:
+	_updating = true
+	%SelfModulate.color = color
+
+
+func _on_self_modulate_color_changed(color: Color) -> void:
+	_texture_data["self_modulate"] = color
+	_temp_sprite.modulate = color
+	
+	if not _updating:
+		texture_data_updated.emit(_texture_data)
+	
+	_updating = false

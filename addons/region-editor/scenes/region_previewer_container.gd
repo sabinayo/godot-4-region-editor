@@ -2,6 +2,7 @@
 extends PanelContainer
 
 signal region_selected(is_selected: bool, region_id: int)
+signal region_updated(data: Dictionary)
 signal region_deleted(was_edited: bool, region_id: int)
 signal region_edition_requested(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
@@ -70,6 +71,10 @@ func _on_region_edition_requested(data: Dictionary) -> void:
 	region_edition_requested.emit(data)
 
 
+func _on_region_data_updated(data: Dictionary) -> void:
+	region_updated.emit(data)
+
+
 func _on_region_properties_property_updated(data: Dictionary) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
 	preview.set_data(data, _display_regions_names, _select_all_regions)
@@ -126,3 +131,8 @@ func _on_select_all_regions(are_selected: bool) -> void:
 	
 	for region: RegionEditorRegionPreviewer in %Container.get_children():
 		region.select(are_selected)
+
+
+func set_data_from_texture_setup(data: Dictionary) -> void:
+	for region: RegionEditorRegionPreviewer in %Container.get_children():
+		region.update_data(data)
