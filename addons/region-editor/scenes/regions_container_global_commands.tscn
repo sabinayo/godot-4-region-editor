@@ -12,7 +12,6 @@ offset_bottom = 23.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.1
 script = ExtResource("1_evds5")
-refresh_connections = null
 
 [node name="RegionsLabel" type="Label" parent="."]
 unique_name_in_owner = true

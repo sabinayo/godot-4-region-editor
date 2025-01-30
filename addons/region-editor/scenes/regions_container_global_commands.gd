@@ -22,14 +22,14 @@ signal multiple_regions_edition_requested()
 @export var regions_container_path: NodePath:
 	set(value):
 		if regions_container_path:
-			_update_connections(false)
+			break_all_connections()
 		
 		regions_container_path = value
-		_update_connections(false)
-
-@export var refresh_connections: bool = false:
-	set(value):
-		_update_connections(true)
+		add_connections()
+#
+#@export var refresh_connections: bool = false:
+	#set(value):
+		#_update_connections(true)
 
 
 ## If true, the 'Multiple Edition' button is displayed when two or more regions are selected.
@@ -38,10 +38,13 @@ signal multiple_regions_edition_requested()
 var _already_connected: bool = false
 
 
-func add_connections(establish_connection: bool) -> void:
+func add_connections() -> void:
 	if not regions_container_path: return
 	
-	var regions_container =get_node(regions_container_path)
+	var regions_container = get_node_or_null(regions_container_path)
+	
+	if not regions_container:
+		return
 	
 	for connection: StringName in INCOMMING_CONNECTIONS:
 		var connection_established: bool = regions_container.is_connected(

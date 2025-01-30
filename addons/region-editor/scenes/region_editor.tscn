@@ -264,7 +264,6 @@ size_flags_horizontal = 3
 [node name="RegionsContainerGlobalCommands" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox" instance=ExtResource("12_flsac")]
 layout_mode = 2
 regions_container_path = NodePath("../hsplitcont/RegionPreviewerContainer")
-refresh_connections = null
 
 [node name="hsplitcont" type="HSplitContainer" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox"]
 layout_mode = 2

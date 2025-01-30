@@ -28,7 +28,6 @@ size_flags_horizontal = 3
 [node name="RegionsContainerGlobalCommands" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_h5bvd")]
 layout_mode = 2
 regions_container_path = NodePath("../RegionPreviewerContainer")
-refresh_connections = false
 multiple_edition = false
 
 [node name="RegionPreviewerContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_ymnnb")]
