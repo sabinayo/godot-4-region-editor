@@ -12,7 +12,7 @@ func cancel_export() -> void:
 	%RegionPreviewerContainer.delete_regions()
 
 
-func export() -> void:
+func export(path: String) -> void:
 	pass
 
 

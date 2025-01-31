@@ -11,11 +11,13 @@ const INCOMMING_CONNECTIONS: Dictionary = {
 
 const OUTGOING_CONNECTIONS: Dictionary = {
 	&"all_regions_selection_requested": &"_on_select_all_regions",
+	&"selected_regions_deletion_requested": &"_on_selected_region_deletion_requested",
 	&"toggle_regions_names_visibility_requested": &"_on_toggle_regions_names_visibility",
 }
 
 signal toggle_regions_names_visibility_requested(toogled_on: bool)
 signal all_regions_selection_requested(selected: bool)
+signal selected_regions_deletion_requested()
 signal multiple_regions_edition_requested()
 
 ## Click 'refresh_connections' if set.
@@ -131,6 +133,7 @@ func _update_regions_data() -> void:
 		regions_container.region_count
 	]
 	%EditMultipleRegions.visible = multiple_edition and regions_container.selected_regions.size() > 1
+	%DeleteSelectedRegions.visible = regions_container.selected_regions.size() >= 1
 
 #region Outgoing connections
 func _on_toggle_region_names_toggled(toggled_on: bool) -> void:
@@ -143,6 +146,10 @@ func _on_select_all_regions_pressed(selected: bool) -> void:
 
 func _on_edit_multiple_regions_pressed() -> void:
 	multiple_regions_edition_requested.emit()
+
+
+func _on_delete_selected_regions_pressed() -> void:
+	selected_regions_deletion_requested.emit()
 #endregion
 
 #region Incoming connections

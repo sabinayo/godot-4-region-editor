@@ -4,6 +4,7 @@ class_name RegionEditorRegionPreviewer
 extends HBoxContainer
 
 signal selected(is_selected: bool, index: int)
+signal export_requested(texture: TextureRect)
 signal data_updated(data: Dictionary)
 signal deletion_request(index: int)
 signal edition_requested(data: Dictionary)
@@ -53,8 +54,9 @@ func update_data(from: Dictionary) -> void:
 	data_updated.emit(get_data())
 
 
-func select(is_selected: bool) -> void:
-	%Selector.button_pressed = is_selected
+func select(selected: bool) -> void:
+	%Selector.button_pressed = selected
+	_data["selected"] = selected
 
 
 func delete() -> void:
@@ -88,3 +90,7 @@ func _on_check_box_toggled(toggled_on: bool) -> void:
 
 func _on_delete_pressed() -> void:
 	deletion_request.emit(get_index())
+
+
+func _on_export_pressed() -> void:
+	export_requested.emit(%Preview.duplicate())

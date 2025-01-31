@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cou3we204lm21"]
+[gd_scene load_steps=14 format=3 uid="uid://cou3we204lm21"]
 
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
@@ -7,8 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://c62i0is2oymqt" path="res://addons/region-editor/icons/Unlock.svg" id="3_q5ig0"]
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="4_0ho3a"]
 [ext_resource type="Texture2D" uid="uid://b2p3x6xdr1rmr" path="res://addons/region-editor/icons/Lock.svg" id="4_vnlnu"]
+[ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="7_e1sf7"]
 [ext_resource type="PackedScene" uid="uid://b34ms68cu307b" path="res://addons/region-editor/scenes/regions_export_dialog.tscn" id="8_nbsv1"]
-[ext_resource type="Texture2D" uid="uid://b6a6grhfs3vkm" path="res://addons/region-editor/samples/exported/test.png" id="9_dlcm8"]
+[ext_resource type="PackedScene" uid="uid://c4uxswx4h7fmm" path="res://addons/region-editor/scenes/region_export_dialog.tscn" id="9_rf4q4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_a2llg"]
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mtlqy"]
 texture = ExtResource("4_0ho3a")
@@ -87,7 +92,7 @@ offset_right = 346.0
 offset_bottom = 353.0
 size_flags_vertical = 3
 script = ExtResource("1_tpmds")
-_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/hbox"), NodePath("mcont/scont/vbox/UpdateRect"), NodePath("mcont/scont/vbox/commands"), NodePath("mcont/scont/vbox/Preview")])
+_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/hbox"), NodePath("mcont/scont/vbox/UpdateRect"), NodePath("mcont/scont/vbox/commands"), NodePath("mcont/scont/vbox/PreviewBackground")])
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -273,29 +278,43 @@ text = "Image"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="Preview" type="TextureRect" parent="mcont/scont/vbox"]
-unique_name_in_owner = true
+[node name="PreviewBackground" type="TextureRect" parent="mcont/scont/vbox"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("7_e1sf7")
+stretch_mode = 1
+
+[node name="Preview" type="TextureRect" parent="mcont/scont/vbox/PreviewBackground"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="mcont/scont/vbox"]
-visible = false
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-size_flags_vertical = 3
-stretch = true
-
-[node name="viewport" type="SubViewport" parent="mcont/scont/vbox/SubViewportContainer"]
+[node name="PreviewInfos" type="Label" parent="mcont/scont/vbox/PreviewBackground"]
 unique_name_in_owner = true
-disable_3d = true
-handle_input_locally = false
-size = Vector2i(330, 100)
-size_2d_override = Vector2i(512, 512)
-render_target_update_mode = 0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "4096 x 4096
+No MipMap
+Memory: 64 Mib"
+label_settings = SubResource("LabelSettings_a2llg")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_h1ivx")
@@ -313,142 +332,9 @@ unique_name_in_owner = true
 offset_right = 592.0
 offset_bottom = 451.0
 
-[node name="ExportSingleRegion" type="ConfirmationDialog" parent="."]
+[node name="RegionExportDialog" parent="." instance=ExtResource("9_rf4q4")]
 unique_name_in_owner = true
-auto_translate_mode = 1
-title = "Export Options"
-position = Vector2i(0, 36)
-size = Vector2i(555, 329)
-popup_window = true
-ok_button_text = "Export"
-
-[node name="PanelContainer" type="PanelContainer" parent="ExportSingleRegion"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 547.0
-offset_bottom = 280.0
-
-[node name="MarginContainer" type="MarginContainer" parent="ExportSingleRegion/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
-
-[node name="vbox" type="HBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox"]
-custom_minimum_size = Vector2(256, 256)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/SubViewportContainer"]
-handle_input_locally = false
-size = Vector2i(256, 256)
-render_target_update_mode = 0
-
-[node name="TextureRect" type="TextureRect" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/SubViewportContainer/SubViewport"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("9_dlcm8")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="hbox" type="HBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox"]
-layout_mode = 2
-
-[node name="pcont" type="PanelContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Panel" type="Panel" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="vbox" type="VBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox"]
-layout_mode = 2
-text = "Size:"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox/HBoxContainer"]
-layout_mode = 2
-text = "x:"
-
-[node name="SpinBox" type="SpinBox" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox/HBoxContainer"]
-layout_mode = 2
-min_value = 2.0
-max_value = 16384.0
-value = 256.0
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox/HBoxContainer2"]
-layout_mode = 2
-text = "y:"
-
-[node name="SpinBox" type="SpinBox" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont/MarginContainer/vbox/HBoxContainer2"]
-layout_mode = 2
-min_value = 2.0
-max_value = 16384.0
-value = 256.0
-
-[node name="pcont2" type="PanelContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Panel" type="Panel" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="vbox" type="VBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer/vbox"]
-layout_mode = 2
-text = "Background"
-
-[node name="HBoxContainer" type="VBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer/vbox"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer/vbox/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer/vbox/HBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Color: "
-
-[node name="ColorPickerButton" type="ColorPickerButton" parent="ExportSingleRegion/PanelContainer/MarginContainer/vbox/hbox/pcont2/MarginContainer/vbox/HBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-color = Color(1, 1, 1, 0)
+visible = false
 
 [connection signal="text_changed" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
 [connection signal="text_submitted" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
@@ -460,5 +346,4 @@ color = Color(1, 1, 1, 0)
 [connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyImage" to="." method="_on_copy_image_pressed"]
 [connection signal="canceled" from="ExportDialog" to="." method="_on_export_dialog_canceled"]
 [connection signal="confirmed" from="ExportDialog" to="." method="_on_export_dialog_confirmed"]
-[connection signal="canceled" from="ExportSingleRegion" to="." method="_on_export_dialog_canceled"]
-[connection signal="confirmed" from="ExportSingleRegion" to="." method="_on_export_dialog_confirmed"]
+[connection signal="confirmed" from="RegionExportDialog" to="." method="_on_export_dialog_confirmed"]

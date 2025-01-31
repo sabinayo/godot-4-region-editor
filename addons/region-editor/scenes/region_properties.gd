@@ -10,9 +10,6 @@ signal file_system_requested(
 signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
 signal property_updated(data: Dictionary)
 
-const VALID_IMAGES_EXTENSIONS_FOR_EXPORT: PackedStringArray = [
-	"*.png", "*.jpg", "*.exr", "*.webp",
-]
 
 @export var _hidden_on_multiple_edition: Array[NodePath]
 
@@ -67,6 +64,7 @@ func _on_name_text_changed(new_text: String) -> void:
 
 func _on_name_text_submitted(new_text: String) -> void:
 	return
+	
 	if not new_text.is_valid_filename():
 		%Name.text = _data["name"]
 	else:
@@ -90,6 +88,31 @@ func _update_preview() -> void:
 	var image: Image = load(_data["base_texture"]).get_image()
 	%Preview.texture = ImageTexture.create_from_image(image.get_region(_data["region_rect"]))
 	%Preview.modulate = _data["modulate"]
+	
+	var texture_size: Vector2 = image.get_size()
+	%PreviewInfos.text = """
+	%s x %s %s
+	%s
+	Memory: %s
+	""" % [
+		texture_size.x, texture_size.y,
+		get_image_format_literal(image.get_format()),
+		"No Mipmaps" if not image.has_mipmaps() else "Has Mipmaps",
+		get_image_real_size(image.get_data_size())
+	]
+
+
+func get_image_real_size(image_size: int) -> String:
+	var kilo_bytes: float = round(image_size / 1024.0)
+	var mega_bytes: float = round(image_size / 1048576.0)
+	
+	if mega_bytes >= 1.0:
+		return " %sMo" % mega_bytes
+	
+	else:
+		return " %sKo" % kilo_bytes
+	
+	return ""
 
 
 func _on_modulate_color_changed(color: Color) -> void:
@@ -105,32 +128,70 @@ func _on_export_pressed() -> void:
 		%RegionsExportDialog.set_data(_edited_regions_data)
 		%ExportDialog.popup_centered()
 	else:
-		%ExportSingleRegion.popup_centered()
+		%RegionExportDialog.set_image(%Preview.duplicate())
+		%RegionExportDialog.popup_centered()
 
 
 func _on_export_dialog_canceled() -> void:
-	%RegionsExportDialog.cancel_export()
+	if _multiple_edition:
+		%RegionsExportDialog.cancel_export()
+	else:
+		%RegionExportDialog.cancel_export()
 
 
 func _on_export_dialog_confirmed() -> void:
 	file_system_requested.emit(
 		get_path(), "Save Image",
-		VALID_IMAGES_EXTENSIONS_FOR_EXPORT,
+		%RegionExportDialog.VALID_IMAGES_EXTENSIONS_FOR_EXPORT,
 		EditorFileDialog.FileMode.FILE_MODE_SAVE_FILE,
 		EditorFileDialog.Access.ACCESS_FILESYSTEM,
 	)
-	%RegionsExportDialog.export()
 
 
 func _on_region_editor_file_dialog_file_selected(requester: NodePath, path: String) -> void:
 	if requester != get_path():
 		return
 	
-	%viewport.size_2d_override = %Preview.size
-	await RenderingServer.frame_post_draw
-	var t = %viewport.get_texture()
-	var image: Image = t.get_image()
-	var extension: String = path.get_extension()
-	
-	if "*." + extension in VALID_IMAGES_EXTENSIONS_FOR_EXPORT:
-		image.call(&"save_%s" % extension, path)
+	if _multiple_edition:
+		%RegionsExportDialog.export(path)
+	else:
+		%RegionExportDialog.export(path)
+
+
+
+func get_image_format_literal(format: Image.Format) -> String:
+	match format:
+		Image.FORMAT_L8: return "L8"
+		Image.FORMAT_LA8: return "LA8"
+		Image.FORMAT_R8: return "R8"
+		Image.FORMAT_RG8: return "RG8"
+		Image.FORMAT_RGB8: return "RGB8"
+		Image.FORMAT_RGBA8: return "RGBA8"
+		Image.FORMAT_RGBA4444: return "RGBA4444"
+		Image.FORMAT_RF: return "RF"
+		Image.FORMAT_RGF: return "RGF"
+		Image.FORMAT_RGBF: return "RGBF"
+		Image.FORMAT_RGBAF: return "RGBAF"
+		Image.FORMAT_RH: return "RH"
+		Image.FORMAT_RGH: return "RGH"
+		Image.FORMAT_RGBH: return "RGBH"
+		Image.FORMAT_RGBAH: return "RGBAH"
+		Image.FORMAT_RGBE9995: return "RGBE9995"
+		Image.FORMAT_DXT1: return "DXT1"
+		Image.FORMAT_DXT3: return "DXT3"
+		Image.FORMAT_DXT5: return "DXT5"
+		Image.FORMAT_RGTC_R: return "RGTC_R"
+		Image.FORMAT_RGTC_RG: return "RGTC_RG"
+		Image.FORMAT_BPTC_RGBA: return "BPTC_RGBA"
+		Image.FORMAT_BPTC_RGBF: return "BPTC_RGBF"
+		Image.FORMAT_BPTC_RGBFU: return "BPTC_RGBFU"
+		Image.FORMAT_ETC: return "ETC"
+		Image.FORMAT_ETC2_R11: return "ETC2_R11"
+		Image.FORMAT_ETC2_R11S: return "ETC2_R11S"
+		Image.FORMAT_ETC2_RG11: return "ETC2_RG11"
+		Image.FORMAT_ETC2_RG11S: return "ETC2_RG11S"
+		Image.FORMAT_ETC2_RGB8: return "ETC2_RGB8"
+		Image.FORMAT_ETC2_RGBA8: return "ETC2_RGBA8"
+		Image.FORMAT_ETC2_RGB8A1: return "ETC2_RGB8A1"
+		_:
+			return "Unknown Format"

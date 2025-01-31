@@ -3,6 +3,7 @@ class_name RegionEditorRegionPreviewersContainer
 
 extends PanelContainer
 
+signal region_export_requested(texture: TextureRect)
 signal region_selected(is_selected: bool, region_id: int)
 signal region_updated(data: Dictionary)
 signal region_added()
@@ -36,6 +37,7 @@ func add_regions(datas: Array[Dictionary]) -> void:
 		preview.selected.connect(_on_region_selected)
 		preview.data_updated.connect(_on_region_data_updated)
 		preview.edition_requested.connect(_on_region_edition_requested)
+		preview.export_requested.connect(_on_region_export_reequested)
 		preview.deletion_request.connect(_on_region_deletion_requested)
 		region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 		preview.set_data(data)
@@ -52,6 +54,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 	preview.selected.connect(_on_region_selected)
 	preview.data_updated.connect(_on_region_data_updated)
 	preview.edition_requested.connect(_on_region_edition_requested)
+	preview.export_requested.connect(_on_region_export_reequested)
 	preview.deletion_request.connect(_on_region_deletion_requested)
 	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 	
@@ -80,23 +83,56 @@ func get_selected_regions_data() -> Array[Dictionary]:
 	return data
 
 
+func _on_region_export_reequested(texture: TextureRect) -> void:
+	region_export_requested.emit(texture)
+
+
+func _on_selected_region_deletion_requested() -> void:
+	# Use NodePath instead of ids as ids will changes onde
+	# any region is deleted
+	var regions_to_delete: Array[NodePath] = []
+	
+	for region_id: int in selected_regions:
+		var region: RegionEditorRegionPreviewer = %Container.get_child(region_id) as RegionEditorRegionPreviewer
+		regions_to_delete.append(region.get_path())
+	
+	for region_path: NodePath in regions_to_delete:
+		var region: RegionEditorRegionPreviewer = get_node_or_null(region_path)
+		
+		if region:
+			region._on_delete_pressed()
+
+
 func _on_region_deletion_requested(region_id: int) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(region_id)
 	
 	if preview.is_selected():
-		selected_regions.remove_at(selected_regions.find(region_id))
-	
+		_remove_selected_region(region_id)
+
 	preview.queue_free()
+	
 	region_count -= 1
 	region_deleted.emit(region_id == edited_region, region_id)
 	edited_region = -1
 
 
+func _set_region_as_selected(region_id: int) -> void:
+	if not (region_id in selected_regions):
+		selected_regions.append(region_id)
+
+
+func _remove_selected_region(region_id: int) -> void:
+	var idx: int = selected_regions.find(region_id)
+	
+	if idx != -1:
+		selected_regions.remove_at(idx)
+
+
 func _on_region_selected(is_selected: bool, region_id: int) -> void:
 	if is_selected:
-		selected_regions.append(region_id)
+		_set_region_as_selected(region_id)
 	else:
-		selected_regions.remove_at(selected_regions.find(region_id))
+		_remove_selected_region(region_id)
 	
 	region_selected.emit(is_selected, region_id)
 

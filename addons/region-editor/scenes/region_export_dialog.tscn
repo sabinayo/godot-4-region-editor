@@ -1,0 +1,260 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4uxswx4h7fmm"]
+
+[ext_resource type="Script" path="res://addons/region-editor/scenes/region_export_dialog.gd" id="1_ih2kt"]
+[ext_resource type="Texture2D" uid="uid://b6a6grhfs3vkm" path="res://addons/region-editor/samples/exported/test.png" id="1_xmojc"]
+[ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="2_7bmnm"]
+[ext_resource type="Texture2D" uid="uid://b3r7gv1e1h8dc" path="res://addons/region-editor/icons/Instance.svg" id="2_dbocx"]
+[ext_resource type="Texture2D" uid="uid://b6b2dklmr7afr" path="res://addons/region-editor/icons/Unlinked.svg" id="3_7r2wx"]
+
+[node name="RegionExportDialog" type="ConfirmationDialog"]
+title = "Export Options"
+size = Vector2i(743, 329)
+visible = true
+unresizable = true
+ok_button_text = "Export"
+script = ExtResource("1_ih2kt")
+
+[node name="ExportViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="BackgrounColor" type="ColorRect" parent="ExportViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Texture" type="TextureRect" parent="ExportViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="panel" type="PanelContainer" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 735.0
+offset_bottom = 280.0
+
+[node name="mcont" type="MarginContainer" parent="panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="panel/mcont/hbox"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+stretch = true
+
+[node name="Preview" type="SubViewport" parent="panel/mcont/hbox/SubViewportContainer"]
+unique_name_in_owner = true
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 4
+
+[node name="EmptyTexture" type="TextureRect" parent="panel/mcont/hbox/SubViewportContainer/Preview"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_7bmnm")
+stretch_mode = 1
+
+[node name="TextureBackgroundColor" type="ColorRect" parent="panel/mcont/hbox/SubViewportContainer/Preview"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Texture" type="TextureRect" parent="panel/mcont/hbox/SubViewportContainer/Preview"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_xmojc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ImageSIze" type="PanelContainer" parent="panel/mcont/hbox/hbox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Panel" type="Panel" parent="panel/mcont/hbox/hbox/ImageSIze"]
+layout_mode = 2
+
+[node name="mcont" type="MarginContainer" parent="panel/mcont/hbox/hbox/ImageSIze"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox"]
+layout_mode = 2
+text = "Image Size:"
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox"]
+layout_mode = 2
+
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+layout_mode = 2
+text = "New:"
+horizontal_alignment = 2
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Width:"
+
+[node name="TextureNewWidth" type="SpinBox" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 16384.0
+value = 256.0
+
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Height:"
+
+[node name="TextureNewHeight" type="SpinBox" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 16384.0
+value = 256.0
+
+[node name="UseTextureOriginalSize" type="CheckBox" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Use Original Size"
+
+[node name="LockUnlockRatio" type="TextureButton" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+tooltip_text = "Lock/Unlock Component Ratio"
+toggle_mode = true
+texture_normal = ExtResource("2_dbocx")
+texture_pressed = ExtResource("3_7r2wx")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="vbox2" type="VBoxContainer" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox"]
+layout_mode = 2
+
+[node name="TextureOriginalSize" type="Label" parent="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/vbox2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Original:
+w: 289
+h: 290"
+
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/hbox"]
+layout_mode = 2
+
+[node name="ImageBackground" type="PanelContainer" parent="panel/mcont/hbox/hbox/vbox"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="Panel" type="Panel" parent="panel/mcont/hbox/hbox/vbox/ImageBackground"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/hbox/hbox/vbox/ImageBackground"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox"]
+layout_mode = 2
+text = "Background"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Color: "
+
+[node name="TextureBackgroundColorPicker" type="ColorPickerButton" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+
+[node name="UseTransparentBackground" type="CheckBox" parent="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_pressed = true
+text = "Transparent"
+
+[connection signal="value_changed" from="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox/TextureNewWidth" to="." method="_on_texture_new_width_value_changed"]
+[connection signal="value_changed" from="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2/TextureNewHeight" to="." method="_on_texture_new_height_value_changed"]
+[connection signal="toggled" from="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/LockUnlockRatio" to="." method="_on_lock_unlock_ratio_toggled"]
+[connection signal="color_changed" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer/TextureBackgroundColorPicker" to="." method="_on_texture_background_color_picker_color_changed"]
+[connection signal="color_changed" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer/TextureBackgroundColorPicker" to="panel/mcont/hbox/SubViewportContainer/Preview/TextureBackgroundColor" method="set_color"]
+[connection signal="toggled" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/UseTransparentBackground" to="panel" method="_on_use_transparent_background_toggled"]

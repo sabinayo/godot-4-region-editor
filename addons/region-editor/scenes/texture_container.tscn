@@ -1,17 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://e76kg1qxu3ui"]
+[gd_scene load_steps=4 format=3 uid="uid://e76kg1qxu3ui"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/texture_container.gd" id="1_3h7b5"]
 [ext_resource type="Texture2D" uid="uid://bavfm4s5uvkf7" path="res://addons/region-editor/icons/Search.svg" id="2_hpfw5"]
-[ext_resource type="Texture2D" uid="uid://d2al6v0xqecvv" path="res://addons/region-editor/icons/Sort.svg" id="2_pw1el"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/add_textures.gd" id="4_bg4qm"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7tr4v"]
-texture = ExtResource("2_pw1el")
-
-[sub_resource type="TileSet" id="TileSet_7ypj1"]
-sources/0 = SubResource("TileSetAtlasSource_7tr4v")
-
 [node name="TextureContainer" type="PanelContainer"]
+custom_minimum_size = Vector2(220, 0)
 offset_right = 417.0
 offset_bottom = 645.0
 size_flags_vertical = 3
@@ -20,7 +14,7 @@ script = ExtResource("1_3h7b5")
 [node name="vbox" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Filter" type="LineEdit" parent="vbox"]
+[node name="Search" type="LineEdit" parent="vbox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
@@ -28,13 +22,16 @@ size_flags_vertical = 0
 placeholder_text = "Filter textures..."
 right_icon = ExtResource("2_hpfw5")
 
-[node name="Container" type="VBoxContainer" parent="vbox"]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="vbox"]
 layout_mode = 2
 size_flags_vertical = 3
+follow_focus = true
 
-[node name="TileMapLayer" type="TileMapLayer" parent="vbox/Container"]
-tile_set = SubResource("TileSet_7ypj1")
+[node name="Container" type="VBoxContainer" parent="vbox/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="AddTextures" type="Button" parent="."]
 unique_name_in_owner = true
@@ -42,4 +39,5 @@ layout_mode = 2
 text = "Add texture(s)..."
 script = ExtResource("4_bg4qm")
 
+[connection signal="text_changed" from="vbox/Search" to="." method="_on_search_text_changed"]
 [connection signal="pressed" from="AddTextures" to="." method="_on_add_textures_pressed"]

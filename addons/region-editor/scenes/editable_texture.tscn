@@ -13,24 +13,3 @@ text_overrun_behavior = 3
 clip_text = true
 expand_icon = true
 script = ExtResource("1_la1i2")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-offset_right = 100.0
-offset_bottom = 100.0
-texture = ExtResource("1_ru35c")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="."]
-visible = false
-layout_mode = 2
-offset_left = 104.0
-offset_right = 166.0
-offset_bottom = 100.0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-text = "Sort.svg"
-vertical_alignment = 1
