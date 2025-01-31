@@ -8,6 +8,7 @@
 
 [node name="RegionExportDialog" type="ConfirmationDialog"]
 title = "Export Options"
+position = Vector2i(0, 36)
 size = Vector2i(743, 329)
 visible = true
 unresizable = true
@@ -257,4 +258,4 @@ text = "Transparent"
 [connection signal="toggled" from="panel/mcont/hbox/hbox/ImageSIze/mcont/vbox/hbox/hbox/LockUnlockRatio" to="." method="_on_lock_unlock_ratio_toggled"]
 [connection signal="color_changed" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer/TextureBackgroundColorPicker" to="." method="_on_texture_background_color_picker_color_changed"]
 [connection signal="color_changed" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/HBoxContainer/TextureBackgroundColorPicker" to="panel/mcont/hbox/SubViewportContainer/Preview/TextureBackgroundColor" method="set_color"]
-[connection signal="toggled" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/UseTransparentBackground" to="panel" method="_on_use_transparent_background_toggled"]
+[connection signal="toggled" from="panel/mcont/hbox/hbox/vbox/ImageBackground/MarginContainer/vbox/HBoxContainer/UseTransparentBackground" to="." method="_on_use_transparent_background_toggled"]

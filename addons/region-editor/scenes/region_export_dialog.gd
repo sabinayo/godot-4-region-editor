@@ -67,6 +67,9 @@ func _on_use_transparent_background_toggled(toggled_on: bool) -> void:
 
 
 func _on_texture_new_width_value_changed(value: float) -> void:
+	if %UseTextureOriginalSize.button_pressed:
+		%UseTextureOriginalSize.button_pressed = false
+	
 	if %LockUnlockRatio.button_pressed and not _updating_image_size:
 		_updating_image_size = true
 		%TextureNewHeight.value = value / _image_size_ratio
@@ -74,6 +77,9 @@ func _on_texture_new_width_value_changed(value: float) -> void:
 
 
 func _on_texture_new_height_value_changed(value: float) -> void:
+	if %UseTextureOriginalSize.button_pressed:
+		%UseTextureOriginalSize.button_pressed = false
+	
 	if %LockUnlockRatio.button_pressed and not _updating_image_size:
 		_updating_image_size = true
 		%TextureNewWidth.value = value / _image_size_ratio

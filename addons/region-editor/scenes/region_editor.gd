@@ -105,7 +105,7 @@ func _on_texture_container_texture_added() -> void:
 
 func _update_texture_fast_options(data: Dictionary) -> void:
 	var texture_name: String = data.get("texture_name", %TextureName.text)
-	var texture_path: String = data.get("texture_path", %TexturePath.text)
+	var texture_path: String = data.get("texture_path", %TexturePath.tooltip_text)
 	
 	%TextureName.text = texture_name
 	%TextureName.tooltip_text = %TextureName.text
@@ -155,7 +155,8 @@ func _on_edit_multiple_regions_pressed() -> void:
 	%RegionPropertiesDock.show()
 	%RegionProperties.edit_multiple_regions(
 		true,
-		%RegionPreviewerContainer.get_selected_regions_data()
+		%RegionPreviewerContainer.get_selected_regions_data(),
+		%ChangeTextureModulate.color
 	)
 
 

@@ -8,6 +8,7 @@ signal file_system_requested(
 	file_mode: EditorFileDialog.FileMode,
 	access: EditorFileDialog.Access)
 signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
+## Only Region id and updated properties are sent.
 signal property_updated(data: Dictionary)
 
 
@@ -28,6 +29,18 @@ var _updating: bool = false
 
 func set_data(new: Dictionary) -> void:
 	_updating = true
+	
+	# Ensures the presence of essential data
+	var update: Dictionary = new.merged({
+		"base_texture": new.get("base_texture", _data.get("base_texture", "res://icon.svg")),
+		"modulate": new.get("modulate", _data.get("modulate", %Modulate.color)),
+		"name": new.get("name", _data.get("name", %Name.text)),
+		"region_rect": new.get("region_rect", _data.get("region_rect", Rect2())),
+	}, true)
+	
+	_data.merge(new, true)
+	
+	
 	_data = new
 	%Name.text = _data["name"]
 	_temp_sprite.region_enabled = true
@@ -39,9 +52,12 @@ func set_data(new: Dictionary) -> void:
 	_updating = false
 
 
-func edit_multiple_regions(edit: bool, datas: Array[Dictionary]) -> void:
+func edit_multiple_regions(edit: bool, datas: Array[Dictionary], color: Color) -> void:
 	_multiple_edition = edit
 	_edited_regions_data = datas
+	_updating = true
+	%Modulate.color = color
+	_updating = false
 
 
 func _on_copy_rect_data_pressed() -> void:
@@ -59,7 +75,7 @@ func _on_copy_image_pressed() -> void:
 func _on_name_text_changed(new_text: String) -> void:
 	if new_text.is_valid_filename():
 		_data["name"] = new_text
-		property_updated.emit(_data.duplicate())
+		_set_properties_as_updated(["name"])
 
 
 func _on_name_text_submitted(new_text: String) -> void:
@@ -68,7 +84,7 @@ func _on_name_text_submitted(new_text: String) -> void:
 	if not new_text.is_valid_filename():
 		%Name.text = _data["name"]
 	else:
-		property_updated.emit(_data.duplicate())
+		_set_properties_as_updated(["name"])
 
 
 func _on_update_rect_pressed() -> void:
@@ -80,7 +96,7 @@ func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePa
 	if requester == get_path():
 		_data["region_rect"] = sprite.region_rect
 		%CopyRectData.tooltip_text = var_to_str(_data["region_rect"])
-		property_updated.emit(_data.duplicate())
+		_set_properties_as_updated(["region_rect"])
 		_update_preview()
 
 
@@ -120,7 +136,7 @@ func _on_modulate_color_changed(color: Color) -> void:
 	
 	_data["modulate"] = color
 	%Preview.modulate = color
-	property_updated.emit(_data.duplicate())
+	_set_properties_as_updated(["modulate"])
 
 
 func _on_export_pressed() -> void:
@@ -157,6 +173,16 @@ func _on_region_editor_file_dialog_file_selected(requester: NodePath, path: Stri
 	else:
 		%RegionExportDialog.export(path)
 
+
+func _set_properties_as_updated(properties: PackedStringArray) -> void:
+	var update: Dictionary = {}
+	
+	for property: String in properties:
+		if property in _data:
+			update[property] = _data[property]
+	
+	update["id"] = _data["id"]
+	property_updated.emit(update.duplicate())
 
 
 func get_image_format_literal(format: Image.Format) -> String:

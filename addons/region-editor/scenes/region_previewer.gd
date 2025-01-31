@@ -34,6 +34,7 @@ func update_data(from: Dictionary) -> void:
 		var image: Image = load(texture_path).get_image().get_region(from["region_rect"])
 		%Preview.texture = ImageTexture.create_from_image(image)
 	
+	# Ensures the presence of essential data
 	var update: Dictionary = from.merged({
 		"base_texture": from.get("base_texture", _data.get("base_texture", "res://icon.svg")),
 		"modulate": from.get("modulate", _data.get("modulate", %Preview.modulate)),
