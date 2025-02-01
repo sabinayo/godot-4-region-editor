@@ -80,6 +80,15 @@ func get_selected_regions_data() -> Array[Dictionary]:
 	return data
 
 
+func get_regions_data() -> Array[Dictionary]:
+	var data: Array[Dictionary] = []
+	
+	for region: RegionEditorRegionPreviewer in %Container.get_children():
+		data.append(region.get_data())
+	
+	return data
+
+
 func _on_selected_region_deletion_requested() -> void:
 	# Use NodePath instead of ids as ids will changes onde
 	# any region is deleted

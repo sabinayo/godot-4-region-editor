@@ -575,14 +575,16 @@ layout_mode = 2
 
 [node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox"]
 layout_mode = 2
+tooltip_text = "Color format"
 
 [node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="ColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
+[node name="PngColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "See Image.Format"
 selected = 5
 item_count = 39
 popup/item_0/text = "L8"
@@ -693,7 +695,9 @@ suffix = "%"
 
 [node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox"]
 layout_mode = 2
-tooltip_text = "JPEG does not save an alpha channel.
+tooltip_text = "Color Format
+
+JPEG does not save an alpha channel.
 If the Image contains an alpha channel, the image will still be saved, but the resulting JPEG file won't contain the alpha channel.
 
 See Image.save_jpg in Godot Doc."
@@ -702,13 +706,90 @@ See Image.save_jpg in Godot Doc."
 layout_mode = 2
 text = "Color:"
 
-[node name="ColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
+[node name="JPGColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
-item_count = 1
-popup/item_0/text = "RGBA8"
+tooltip_text = "See Image.Format"
+selected = 4
+item_count = 39
+popup/item_0/text = "L8"
+popup/item_1/text = "LA8"
+popup/item_1/id = 1
+popup/item_2/text = "R8"
+popup/item_2/id = 2
+popup/item_3/text = "RG8"
+popup/item_3/id = 3
+popup/item_4/text = "RGB8"
+popup/item_4/id = 4
+popup/item_5/text = "RGBA8"
+popup/item_5/id = 5
+popup/item_6/text = "RGBA4444"
+popup/item_6/id = 6
+popup/item_7/text = "RGB565"
+popup/item_7/id = 7
+popup/item_8/text = "RF"
+popup/item_8/id = 8
+popup/item_9/text = "RGF"
+popup/item_9/id = 9
+popup/item_10/text = "RGBF"
+popup/item_10/id = 10
+popup/item_11/text = "RGBAF"
+popup/item_11/id = 11
+popup/item_12/text = "RH"
+popup/item_12/id = 12
+popup/item_13/text = "RGH"
+popup/item_13/id = 13
+popup/item_14/text = "RGBH"
+popup/item_14/id = 14
+popup/item_15/text = "RGBAH"
+popup/item_15/id = 15
+popup/item_16/text = "RGBE9995"
+popup/item_16/id = 16
+popup/item_17/text = "DXT1"
+popup/item_17/id = 17
+popup/item_18/text = "DXT3"
+popup/item_18/id = 18
+popup/item_19/text = "DXT5"
+popup/item_19/id = 19
+popup/item_20/text = "RGTC_R"
+popup/item_20/id = 20
+popup/item_21/text = "RGTC_RG"
+popup/item_21/id = 21
+popup/item_22/text = "BPTC_RGBA"
+popup/item_22/id = 22
+popup/item_23/text = "BPTC_RGBF"
+popup/item_23/id = 23
+popup/item_24/text = "BPTC_RGBFU"
+popup/item_24/id = 24
+popup/item_25/text = "ETC"
+popup/item_25/id = 25
+popup/item_26/text = "ETC2_R11"
+popup/item_26/id = 26
+popup/item_27/text = "ETC2_R11S"
+popup/item_27/id = 27
+popup/item_28/text = "ETC2_RG11"
+popup/item_28/id = 28
+popup/item_29/text = "ETC2_RG11S"
+popup/item_29/id = 29
+popup/item_30/text = "ETC2_RGB8"
+popup/item_30/id = 30
+popup/item_31/text = "ETC2_RGBA8"
+popup/item_31/id = 31
+popup/item_32/text = "ETC2_RGB8A1"
+popup/item_32/id = 32
+popup/item_33/text = "ETC2_RA_AS_RG"
+popup/item_33/id = 33
+popup/item_34/text = "DXT5_RA_AS_RG"
+popup/item_34/id = 34
+popup/item_35/text = "ASTC_4x4"
+popup/item_35/id = 35
+popup/item_36/text = "ASTC_4x4_HDR"
+popup/item_36/id = 36
+popup/item_37/text = "ASTC_8x8"
+popup/item_37/id = 37
+popup/item_38/text = "ASTC_8x8_HDR"
+popup/item_38/id = 38
 
 [node name="Webp" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 visible = false
@@ -729,23 +810,22 @@ See \"Image.save_webp\" in Godot Doc."
 layout_mode = 2
 text = "Lossy: "
 
-[node name="Lossy" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
+[node name="WEBPLossy" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
+[node name="WEBPQualityDock" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
+visible = false
 layout_mode = 2
-tooltip_text = "Higher quality values result in better-looking output at the cost of larger file sizes.
-Recommended quality values are between 0.75 and 0.90.
-Even at quality 1.00, JPEG compression remains lossy.
+tooltip_text = "The image will be saved lossy, using the quality provided.
+Lossless WebP offers more efficient compression than PNG."
 
-See Image.save_jpg in Godot Doc."
-
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
 layout_mode = 2
 text = "Quality: "
 
-[node name="WebpQuality" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox"]
+[node name="WebpQuality" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -754,21 +834,96 @@ suffix = "%"
 
 [node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
 layout_mode = 2
-tooltip_text = "JPEG does not save an alpha channel.
-If the Image contains an alpha channel, the image will still be saved, but the resulting JPEG file won't contain the alpha channel.
-
-See Image.save_jpg in Godot Doc."
+tooltip_text = "Color Format"
 
 [node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="ColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
+[node name="WEBPColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
-item_count = 1
-popup/item_0/text = "RGBA8"
+tooltip_text = "See Image.Format"
+selected = 5
+item_count = 39
+popup/item_0/text = "L8"
+popup/item_1/text = "LA8"
+popup/item_1/id = 1
+popup/item_2/text = "R8"
+popup/item_2/id = 2
+popup/item_3/text = "RG8"
+popup/item_3/id = 3
+popup/item_4/text = "RGB8"
+popup/item_4/id = 4
+popup/item_5/text = "RGBA8"
+popup/item_5/id = 5
+popup/item_6/text = "RGBA4444"
+popup/item_6/id = 6
+popup/item_7/text = "RGB565"
+popup/item_7/id = 7
+popup/item_8/text = "RF"
+popup/item_8/id = 8
+popup/item_9/text = "RGF"
+popup/item_9/id = 9
+popup/item_10/text = "RGBF"
+popup/item_10/id = 10
+popup/item_11/text = "RGBAF"
+popup/item_11/id = 11
+popup/item_12/text = "RH"
+popup/item_12/id = 12
+popup/item_13/text = "RGH"
+popup/item_13/id = 13
+popup/item_14/text = "RGBH"
+popup/item_14/id = 14
+popup/item_15/text = "RGBAH"
+popup/item_15/id = 15
+popup/item_16/text = "RGBE9995"
+popup/item_16/id = 16
+popup/item_17/text = "DXT1"
+popup/item_17/id = 17
+popup/item_18/text = "DXT3"
+popup/item_18/id = 18
+popup/item_19/text = "DXT5"
+popup/item_19/id = 19
+popup/item_20/text = "RGTC_R"
+popup/item_20/id = 20
+popup/item_21/text = "RGTC_RG"
+popup/item_21/id = 21
+popup/item_22/text = "BPTC_RGBA"
+popup/item_22/id = 22
+popup/item_23/text = "BPTC_RGBF"
+popup/item_23/id = 23
+popup/item_24/text = "BPTC_RGBFU"
+popup/item_24/id = 24
+popup/item_25/text = "ETC"
+popup/item_25/id = 25
+popup/item_26/text = "ETC2_R11"
+popup/item_26/id = 26
+popup/item_27/text = "ETC2_R11S"
+popup/item_27/id = 27
+popup/item_28/text = "ETC2_RG11"
+popup/item_28/id = 28
+popup/item_29/text = "ETC2_RG11S"
+popup/item_29/id = 29
+popup/item_30/text = "ETC2_RGB8"
+popup/item_30/id = 30
+popup/item_31/text = "ETC2_RGBA8"
+popup/item_31/id = 31
+popup/item_32/text = "ETC2_RGB8A1"
+popup/item_32/id = 32
+popup/item_33/text = "ETC2_RA_AS_RG"
+popup/item_33/id = 33
+popup/item_34/text = "DXT5_RA_AS_RG"
+popup/item_34/id = 34
+popup/item_35/text = "ASTC_4x4"
+popup/item_35/id = 35
+popup/item_36/text = "ASTC_4x4_HDR"
+popup/item_36/id = 36
+popup/item_37/text = "ASTC_8x8"
+popup/item_37/id = 37
+popup/item_38/text = "ASTC_8x8_HDR"
+popup/item_38/id = 38
 
 [node name="EXR" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 visible = false
@@ -794,17 +949,96 @@ size_flags_horizontal = 3
 
 [node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox"]
 layout_mode = 2
+tooltip_text = "Color Format"
 
 [node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="ColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
+[node name="EXRColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
-item_count = 1
-popup/item_0/text = "RGBA8"
+tooltip_text = "See Image.Format"
+selected = 5
+item_count = 39
+popup/item_0/text = "L8"
+popup/item_1/text = "LA8"
+popup/item_1/id = 1
+popup/item_2/text = "R8"
+popup/item_2/id = 2
+popup/item_3/text = "RG8"
+popup/item_3/id = 3
+popup/item_4/text = "RGB8"
+popup/item_4/id = 4
+popup/item_5/text = "RGBA8"
+popup/item_5/id = 5
+popup/item_6/text = "RGBA4444"
+popup/item_6/id = 6
+popup/item_7/text = "RGB565"
+popup/item_7/id = 7
+popup/item_8/text = "RF"
+popup/item_8/id = 8
+popup/item_9/text = "RGF"
+popup/item_9/id = 9
+popup/item_10/text = "RGBF"
+popup/item_10/id = 10
+popup/item_11/text = "RGBAF"
+popup/item_11/id = 11
+popup/item_12/text = "RH"
+popup/item_12/id = 12
+popup/item_13/text = "RGH"
+popup/item_13/id = 13
+popup/item_14/text = "RGBH"
+popup/item_14/id = 14
+popup/item_15/text = "RGBAH"
+popup/item_15/id = 15
+popup/item_16/text = "RGBE9995"
+popup/item_16/id = 16
+popup/item_17/text = "DXT1"
+popup/item_17/id = 17
+popup/item_18/text = "DXT3"
+popup/item_18/id = 18
+popup/item_19/text = "DXT5"
+popup/item_19/id = 19
+popup/item_20/text = "RGTC_R"
+popup/item_20/id = 20
+popup/item_21/text = "RGTC_RG"
+popup/item_21/id = 21
+popup/item_22/text = "BPTC_RGBA"
+popup/item_22/id = 22
+popup/item_23/text = "BPTC_RGBF"
+popup/item_23/id = 23
+popup/item_24/text = "BPTC_RGBFU"
+popup/item_24/id = 24
+popup/item_25/text = "ETC"
+popup/item_25/id = 25
+popup/item_26/text = "ETC2_R11"
+popup/item_26/id = 26
+popup/item_27/text = "ETC2_R11S"
+popup/item_27/id = 27
+popup/item_28/text = "ETC2_RG11"
+popup/item_28/id = 28
+popup/item_29/text = "ETC2_RG11S"
+popup/item_29/id = 29
+popup/item_30/text = "ETC2_RGB8"
+popup/item_30/id = 30
+popup/item_31/text = "ETC2_RGBA8"
+popup/item_31/id = 31
+popup/item_32/text = "ETC2_RGB8A1"
+popup/item_32/id = 32
+popup/item_33/text = "ETC2_RA_AS_RG"
+popup/item_33/id = 33
+popup/item_34/text = "DXT5_RA_AS_RG"
+popup/item_34/id = 34
+popup/item_35/text = "ASTC_4x4"
+popup/item_35/id = 35
+popup/item_36/text = "ASTC_4x4_HDR"
+popup/item_36/id = 36
+popup/item_37/text = "ASTC_8x8"
+popup/item_37/id = 37
+popup/item_38/text = "ASTC_8x8_HDR"
+popup/item_38/id = 38
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]
@@ -826,3 +1060,4 @@ popup/item_0/text = "RGBA8"
 [connection signal="toggled" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/UseTransparentBackground" to="." method="_on_use_transparent_background_toggled"]
 [connection signal="item_selected" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="." method="_on_export_format_item_selected"]
 [connection signal="item_selected" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets" method="set_current_tab"]
+[connection signal="toggled" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3/WEBPLossy" to="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock" method="set_visible"]

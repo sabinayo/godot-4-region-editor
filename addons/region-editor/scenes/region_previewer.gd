@@ -96,3 +96,7 @@ func _on_export_pressed() -> void:
 	var export_options = preload("region_export_dialog.tscn").instantiate()
 	add_child(export_options)
 	export_options.set_image(%Preview.duplicate())
+
+
+func export_to(dir: String) -> void:
+	pass

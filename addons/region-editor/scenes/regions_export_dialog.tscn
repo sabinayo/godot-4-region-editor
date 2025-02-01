@@ -68,12 +68,212 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
 layout_mode = 2
+text = "Export Type: "
+
+[node name="ExportType" type="OptionButton" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+item_count = 2
+popup/item_0/text = "Images"
+popup/item_1/text = "Enumeration"
+popup/item_1/id = 1
+
+[node name="TabContainer" type="TabContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer"]
+layout_mode = 2
+current_tab = 0
+tabs_visible = false
+
+[node name="Images" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExportSelectedRegionsAsImages" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Only Export Selected Regions"
+
+[node name="AdvancedExport" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Advanced Export"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="format" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Image type."
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/format"]
+layout_mode = 2
+text = "Format: "
+
+[node name="ExportFormat" type="OptionButton" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/format"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "PNG: Saves the image as a PNG file
+
+JPG: Saves the image as a JPEG file to path with the specified quality between 0.01 and 1.0 (inclusive).
+
+WEBP: Saves the image as a WebP (Web Picture) file to the file
+The WebP format is limited to a size of 16383×16383 pixels, while PNG can save larger images.
+
+EXR: Saves the image as an EXR file."
+selected = 0
+item_count = 4
+popup/item_0/text = "PNG"
+popup/item_1/text = "JPG"
+popup/item_1/id = 1
+popup/item_2/text = "WEBP"
+popup/item_2/id = 2
+popup/item_3/text = "EXR"
+popup/item_3/id = 3
+
+[node name="hbox2" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/hbox2"]
+layout_mode = 2
+text = "Color:"
+
+[node name="ColorFormat" type="OptionButton" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/hbox2"]
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 5
+item_count = 39
+popup/item_0/text = "L8"
+popup/item_1/text = "LA8"
+popup/item_1/id = 1
+popup/item_2/text = "R8"
+popup/item_2/id = 2
+popup/item_3/text = "RG8"
+popup/item_3/id = 3
+popup/item_4/text = "RGB8"
+popup/item_4/id = 4
+popup/item_5/text = "RGBA8"
+popup/item_5/id = 5
+popup/item_6/text = "RGBA4444"
+popup/item_6/id = 6
+popup/item_7/text = "RGB565"
+popup/item_7/id = 7
+popup/item_8/text = "RF"
+popup/item_8/id = 8
+popup/item_9/text = "RGF"
+popup/item_9/id = 9
+popup/item_10/text = "RGBF"
+popup/item_10/id = 10
+popup/item_11/text = "RGBAF"
+popup/item_11/id = 11
+popup/item_12/text = "RH"
+popup/item_12/id = 12
+popup/item_13/text = "RGH"
+popup/item_13/id = 13
+popup/item_14/text = "RGBH"
+popup/item_14/id = 14
+popup/item_15/text = "RGBAH"
+popup/item_15/id = 15
+popup/item_16/text = "RGBE9995"
+popup/item_16/id = 16
+popup/item_17/text = "DXT1"
+popup/item_17/id = 17
+popup/item_18/text = "DXT3"
+popup/item_18/id = 18
+popup/item_19/text = "DXT5"
+popup/item_19/id = 19
+popup/item_20/text = "RGTC_R"
+popup/item_20/id = 20
+popup/item_21/text = "RGTC_RG"
+popup/item_21/id = 21
+popup/item_22/text = "BPTC_RGBA"
+popup/item_22/id = 22
+popup/item_23/text = "BPTC_RGBF"
+popup/item_23/id = 23
+popup/item_24/text = "BPTC_RGBFU"
+popup/item_24/id = 24
+popup/item_25/text = "ETC"
+popup/item_25/id = 25
+popup/item_26/text = "ETC2_R11"
+popup/item_26/id = 26
+popup/item_27/text = "ETC2_R11S"
+popup/item_27/id = 27
+popup/item_28/text = "ETC2_RG11"
+popup/item_28/id = 28
+popup/item_29/text = "ETC2_RG11S"
+popup/item_29/id = 29
+popup/item_30/text = "ETC2_RGB8"
+popup/item_30/id = 30
+popup/item_31/text = "ETC2_RGBA8"
+popup/item_31/id = 31
+popup/item_32/text = "ETC2_RGB8A1"
+popup/item_32/id = 32
+popup/item_33/text = "ETC2_RA_AS_RG"
+popup/item_33/id = 33
+popup/item_34/text = "DXT5_RA_AS_RG"
+popup/item_34/id = 34
+popup/item_35/text = "ASTC_4x4"
+popup/item_35/id = 35
+popup/item_36/text = "ASTC_4x4_HDR"
+popup/item_36/id = 36
+popup/item_37/text = "ASTC_8x8"
+popup/item_37/id = 37
+popup/item_38/text = "ASTC_8x8_HDR"
+popup/item_38/id = 38
+
+[node name="Enumaration" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
 text = "Enumaration: "
 
-[node name="LineEdit" type="LineEdit" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
+[node name="EnumName" type="LineEdit" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter a name..."
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExportSelectedRegionsAsEnum" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Only Export Selected Regions"
+
+[node name="AddToCurrentScene" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Add To Current Scene"
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]
@@ -84,3 +284,4 @@ placeholder_text = "Enter a name..."
 [connection signal="region_deleted" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_deleted"]
 [connection signal="region_deleted" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
 [connection signal="region_selected" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]
+[connection signal="item_selected" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer" method="set_current_tab"]
