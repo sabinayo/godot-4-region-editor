@@ -3,7 +3,6 @@ class_name RegionEditorRegionPreviewersContainer
 
 extends PanelContainer
 
-signal region_export_requested(texture: TextureRect)
 signal region_selected(is_selected: bool, region_id: int)
 signal region_updated(data: Dictionary)
 signal region_added()
@@ -37,7 +36,6 @@ func add_regions(datas: Array[Dictionary]) -> void:
 		preview.selected.connect(_on_region_selected)
 		preview.data_updated.connect(_on_region_data_updated)
 		preview.edition_requested.connect(_on_region_edition_requested)
-		preview.export_requested.connect(_on_region_export_reequested)
 		preview.deletion_request.connect(_on_region_deletion_requested)
 		region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 		preview.set_data(data)
@@ -54,7 +52,6 @@ func add_region_from(sprite: Sprite2D) -> void:
 	preview.selected.connect(_on_region_selected)
 	preview.data_updated.connect(_on_region_data_updated)
 	preview.edition_requested.connect(_on_region_edition_requested)
-	preview.export_requested.connect(_on_region_export_reequested)
 	preview.deletion_request.connect(_on_region_deletion_requested)
 	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 	
@@ -81,10 +78,6 @@ func get_selected_regions_data() -> Array[Dictionary]:
 		data.append(%Container.get_child(region_id).get_data())
 	
 	return data
-
-
-func _on_region_export_reequested(texture: TextureRect) -> void:
-	region_export_requested.emit(texture)
 
 
 func _on_selected_region_deletion_requested() -> void:

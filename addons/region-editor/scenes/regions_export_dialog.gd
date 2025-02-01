@@ -1,5 +1,5 @@
 @tool
-extends PanelContainer
+extends ConfirmationDialog
 
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 

@@ -4,7 +4,6 @@ class_name RegionEditorRegionPreviewer
 extends HBoxContainer
 
 signal selected(is_selected: bool, index: int)
-signal export_requested(texture: TextureRect)
 signal data_updated(data: Dictionary)
 signal deletion_request(index: int)
 signal edition_requested(data: Dictionary)
@@ -94,4 +93,6 @@ func _on_delete_pressed() -> void:
 
 
 func _on_export_pressed() -> void:
-	export_requested.emit(%Preview.duplicate())
+	var export_options = preload("region_export_dialog.tscn").instantiate()
+	add_child(export_options)
+	export_options.set_image(%Preview.duplicate())

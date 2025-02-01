@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cou3we204lm21"]
+[gd_scene load_steps=12 format=3 uid="uid://cou3we204lm21"]
 
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
@@ -8,8 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="4_0ho3a"]
 [ext_resource type="Texture2D" uid="uid://b2p3x6xdr1rmr" path="res://addons/region-editor/icons/Lock.svg" id="4_vnlnu"]
 [ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="7_e1sf7"]
-[ext_resource type="PackedScene" uid="uid://b34ms68cu307b" path="res://addons/region-editor/scenes/regions_export_dialog.tscn" id="8_nbsv1"]
-[ext_resource type="PackedScene" uid="uid://c4uxswx4h7fmm" path="res://addons/region-editor/scenes/region_export_dialog.tscn" id="9_rf4q4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a2llg"]
 outline_size = 8
@@ -319,23 +317,6 @@ label_settings = SubResource("LabelSettings_a2llg")
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_h1ivx")
 
-[node name="ExportDialog" type="ConfirmationDialog" parent="."]
-unique_name_in_owner = true
-title = "Export Options"
-position = Vector2i(0, 36)
-size = Vector2i(600, 500)
-popup_window = true
-ok_button_text = "Export"
-
-[node name="RegionsExportDialog" parent="ExportDialog" instance=ExtResource("8_nbsv1")]
-unique_name_in_owner = true
-offset_right = 592.0
-offset_bottom = 451.0
-
-[node name="RegionExportDialog" parent="." instance=ExtResource("9_rf4q4")]
-unique_name_in_owner = true
-visible = false
-
 [connection signal="text_changed" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
 [connection signal="text_submitted" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
 [connection signal="pressed" from="mcont/scont/vbox/Export" to="." method="_on_export_pressed"]
@@ -344,6 +325,3 @@ visible = false
 [connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
 [connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]
 [connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyImage" to="." method="_on_copy_image_pressed"]
-[connection signal="canceled" from="ExportDialog" to="." method="_on_export_dialog_canceled"]
-[connection signal="confirmed" from="ExportDialog" to="." method="_on_export_dialog_confirmed"]
-[connection signal="confirmed" from="RegionExportDialog" to="." method="_on_export_dialog_confirmed"]

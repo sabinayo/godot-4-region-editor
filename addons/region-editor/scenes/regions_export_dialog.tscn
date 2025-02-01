@@ -4,68 +4,77 @@
 [ext_resource type="PackedScene" uid="uid://c7lefalft3kk8" path="res://addons/region-editor/scenes/regions_container_global_commands.tscn" id="2_h5bvd"]
 [ext_resource type="PackedScene" uid="uid://dr6xso5j2umfq" path="res://addons/region-editor/scenes/region_previewer_container.tscn" id="2_ymnnb"]
 
-[node name="RegionsExportDialog" type="PanelContainer"]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 642.0
-offset_bottom = 536.0
+[node name="RegionsExportDialog" type="ConfirmationDialog"]
+title = "Export Options"
+position = Vector2i(0, 36)
+size = Vector2i(616, 457)
+visible = true
+ok_button_text = "Export"
 script = ExtResource("1_rrdy8")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="pcont" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(600, 400)
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 608.0
+offset_bottom = 408.0
+
+[node name="MarginContainer" type="MarginContainer" parent="pcont"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="RegionsContainerGlobalCommands" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_h5bvd")]
+[node name="RegionsContainerGlobalCommands" parent="pcont/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_h5bvd")]
 layout_mode = 2
 regions_container_path = NodePath("../RegionPreviewerContainer")
 multiple_edition = false
 
-[node name="RegionPreviewerContainer" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_ymnnb")]
+[node name="RegionPreviewerContainer" parent="pcont/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_ymnnb")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="Panel" parent="MarginContainer/HBoxContainer/PanelContainer2"]
+[node name="Panel" type="Panel" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2"]
 layout_mode = 2
 
-[node name="mcont" type="MarginContainer" parent="MarginContainer/HBoxContainer/PanelContainer2"]
+[node name="mcont" type="MarginContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer2/mcont"]
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Enumaration: "
 
-[node name="LineEdit" type="LineEdit" parent="MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Enter a name..."
 
-[connection signal="all_regions_selection_requested" from="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_select_all_regions"]
-[connection signal="toggle_regions_names_visibility_requested" from="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
-[connection signal="region_added" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_added"]
-[connection signal="region_deleted" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
-[connection signal="region_selected" from="MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]
+[connection signal="all_regions_selection_requested" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_select_all_regions"]
+[connection signal="selected_regions_deletion_requested" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_selected_region_deletion_requested"]
+[connection signal="toggle_regions_names_visibility_requested" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" method="_on_toggle_regions_names_visibility"]
+[connection signal="region_added" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_added"]
+[connection signal="region_deleted" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
+[connection signal="region_selected" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]

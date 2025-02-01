@@ -1,16 +1,12 @@
 @tool
 extends PanelContainer
 
-## Used to display the Godot Texture Region Editor Node.
-signal file_system_requested(
-	requester: NodePath,
-	title: String, filters: PackedStringArray,
-	file_mode: EditorFileDialog.FileMode,
-	access: EditorFileDialog.Access)
 signal texture_region_editor_requested(sprite: Sprite2D, requester: NodePath)
 ## Only Region id and updated properties are sent.
 signal property_updated(data: Dictionary)
 
+const REGION_EXPORT_DIALOG: PackedScene = preload("region_export_dialog.tscn")
+const REGIONS_EXPORT_DIALOG: PackedScene = preload("regions_export_dialog.tscn")
 
 @export var _hidden_on_multiple_edition: Array[NodePath]
 
@@ -100,6 +96,24 @@ func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePa
 		_update_preview()
 
 
+func _on_modulate_color_changed(color: Color) -> void:
+	if _updating: return
+	
+	_data["modulate"] = color
+	%Preview.modulate = color
+	_set_properties_as_updated(["modulate"])
+
+
+func _on_export_pressed() -> void:
+	if _multiple_edition:
+		%RegionsExportDialog.set_data(_edited_regions_data)
+		%ExportDialog.popup_centered()
+	else:
+		var export_dialog = REGION_EXPORT_DIALOG.instantiate()
+		add_child(export_dialog)
+		export_dialog.set_image(%Preview.duplicate())
+
+
 func _update_preview() -> void:
 	var image: Image = load(_data["base_texture"]).get_image()
 	%Preview.texture = ImageTexture.create_from_image(image.get_region(_data["region_rect"]))
@@ -118,6 +132,17 @@ func _update_preview() -> void:
 	]
 
 
+func _set_properties_as_updated(properties: PackedStringArray) -> void:
+	var update: Dictionary = {}
+	
+	for property: String in properties:
+		if property in _data:
+			update[property] = _data[property]
+	
+	update["id"] = _data["id"]
+	property_updated.emit(update.duplicate())
+
+
 func get_image_real_size(image_size: int) -> String:
 	var kilo_bytes: float = round(image_size / 1024.0)
 	var mega_bytes: float = round(image_size / 1048576.0)
@@ -129,60 +154,6 @@ func get_image_real_size(image_size: int) -> String:
 		return " %sKo" % kilo_bytes
 	
 	return ""
-
-
-func _on_modulate_color_changed(color: Color) -> void:
-	if _updating: return
-	
-	_data["modulate"] = color
-	%Preview.modulate = color
-	_set_properties_as_updated(["modulate"])
-
-
-func _on_export_pressed() -> void:
-	if _multiple_edition:
-		%RegionsExportDialog.set_data(_edited_regions_data)
-		%ExportDialog.popup_centered()
-	else:
-		%RegionExportDialog.set_image(%Preview.duplicate())
-		%RegionExportDialog.popup_centered()
-
-
-func _on_export_dialog_canceled() -> void:
-	if _multiple_edition:
-		%RegionsExportDialog.cancel_export()
-	else:
-		%RegionExportDialog.cancel_export()
-
-
-func _on_export_dialog_confirmed() -> void:
-	file_system_requested.emit(
-		get_path(), "Save Image",
-		%RegionExportDialog.VALID_IMAGES_EXTENSIONS_FOR_EXPORT,
-		EditorFileDialog.FileMode.FILE_MODE_SAVE_FILE,
-		EditorFileDialog.Access.ACCESS_FILESYSTEM,
-	)
-
-
-func _on_region_editor_file_dialog_file_selected(requester: NodePath, path: String) -> void:
-	if requester != get_path():
-		return
-	
-	if _multiple_edition:
-		%RegionsExportDialog.export(path)
-	else:
-		%RegionExportDialog.export(path)
-
-
-func _set_properties_as_updated(properties: PackedStringArray) -> void:
-	var update: Dictionary = {}
-	
-	for property: String in properties:
-		if property in _data:
-			update[property] = _data[property]
-	
-	update["id"] = _data["id"]
-	property_updated.emit(update.duplicate())
 
 
 func get_image_format_literal(format: Image.Format) -> String:

@@ -1,15 +1,8 @@
 @tool
 extends EditorPlugin
 
-signal file_dialog_dir_selected(dir: String)
-signal file_dialog_file_selected(path: String)
-signal file_dialog_files_selected(paths: PackedStringArray)
-
-
 var region_editor: Control = null
 var region_editor_btn: Button = null
-var file_dialog_requester: NodePath = ^""
-var file_dialog: EditorFileDialog = null
 
 var inspector_plugin: EditorInspectorPlugin
 var undo_redo: EditorUndoRedoManager
@@ -21,8 +14,6 @@ func _enter_tree() -> void:
 	add_inspector_plugin(inspector_plugin)
 	
 	region_editor = preload("scenes/region_editor.tscn").instantiate() as Control
-	region_editor.get_from_file_system.connect(get_from_file_system)
-	
 	region_editor.resource_picker_requested.connect(_on_resource_picker_requested)
 	region_editor.texture_region_editor_requested.connect(_on_texture_region_editor_requested)
 	
@@ -35,16 +26,6 @@ func _enter_tree() -> void:
 	
 	region_editor_btn = add_control_to_bottom_panel(region_editor, "Region Editor", shortcut)
 	region_editor_btn.tooltip_text = "Toggle Region Editor Bottom Panel"
-	
-	file_dialog_dir_selected.connect(Callable(region_editor, &"_on_file_dialog_dir_selected"))
-	file_dialog_file_selected.connect(Callable(region_editor, &"_on_file_dialog_file_selected"))
-	file_dialog_files_selected.connect(Callable(region_editor, &"_on_file_dialog_files_selected"))
-	
-	file_dialog = EditorFileDialog.new()
-	add_child(file_dialog)
-	file_dialog.dir_selected.connect(_on_file_dialog_dir_selected)
-	file_dialog.file_selected.connect(_on_file_dialog_file_selected)
-	file_dialog.files_selected.connect(_on_file_dialog_files_selected)
 
 
 func _exit_tree() -> void:
@@ -52,9 +33,6 @@ func _exit_tree() -> void:
 	region_editor_btn.queue_free()
 	remove_control_from_bottom_panel(region_editor)
 	region_editor.queue_free()
-	
-	if file_dialog:
-		file_dialog.queue_free()
 
 
 func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
@@ -96,29 +74,3 @@ func _on_resource_picker_requested(sprite: Sprite2D, property: String) -> void:
 		EditorInterface.edit_node(last_edited_object)
 	else:
 		EditorInterface.edit_node(null)
-
-
-func get_from_file_system(
-	requester: NodePath,
-	title: String, filters: PackedStringArray,
-	file_mode: EditorFileDialog.FileMode,
-	access: EditorFileDialog.Access = EditorFileDialog.ACCESS_RESOURCES
-) -> void:
-	file_dialog_requester = requester
-	file_dialog.title = title
-	file_dialog.access = access
-	file_dialog.filters = filters
-	file_dialog.file_mode = file_mode
-	file_dialog.popup_file_dialog()
-
-
-func _on_file_dialog_dir_selected(dir: String) -> void:
-	file_dialog_dir_selected.emit(file_dialog_requester, dir)
-
-
-func _on_file_dialog_file_selected(path: String) -> void:
-	file_dialog_file_selected.emit(file_dialog_requester, path)
-
-
-func _on_file_dialog_files_selected(paths: PackedStringArray) -> void:
-	file_dialog_files_selected.emit(file_dialog_requester, paths)
