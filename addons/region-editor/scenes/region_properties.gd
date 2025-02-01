@@ -106,8 +106,9 @@ func _on_modulate_color_changed(color: Color) -> void:
 
 func _on_export_pressed() -> void:
 	if _multiple_edition:
-		%RegionsExportDialog.set_data(_edited_regions_data)
-		%ExportDialog.popup_centered()
+		var export_dialog = REGIONS_EXPORT_DIALOG.instantiate()
+		add_child(export_dialog)
+		export_dialog.set_data(_edited_regions_data)
 	else:
 		var export_dialog = REGION_EXPORT_DIALOG.instantiate()
 		add_child(export_dialog)

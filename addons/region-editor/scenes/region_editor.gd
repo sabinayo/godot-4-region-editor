@@ -10,6 +10,7 @@ signal texture_region_edited(sprite: Sprite2D, requester: NodePath)
 
 
 var edited_region_id: int = -1
+var editing_multiple_regions: bool = false
 
 var _resource_picker_requester: NodePath = ^""
 var _texture_region_editor_requester: NodePath = ^""
@@ -130,8 +131,16 @@ func _on_change_texture_modulate(color: Color) -> void:
 #endregion
 
 #region TexturesRegions
+
+func _on_all_regions_selection_requested(selected: bool) -> void:
+	if not selected and editing_multiple_regions:
+		%RegionPropertiesDock.hide()
+
+
 func _on_edit_multiple_regions_pressed() -> void:
+	editing_multiple_regions = true
 	%RegionPropertiesDock.show()
+	%RegionPropertiesLabel.text = "Regions Properties"
 	%RegionProperties.edit_multiple_regions(
 		true,
 		%RegionPreviewerContainer.get_selected_regions_data(),
@@ -149,12 +158,20 @@ func set_texture_region_as_edited(sprite: Sprite2D) -> void:
 
 
 func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:
-	if region_id == edited_region_id:
+	if (
+		region_id == edited_region_id
+		or (
+			editing_multiple_regions
+			and %RegionPreviewerContainer.selected_regions.is_empty()
+		)
+	):
 		%RegionPropertiesDock.hide()
 
 
 func _on_region_previewer_container_region_edition_requested(data: Dictionary) -> void:
 	edited_region_id = data["id"]
+	editing_multiple_regions = false
+	%RegionPropertiesLabel.text = "Region Properties"
 	%RegionPropertiesDock.show()
 	%RegionProperties.edit_multiple_regions(false, [] as Array[Dictionary], Color.WHITE)
 	%RegionProperties.set_data(data)

@@ -337,7 +337,8 @@ texture_normal = ExtResource("10_g6a71")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
+[node name="RegionPropertiesLabel" type="Label" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/hbox"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Region Properties:"
 
@@ -378,6 +379,7 @@ visible = false
 [connection signal="texture_data_updated" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" to="." method="_on_texture_setup_texture_data_updated"]
 [connection signal="texture_region_editor_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" to="." method="_on_texture_region_editor_requested"]
 [connection signal="texture_renamed" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" to="vbox/HSplitContainer/TexturesDock/TextureContainer" method="_on_texture_setup_texture_renamed"]
+[connection signal="all_regions_selection_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/RegionsContainerGlobalCommands" to="." method="_on_all_regions_selection_requested"]
 [connection signal="all_regions_selection_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/RegionsContainerGlobalCommands" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_select_all_regions"]
 [connection signal="multiple_regions_edition_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/RegionsContainerGlobalCommands" to="." method="_on_edit_multiple_regions_pressed"]
 [connection signal="selected_regions_deletion_requested" from="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/RegionsContainerGlobalCommands" to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPreviewerContainer" method="_on_selected_region_deletion_requested"]

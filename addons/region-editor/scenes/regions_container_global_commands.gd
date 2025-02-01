@@ -141,6 +141,11 @@ func _on_toggle_region_names_toggled(toggled_on: bool) -> void:
 
 
 func _on_select_all_regions_pressed(selected: bool) -> void:
+	if selected:
+		%SelectAllRegions.tooltip_text = "Deselect All Regions"
+	else:
+		%SelectAllRegions.tooltip_text = "Select All Regions"
+	
 	all_regions_selection_requested.emit(selected)
 
 
