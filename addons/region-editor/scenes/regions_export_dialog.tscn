@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://b34ms68cu307b"]
+[gd_scene load_steps=6 format=3 uid="uid://b34ms68cu307b"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/regions_export_dialog.gd" id="1_rrdy8"]
 [ext_resource type="PackedScene" uid="uid://c7lefalft3kk8" path="res://addons/region-editor/scenes/regions_container_global_commands.tscn" id="2_h5bvd"]
 [ext_resource type="PackedScene" uid="uid://dr6xso5j2umfq" path="res://addons/region-editor/scenes/region_previewer_container.tscn" id="2_ymnnb"]
+[ext_resource type="Texture2D" uid="uid://d14x00cbio3fm" path="res://addons/region-editor/icons/Help.svg" id="4_ugvas"]
+[ext_resource type="Texture2D" uid="uid://p3tnf1sk4ir4" path="res://addons/region-editor/icons/Load.svg" id="4_vycu1"]
 
 [node name="RegionsExportDialog" type="ConfirmationDialog"]
 disable_3d = true
@@ -10,7 +12,6 @@ title = "Export Options"
 position = Vector2i(0, 36)
 size = Vector2i(616, 457)
 visible = true
-unresizable = true
 ok_button_text = "Export"
 script = ExtResource("1_rrdy8")
 
@@ -28,7 +29,7 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer"]
+[node name="HBoxContainer" type="VSplitContainer" parent="pcont/MarginContainer"]
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer"]
@@ -261,7 +262,102 @@ text = "Enumaration: "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+placeholder_text = "Leave empty for \"Types\""
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SaveEnumAsScene" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+text = "Save as Scene"
+
+[node name="AddEnumDescription" type="Button" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+tooltip_text = "Add a description to your Enumaration.
+This description doesn't appears when your mouse hover the enumaration in the inspector dock(built-in script limitation).
+If you want the description to appears, check \"Save as Scene\""
+text = "Add Description"
+icon = ExtResource("4_ugvas")
+icon_alignment = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Root Name: "
+
+[node name="NodeName" type="LineEdit" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Leave empty for \"RegionEditorRegionsEnum\""
+
+[node name="SceneOptions" type="VBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="hbox" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/hbox"]
+layout_mode = 2
+text = "Scene Name: "
+
+[node name="SceneName" type="LineEdit" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/hbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Enter a name..."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions"]
+layout_mode = 2
+
+[node name="ScenePathCont" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont"]
+layout_mode = 2
+text = "Path: "
+
+[node name="ScenePath" type="Label" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "res://"
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="SelectEnumarationScenePath" type="Button" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+tooltip_text = "Select Destination Folder."
+icon = ExtResource("4_vycu1")
+flat = true
+expand_icon = true
+
+[node name="UseBuiltInScript" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "If checked, save the script into the scene file otherwise save the script into a file close to the scene file.
+
+Buit-in script have some limitations and can't be edited in external editor.
+If you check built-in script, descriptions will not appears when your mouse hovers the enumaration in inspector dock."
+text = "Built-in Script"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -271,9 +367,23 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Only Export Selected Regions"
 
-[node name="AddToCurrentScene" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="AddEnumToCurrentScene" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Add the Enumeration to the current scene."
 text = "Add To Current Scene"
+
+[node name="DescriptionEdit" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+disable_3d = true
+title = "Edit Description"
+size = Vector2i(800, 600)
+
+[node name="TextEdit" type="TextEdit" parent="DescriptionEdit"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 792.0
+offset_bottom = 551.0
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]
@@ -285,3 +395,7 @@ text = "Add To Current Scene"
 [connection signal="region_deleted" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
 [connection signal="region_selected" from="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/HBoxContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer" method="set_current_tab"]
+[connection signal="toggled" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SaveEnumAsScene" to="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions" method="set_visible"]
+[connection signal="pressed" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AddEnumDescription" to="." method="_on_add_enum_description_pressed"]
+[connection signal="pressed" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont/SelectEnumarationScenePath" to="." method="_on_select_enumaration_scene_path_pressed"]
+[connection signal="visibility_changed" from="DescriptionEdit" to="." method="_on_description_edit_visibility_changed"]
