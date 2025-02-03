@@ -134,6 +134,7 @@ layout_mode = 2
 [node name="ExportSelectedRegionsAsImages" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Only Export Selected Regions"
 
 [node name="AdvancedImageExport" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -756,7 +757,7 @@ custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
-tooltip_text = "Add a description to your Enumaration.
+tooltip_text = "Add/Edit a description to your Enumaration.
 This description doesn't appears when your mouse hover the enumaration in the inspector dock(built-in script limitation).
 If you want the description to appears, check \"Save as Scene\" and uncheck \"Built-in script\""
 text = "Add Description"
@@ -844,6 +845,7 @@ layout_mode = 2
 [node name="ExportSelectedRegionsAsEnum" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+disabled = true
 text = "Only Export Selected Regions"
 
 [node name="AddEnumToCurrentScene" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
@@ -904,6 +906,7 @@ scroll_smooth = true
 [connection signal="region_added" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_added"]
 [connection signal="region_deleted" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_deleted"]
 [connection signal="region_deleted" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_deleted"]
+[connection signal="region_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="." method="_on_region_previewer_container_region_selected"]
 [connection signal="region_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="." method="_on_export_type_item_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer" method="set_current_tab"]
@@ -913,3 +916,4 @@ scroll_smooth = true
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SaveEnumAsScene" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions" method="set_visible"]
 [connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AddEnumDescription" to="." method="_on_add_enum_description_pressed"]
 [connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont/SelectEnumarationScenePath" to="." method="_on_select_enumaration_scene_path_pressed"]
+[connection signal="visibility_changed" from="DescriptionEdit" to="." method="_on_description_edit_visibility_changed"]

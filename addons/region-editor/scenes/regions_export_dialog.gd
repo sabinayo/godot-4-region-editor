@@ -16,6 +16,7 @@ enum TipTypes {
 
 const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
+const DEFAULT_ENUN_EXPORT_TIP: String = "(Click Regions to edit their description)"
 const REGIONS_ENUM_EDITOR_DESCRIPTION: String = "Allow to select exported edited regions in 'Region Editor' through enumaration."
 const TIP_ICONS: Dictionary = {
 	TipTypes.IMPORTANT: preload("../icons/Warning.svg"),
@@ -104,7 +105,9 @@ func _on_confirmed() -> void:
 					var current_scene = EditorInterface.get_edited_scene_root()
 					
 					if not current_scene:
-						printerr("Region Editor: Attempt to add RegionsEnumNode to a null instance....")
+						var msg: String = "Attempt to add RegionsEnumNode to a null instance..."
+						show_tip(TipTypes.VERY_IMPORTANT, msg, 3.0)
+						printerr("Region Editor: %s" % msg)
 						return
 					
 					var regions_enum_scene = load(scene_path).instantiate()
@@ -117,7 +120,9 @@ func _on_confirmed() -> void:
 				var current_scene = EditorInterface.get_edited_scene_root()
 				
 				if not current_scene:
-					printerr("Region Editor: Attempt to add RegionsEnumNode to a null instance....")
+					var msg: String = "Attempt to add RegionsEnumNode to a null instance..."
+					show_tip(TipTypes.VERY_IMPORTANT, msg, 3.0)
+					printerr("Region Editor: %s" % msg)
 					return
 				
 				current_scene.add_child(regions_enum)
@@ -168,7 +173,13 @@ const REGIONS: Dictionary = {
 }
 
 """
-	var regions_data: Array[Dictionary] = %RegionPreviewerContainer.get_regions_data()
+	var regions_data: Array[Dictionary] = []
+	
+	if %ExportSelectedRegionsAsEnum.button_pressed:
+		regions_data = %RegionPreviewerContainer.get_selected_regions_data()
+	else:
+		regions_data = %RegionPreviewerContainer.get_regions_data()
+	
 	var enum_data: String = ""
 	var enum_first_value: String = ""
 	var regions_enum_data: String = ""
@@ -207,7 +218,7 @@ const REGIONS: Dictionary = {
 		enum_data += new_enum_data
 		
 		regions_enum_data += \
-"""Types.{EnumValue}: {
+"""{EnumName}.{EnumValue}: {
 		RegionProperties.COLOR: {RegionColor},
 		RegionProperties.RECT: {RegionRect},
 	},
@@ -233,12 +244,11 @@ const REGIONS: Dictionary = {
 	
 	source_code = source_code.format({
 		"EnumDescription": enum_description,
-		"EnumName": enum_name,
 		"EnumData": enum_data,
 		"EnumVarName": enum_var_name,
 		"EnumFirstValue": enum_first_value,
 		"RegionsData": regions_enum_data,
-	})
+	}).format({"EnumName": enum_name,})
 	
 	return source_code
 
@@ -289,13 +299,30 @@ func show_tip(type: TipTypes, text: String, time: float = 0.0) -> void:
 
 
 func _on_tip_timer_timeout() -> void:
-	%Tip.hide()
+	if %ExportType.selected == 1:
+		show_tip(TipTypes.IMPORTANT, DEFAULT_ENUN_EXPORT_TIP)
+	
+	else:
+		%Tip.hide()
 
 
 func _on_export_type_item_selected(index: int) -> void:
 	if index == 1:
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DESCRIPTION)
-		show_tip(TipTypes.IMPORTANT, "(Click Regions to edit their description)")
+		show_tip(TipTypes.IMPORTANT, DEFAULT_ENUN_EXPORT_TIP)
 	else:
 		%Tip.hide()
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DISABLED)
+
+
+func _on_region_previewer_container_region_selected(is_selected: bool, region_id: int) -> void:
+	var can_export_selected_regions: bool = not %RegionPreviewerContainer.selected_regions.is_empty()
+	%ExportSelectedRegionsAsImages.disabled = not can_export_selected_regions
+	%ExportSelectedRegionsAsEnum.disabled = not can_export_selected_regions
+
+
+func _on_description_edit_visibility_changed() -> void:
+	if %RegionsEnumDescription.text:
+		%AddEnumDescription.text = "Edit Description"
+	else:
+		%AddEnumDescription.text = "Add Description"
