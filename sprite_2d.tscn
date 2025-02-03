@@ -1,60 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://r25coqhc0b4d"]
+[gd_scene load_steps=2 format=3 uid="uid://r25coqhc0b4d"]
 
-[ext_resource type="Script" path="res://sprite_2d.gd" id="1_tun3i"]
-[ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="2_lq5ot"]
-
-[sub_resource type="GDScript" id="GDScript_74jsf"]
-script/source = "@tool
-# Generated Script from RegionEditorPlugin. See https://sabinayo.github.com/
-
-extends Sprite2D
-
-# Add new values here.
-enum Types {
-	## hfgdshjgf
-	REGION_RECT_1,
-	## <sdgkjs<fghsk
-	REGION_RECT_2,
-	
-}
-
-# Properties below are used when a value of \"Types\" is selected.
-enum RegionProperties {
-	COLOR, # Type: Color. The color applied to the Sprite. See CanvasItem.self_modulate
-	RECT, # Type: Rect2. The Rect2 defining the region to be applied to the sprite. See Sprite2D.region_rect
-	COLLISION, # Type: PackedVector2Array. The collision polygon to use for collision detection. See CollisionPolygon2D.polygon
-}
-
-## jhdfbgdhjd
-@export var type: Types = Types.REGION_RECT_1:
-	set(value):
-		type = value
-		region_enabled = true
-		region_rect = REGIONS[type][RegionProperties.RECT]
-		self_modulate = REGIONS[type][RegionProperties.COLOR]
-
-# Contain the properties to be applied to the sprite for each value of \"Types\".
-# If you add a new value to \"Types\", be sure to add here the properties to be applied to the sprite.
-# Syntax: { RegionProperties.X: Value }
-const REGIONS: Dictionary = {
-	Types.REGION_RECT_1: {
-		RegionProperties.COLOR: Color(1, 1, 1, 1),
-		RegionProperties.RECT: Rect2(97, 2640, 289, 258),
-	},
-	Types.REGION_RECT_2: {
-		RegionProperties.COLOR: Color(1, 1, 1, 1),
-		RegionProperties.RECT: Rect2(618, 3180, 299, 227),
-	},
-	
-}
-
+[sub_resource type="GDScript" id="GDScript_ve4w4"]
+script/source = "extends Node2D
 "
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_tun3i")
-
-[node name="RegionEditorRegionsEnum" type="Sprite2D" parent="."]
-editor_description = "Allow to select exported edited regions in 'Region Editor' through enumaration."
-texture = ExtResource("2_lq5ot")
-region_enabled = true
-script = SubResource("GDScript_74jsf")
+script = SubResource("GDScript_ve4w4")

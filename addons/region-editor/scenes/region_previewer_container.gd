@@ -9,11 +9,12 @@ signal region_added()
 signal region_deleted(was_edited: bool, region_id: int)
 signal region_edition_requested(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
+signal edition_type_changed(new: RegionEditorRegionPreviewer.EditionTypes)
 
 const MINIMUM_PREVIEW_SIZE: int = 160
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 
-@export var description_edition_activated: bool = false
+@export var edition_type: RegionEditorRegionPreviewer.EditionTypes = RegionEditorRegionPreviewer.EditionTypes.PROPERTIES
 
 var region_count: int = 0
 var selected_regions: PackedInt32Array = []
@@ -30,19 +31,29 @@ func delete_regions() -> void:
 		region._on_delete_pressed()
 
 
+func change_region_edition_type(to: RegionEditorRegionPreviewer.EditionTypes) -> void:
+	edition_type_changed.emit(to)
+
+
 func add_regions(datas: Array[Dictionary]) -> void:
 	for data: Dictionary in datas:
 		var preview: RegionEditorRegionPreviewer = REGION_PREVIEWER.instantiate()
 		%Container.add_child(preview)
 		region_count += 1
-		preview.can_edit_description = description_edition_activated
-		preview.selected.connect(_on_region_selected)
-		preview.data_updated.connect(_on_region_data_updated)
-		preview.edition_requested.connect(_on_region_edition_requested)
-		preview.deletion_request.connect(_on_region_deletion_requested)
-		region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
-		preview.set_data(data)
+		_make_region_preview_usable(preview, data)
 		region_added.emit()
+
+
+func _make_region_preview_usable(preview: RegionEditorRegionPreviewer, data: Dictionary) -> void:
+	edition_type_changed.connect(preview.change_edition_type)
+	
+	preview.edition_type = edition_type
+	preview.selected.connect(_on_region_selected)
+	preview.data_updated.connect(_on_region_data_updated)
+	preview.edition_requested.connect(_on_region_edition_requested)
+	preview.deletion_request.connect(_on_region_deletion_requested)
+	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
+	preview.set_data(data)
 
 
 func add_region_from(sprite: Sprite2D) -> void:
@@ -52,12 +63,6 @@ func add_region_from(sprite: Sprite2D) -> void:
 	var preview: RegionEditorRegionPreviewer = REGION_PREVIEWER.instantiate()
 	%Container.add_child(preview)
 	region_count += 1
-	preview.can_edit_description = description_edition_activated
-	preview.selected.connect(_on_region_selected)
-	preview.data_updated.connect(_on_region_data_updated)
-	preview.edition_requested.connect(_on_region_edition_requested)
-	preview.deletion_request.connect(_on_region_deletion_requested)
-	region_names_visibility_changed.connect(Callable(preview, &"_on_text_visibility_toggled"))
 	
 	var preview_id: int = preview.get_index()
 	
@@ -71,7 +76,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 		"texture_repeat": sprite.texture_repeat,
 	}
 	
-	preview.set_data(data, _display_regions_names, _select_all_regions)
+	_make_region_preview_usable(preview, data)
 	region_added.emit()
 
 

@@ -316,7 +316,6 @@ size_flags_vertical = 3
 [node name="RegionPreviewerContainer" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont" instance=ExtResource("7_2ci81")]
 unique_name_in_owner = true
 layout_mode = 2
-description_edition_activated = null
 
 [node name="RegionPropertiesDock" type="PanelContainer" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont"]
 unique_name_in_owner = true
@@ -355,7 +354,6 @@ tile_set = SubResource("TileSet_epqgv")
 
 [node name="RegionExportDialog" parent="." instance=ExtResource("17_85vun")]
 unique_name_in_owner = true
-visible = false
 
 [connection signal="resource_picker_retrieved" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" method="_on_region_editor_resource_picker_retrieved"]
 [connection signal="texture_region_edited" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_texture_region_edited"]

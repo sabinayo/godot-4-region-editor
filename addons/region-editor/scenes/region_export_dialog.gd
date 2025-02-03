@@ -10,6 +10,8 @@ extends ConfirmationDialog
 signal export_canceled()
 signal export_successful(path: String)
 
+const DEFAULT_TITLE: String = "Export Options"
+const TITLE_ANIM_TIME: float = 1.0
 const TRANSPARENT_COLOR: Color = Color("#ffffff00")
 const VALID_IMAGES_EXTENSIONS_FOR_EXPORT: PackedStringArray = [
 	"*.png", "*.jpg", "*.exr", "*.webp"
@@ -41,7 +43,8 @@ func set_image(image: TextureRect) -> void:
 	popup_centered()
 
 
-func export(path: String) -> void:
+
+func get_texture_to_export() -> ViewportTexture:
 	var export_size: Vector2 = _image_original_size
 	var export_background_color: Color = TRANSPARENT_COLOR
 	
@@ -60,7 +63,12 @@ func export(path: String) -> void:
 	
 	await get_tree().process_frame
 	await RenderingServer.frame_post_draw
-	var texture: ViewportTexture = $ExportViewport.get_texture()
+	
+	return $ExportViewport.get_texture()
+
+
+func simple_export(path: String) -> void:
+	var texture: ViewportTexture = await get_texture_to_export()
 	var image: Image = texture.get_image()
 	var extension: String = path.get_extension()
 	
@@ -69,8 +77,82 @@ func export(path: String) -> void:
 	queue_free()
 
 
-func cancel_export() -> void:
-	pass
+func advanced_export() -> void:
+	var texture: ViewportTexture = await get_texture_to_export()
+	var image: Image = texture.get_image()
+	var path: String = %ExportFolderLabel.text
+	
+	if not path.ends_with("/"):
+		path += "/"
+	
+	var file_name: String = "Region"
+	
+	if %FileName.text:
+		file_name = %FileName.text
+	
+	path += file_name
+	
+	var compress_image: Callable = func () -> void:
+		if %CompressionOptions.selected != 0:
+			image.compress(
+				%CompressionOptions.selected -1,
+				%CompressionSourceOptions.selected,
+				%AstcFormatOptions.selected
+			)
+	
+	match %ExportFormat.selected:
+		0:
+			if not path.ends_with(".png"):
+				path += ".png"
+			
+			image.convert(%PngColorFormat.selected)
+			compress_image.call()
+			image.save_png(path)
+		
+		1:
+			if not path.ends_with(".jpg"):
+				path += ".jpg"
+			
+			image.convert(%JPGColorFormat.selected)
+			compress_image.call()
+			image.save_jpg(path, %JPGQuality.value / 100.0)
+		
+		2:
+			if not path.ends_with(".webp"):
+				path += ".webp"
+			
+			image.convert(%WEBPColorFormat.selected)
+			
+			var quality: float = 0.75
+			
+			if %WEBPLossy.button_pressed:
+				quality = %WebpQuality.value / 100.0
+			
+			compress_image.call()
+			image.save_webp(path, %WEBPLossy.button_pressed, quality)
+		
+		3:
+			if not path.ends_with(".exr"):
+				path += ".exr"
+			
+			image.convert(%EXRColorFormat.selected)
+			compress_image.call()
+			image.save_exr(path, %ExrGrayscale.button_pressed)
+	
+	export_successful.emit(path)
+
+
+func set_export_success(succeed: bool) -> void:
+	if succeed:
+		title = "File Succesfully Exported..."
+		await get_tree().create_timer(TITLE_ANIM_TIME).timeout
+		title = DEFAULT_TITLE
+		print("Region Editor: " + title)
+	else:
+		title = "Error while exporting file..."
+		printerr("Region Editor: " + title)
+		await get_tree().create_timer(TITLE_ANIM_TIME).timeout
+		title = DEFAULT_TITLE
 
 
 func _on_use_transparent_background_toggled(toggled_on: bool) -> void:
@@ -101,6 +183,11 @@ func _on_texture_new_height_value_changed(value: float) -> void:
 
 
 func _on_lock_unlock_ratio_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		%LockUnlockRatio.tooltip_text = "UnLock Component Ratio."
+	else:
+		%LockUnlockRatio.tooltip_text = "Lock Component Ratio."
+	
 	_image_size_ratio = %TextureNewWidth.value / %TextureNewHeight.value
 
 
@@ -181,7 +268,7 @@ func _on_grab_folder_pressed() -> void:
 
 func _on_confirmed() -> void:
 	if %AdvancedSettings.button_pressed:
-		queue_free()
+		advanced_export()
 	else:
 		var file_dialog: EditorFileDialog = EditorFileDialog.new()
 		add_child(file_dialog)
@@ -193,7 +280,7 @@ func _on_confirmed() -> void:
 		file_dialog.popup_file_dialog()
 		file_dialog.file_selected.connect(
 			func (path: String) -> void:
-				export(path)
+				simple_export(path)
 		, CONNECT_ONE_SHOT)
 		file_dialog.canceled.connect(
 			func () -> void:
@@ -203,3 +290,9 @@ func _on_confirmed() -> void:
 func _on_canceled() -> void:
 	export_canceled.emit()
 	queue_free()
+
+
+func _on_compression_options_item_selected(index: int) -> void:
+	# Ignore Compresion NONE and ASTC
+	%compresionSource.visible = not (index in [0, 5])
+	%ASTCFormat.visible = index == 5

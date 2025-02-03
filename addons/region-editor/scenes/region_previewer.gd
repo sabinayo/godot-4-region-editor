@@ -3,22 +3,44 @@ class_name RegionEditorRegionPreviewer
 
 extends HBoxContainer
 
+enum EditionTypes {
+	DISABLED,## No edition request is sent.
+	PROPERTIES,## Edition request is sent for properties edition.
+	DESCRIPTION,## No edition request is sent. Description will be edited.
+}
+
 signal selected(is_selected: bool, index: int)
 signal data_updated(data: Dictionary)
 signal deletion_request(index: int)
 signal edition_requested(data: Dictionary)
 
 var preview_name: String
-var can_edit_description: bool = false
+var edition_type: EditionTypes = EditionTypes.PROPERTIES:
+	set(value):
+		edition_type = value
+		_update_edition_type()
+
 var _data: Dictionary = {}
 
 
+func change_edition_type(type: EditionTypes) -> void:
+	edition_type = type
+
+
+func _update_edition_type() -> void:
+	match edition_type:
+		EditionTypes.DISABLED:
+			%Previewer.tooltip_text = ""
+		
+		EditionTypes.PROPERTIES:
+			%Previewer.tooltip_text = "Edit Properties."
+		
+		EditionTypes.DESCRIPTION:
+			%Previewer.tooltip_text = "Edit Description."
+
+
 func set_data(new: Dictionary, display_name: bool = true, selected: bool = false) -> void:
-	if not can_edit_description:
-		%DescriptionEdit.queue_free()
-	else:
-		%Previewer.tooltip_text = "Edit Description."
-	
+	_update_edition_type()
 	update_data(new.merged({
 		"display_name": display_name,
 		"selected": selected,
@@ -87,11 +109,13 @@ func _update_name_visibility(name_visible: bool) -> void:
 
 
 func _on_previewer_pressed() -> void:
-	if not can_edit_description:
-		edition_requested.emit(get_data())
-	else:
-		%DescriptionEdit.title = "Edit Description for: '%s'" % _data["name"]
-		%DescriptionEdit.popup_centered()
+	match edition_type:
+		EditionTypes.PROPERTIES:
+			edition_requested.emit(get_data())
+		
+		EditionTypes.DESCRIPTION:
+			%DescriptionEdit.title = "Edit Description for: '%s'" % _data["name"]
+			%DescriptionEdit.popup_centered()
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:

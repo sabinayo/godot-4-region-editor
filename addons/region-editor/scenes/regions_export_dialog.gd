@@ -10,12 +10,20 @@ extends ConfirmationDialog
 signal export_canceled()
 signal export_successful(path: String)
 
+enum TipTypes {
+	IMPORTANT, VERY_IMPORTANT,
+}
 
 const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 const REGIONS_ENUM_EDITOR_DESCRIPTION: String = "Allow to select exported edited regions in 'Region Editor' through enumaration."
+const TIP_ICONS: Dictionary = {
+	TipTypes.IMPORTANT: preload("../icons/Warning.svg"),
+	TipTypes.VERY_IMPORTANT: preload("../icons/Error.svg"),
+}
 
 
+var can_be_deleted: bool = false
 var enum_base_texture: String = ""
 
 
@@ -25,9 +33,8 @@ func set_data(regions_data: Array[Dictionary]) -> void:
 	popup_centered()
 
 
-func export(path: String) -> void:
-	export_successful.emit(path)
-	queue_free()
+func export_images(dir: String) -> void:
+	pass
 
 
 func _on_confirmed() -> void:
@@ -35,13 +42,13 @@ func _on_confirmed() -> void:
 		0:
 			var file_dialog: EditorFileDialog = EditorFileDialog.new()
 			add_child(file_dialog)
-			file_dialog.access = EditorFileDialog.ACCESS_FILESYSTEM
-			file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_DIR
+			file_dialog.access = EditorFileDialog.ACCESS_RESOURCES
+			file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_ANY
 			file_dialog.title = "Select Regions Destination Folder"
 			file_dialog.popup_file_dialog()
 			file_dialog.dir_selected.connect(
 				func (dir: String) -> void:
-					
+					export_images(dir)
 					file_dialog.queue_free()
 			, CONNECT_ONE_SHOT)
 			file_dialog.canceled.connect(
@@ -50,14 +57,12 @@ func _on_confirmed() -> void:
 			)
 		
 		1:
-			#get_region_enum_script_code()
-			#return
-			
 			var regions_enum: Sprite2D = Sprite2D.new()
 			regions_enum.editor_description = REGIONS_ENUM_EDITOR_DESCRIPTION
 			regions_enum.region_enabled = true
 			
-			if %NodeName.text == "":
+			# Avoid "scene/main/node.cpp:1311 - Condition "name.is_empty()" is true."
+			if not %NodeName.text:
 				regions_enum.name = "RegionEditorRegionsEnum"
 			else:
 				regions_enum.name = %NodeName.text
@@ -91,7 +96,7 @@ func _on_confirmed() -> void:
 					ResourceSaver.save(script, script_path)
 					regions_enum.set_script(load(script_path))
 				
-				var scene = PackedScene.new()
+				var scene: PackedScene = PackedScene.new()
 				scene.pack(regions_enum)
 				ResourceSaver.save(scene, scene_path)
 				
@@ -106,7 +111,7 @@ func _on_confirmed() -> void:
 					current_scene.add_child(regions_enum_scene)
 					regions_enum_scene.owner = current_scene
 					EditorInterface.mark_scene_as_unsaved()
-				
+			
 			elif %AddEnumToCurrentScene.button_pressed:
 				add_built_in_script_to_regions_enum(regions_enum)
 				var current_scene = EditorInterface.get_edited_scene_root()
@@ -269,3 +274,28 @@ func _on_select_enumaration_scene_path_pressed() -> void:
 
 func _on_add_enum_description_pressed() -> void:
 	%DescriptionEdit.popup_centered()
+
+
+func show_tip(type: TipTypes, text: String, time: float = 0.0) -> void:
+	%Tip.show()
+	%TipIcon.texture = TIP_ICONS[type]
+	%TipLabel.text = text
+	
+	if time > 0.0:
+		if not %TipTimer.is_stopped():
+			%TipTimer.stop()
+		
+		%TipTimer.start(time)
+
+
+func _on_tip_timer_timeout() -> void:
+	%Tip.hide()
+
+
+func _on_export_type_item_selected(index: int) -> void:
+	if index == 1:
+		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DESCRIPTION)
+		show_tip(TipTypes.IMPORTANT, "(Click Regions to edit their description)")
+	else:
+		%Tip.hide()
+		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DISABLED)
