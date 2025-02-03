@@ -8,10 +8,9 @@
 
 [node name="RegionsExportDialog" type="ConfirmationDialog"]
 disable_3d = true
-title = "Export Options"
+title = "Export Options(Click Regions to edit their description)"
 position = Vector2i(0, 36)
 size = Vector2i(616, 457)
-visible = true
 ok_button_text = "Export"
 script = ExtResource("1_rrdy8")
 
@@ -45,6 +44,7 @@ multiple_edition = false
 [node name="RegionPreviewerContainer" parent="pcont/MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("2_ymnnb")]
 unique_name_in_owner = true
 layout_mode = 2
+description_edition_activated = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -83,10 +83,11 @@ popup/item_1/id = 1
 
 [node name="TabContainer" type="TabContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 1
 tabs_visible = false
 
 [node name="Images" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -237,7 +238,6 @@ popup/item_38/text = "ASTC_8x8_HDR"
 popup/item_38/id = 38
 
 [node name="Enumaration" type="PanelContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -278,6 +278,8 @@ text = "Save as Scene"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 tooltip_text = "Add a description to your Enumaration.
 This description doesn't appears when your mouse hover the enumaration in the inspector dock(built-in script limitation).
 If you want the description to appears, check \"Save as Scene\""
@@ -315,7 +317,7 @@ text = "Scene Name: "
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Enter a name..."
+placeholder_text = "Leave empty for \"region_editor_regions_enum\""
 
 [node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions"]
 layout_mode = 2
@@ -352,6 +354,7 @@ expand_icon = true
 
 [node name="UseBuiltInScript" type="CheckBox" parent="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 tooltip_text = "If checked, save the script into the scene file otherwise save the script into a file close to the scene file.
 
@@ -379,7 +382,8 @@ disable_3d = true
 title = "Edit Description"
 size = Vector2i(800, 600)
 
-[node name="TextEdit" type="TextEdit" parent="DescriptionEdit"]
+[node name="RegionsEnumDescription" type="TextEdit" parent="DescriptionEdit"]
+unique_name_in_owner = true
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 792.0
@@ -398,4 +402,3 @@ offset_bottom = 551.0
 [connection signal="toggled" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SaveEnumAsScene" to="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions" method="set_visible"]
 [connection signal="pressed" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AddEnumDescription" to="." method="_on_add_enum_description_pressed"]
 [connection signal="pressed" from="pcont/MarginContainer/HBoxContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont/SelectEnumarationScenePath" to="." method="_on_select_enumaration_scene_path_pressed"]
-[connection signal="visibility_changed" from="DescriptionEdit" to="." method="_on_description_edit_visibility_changed"]

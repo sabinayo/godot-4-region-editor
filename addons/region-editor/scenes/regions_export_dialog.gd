@@ -13,14 +13,10 @@ signal export_successful(path: String)
 
 const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
-const REGIONS_ENUM_EDITOR_DESCRIPTION: String = \
-"""
-Allow to select exported edited regions in 'Region Editor' through enumaration.
-"""
+const REGIONS_ENUM_EDITOR_DESCRIPTION: String = "Allow to select exported edited regions in 'Region Editor' through enumaration."
 
 
 var enum_base_texture: String = ""
-var enum_description: String = ""
 
 
 func set_data(regions_data: Array[Dictionary]) -> void:
@@ -56,18 +52,10 @@ func _on_confirmed() -> void:
 		1:
 			#get_region_enum_script_code()
 			#return
-			var current_scene = get_tree().edited_scene_root
 			
-			if not current_scene:
-				return
 			var regions_enum: Sprite2D = Sprite2D.new()
 			regions_enum.editor_description = REGIONS_ENUM_EDITOR_DESCRIPTION
 			regions_enum.region_enabled = true
-			
-			var script: GDScript = GDScript.new()
-			script.source_code = get_region_enum_script_code()
-			script.reload(true)
-			regions_enum.set_script(script)
 			
 			if %NodeName.text == "":
 				regions_enum.name = "RegionEditorRegionsEnum"
@@ -77,8 +65,6 @@ func _on_confirmed() -> void:
 			regions_enum.texture = load(enum_base_texture)
 			
 			if %SaveEnumAsScene.button_pressed:
-				var scene = PackedScene.new()
-				scene.pack(regions_enum)
 				var scene_name: String = %SceneName.text
 				
 				if not scene_name:
@@ -91,19 +77,55 @@ func _on_confirmed() -> void:
 				else:
 					scene_path = %ScenePath.text + scene_path
 				
-				print(scene_path)
+				if not (scene_path.ends_with(".tscn")):
+					scene_path += ".tscn"
+				
+				if %UseBuiltInScript.button_pressed:
+					add_built_in_script_to_regions_enum(regions_enum)
+				else:
+					var script: GDScript = GDScript.new()
+					script.source_code = get_region_enum_script_code()
+					script.reload(true)
+					
+					var script_path: String = scene_path.trim_suffix(".tscn") + ".gd"
+					ResourceSaver.save(script, script_path)
+					regions_enum.set_script(load(script_path))
+				
+				var scene = PackedScene.new()
+				scene.pack(regions_enum)
 				ResourceSaver.save(scene, scene_path)
 				
 				if %AddEnumToCurrentScene.button_pressed:
+					var current_scene = EditorInterface.get_edited_scene_root()
+					
+					if not current_scene:
+						printerr("Region Editor: Attempt to add RegionsEnumNode to a null instance....")
+						return
+					
 					var regions_enum_scene = load(scene_path).instantiate()
 					current_scene.add_child(regions_enum_scene)
 					regions_enum_scene.owner = current_scene
 					EditorInterface.mark_scene_as_unsaved()
 				
 			elif %AddEnumToCurrentScene.button_pressed:
+				add_built_in_script_to_regions_enum(regions_enum)
+				var current_scene = EditorInterface.get_edited_scene_root()
+				
+				if not current_scene:
+					printerr("Region Editor: Attempt to add RegionsEnumNode to a null instance....")
+					return
+				
 				current_scene.add_child(regions_enum)
 				regions_enum.owner = current_scene
 				EditorInterface.mark_scene_as_unsaved()
+
+
+func add_built_in_script_to_regions_enum(regions_enum: Sprite2D) -> void:
+	var script: GDScript = GDScript.new()
+	script.source_code = get_region_enum_script_code()
+	script.reload(true)
+	regions_enum.set_script(script)
+
 
 
 func get_region_enum_script_code() -> String:
@@ -198,16 +220,20 @@ const REGIONS: Dictionary = {
 		enum_name = "Types"
 		enum_var_name = "type"
 	
+	# add '##' only if not empty description
+	var enum_description: String = %RegionsEnumDescription.text
+	
+	if enum_description:
+		enum_description = "## %s" % enum_description
+	
 	source_code = source_code.format({
-		# add '##' only if not empty description
-		"EnumDescription": enum_description if not enum_description else "## %s" % enum_description,
+		"EnumDescription": enum_description,
 		"EnumName": enum_name,
 		"EnumData": enum_data,
 		"EnumVarName": enum_var_name,
 		"EnumFirstValue": enum_first_value,
 		"RegionsData": regions_enum_data,
 	})
-	print(source_code)
 	
 	return source_code
 
@@ -242,10 +268,4 @@ func _on_select_enumaration_scene_path_pressed() -> void:
 
 
 func _on_add_enum_description_pressed() -> void:
-	%DescriptionEdit.get_node(^"TextEdit").text = enum_description
 	%DescriptionEdit.popup_centered()
-
-
-func _on_description_edit_visibility_changed() -> void:
-	if not %DescriptionEdit.visible:
-		enum_description = %DescriptionEdit.get_node(^"TextEdit").text

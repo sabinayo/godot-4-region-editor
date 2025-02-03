@@ -1,9 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://r25coqhc0b4d"]
+[gd_scene load_steps=3 format=3 uid="uid://p3tdhq8mig2s"]
 
-[ext_resource type="Script" path="res://sprite_2d.gd" id="1_tun3i"]
-[ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="2_lq5ot"]
+[ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="1_ncyep"]
 
-[sub_resource type="GDScript" id="GDScript_74jsf"]
+[sub_resource type="GDScript" id="GDScript_s6w7o"]
 script/source = "@tool
 # Generated Script from RegionEditorPlugin. See https://sabinayo.github.com/
 
@@ -11,9 +10,7 @@ extends Sprite2D
 
 # Add new values here.
 enum Types {
-	## hfgdshjgf
 	REGION_RECT_1,
-	## <sdgkjs<fghsk
 	REGION_RECT_2,
 	
 }
@@ -25,7 +22,7 @@ enum RegionProperties {
 	COLLISION, # Type: PackedVector2Array. The collision polygon to use for collision detection. See CollisionPolygon2D.polygon
 }
 
-## jhdfbgdhjd
+## Test description
 @export var type: Types = Types.REGION_RECT_1:
 	set(value):
 		type = value
@@ -39,22 +36,21 @@ enum RegionProperties {
 const REGIONS: Dictionary = {
 	Types.REGION_RECT_1: {
 		RegionProperties.COLOR: Color(1, 1, 1, 1),
-		RegionProperties.RECT: Rect2(97, 2640, 289, 258),
+		RegionProperties.RECT: Rect2(1665, 1893, 456, 423),
 	},
 	Types.REGION_RECT_2: {
 		RegionProperties.COLOR: Color(1, 1, 1, 1),
-		RegionProperties.RECT: Rect2(618, 3180, 299, 227),
+		RegionProperties.RECT: Rect2(2344, 1892, 609, 402),
 	},
 	
 }
 
 "
 
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_tun3i")
-
-[node name="RegionEditorRegionsEnum" type="Sprite2D" parent="."]
-editor_description = "Allow to select exported edited regions in 'Region Editor' through enumaration."
-texture = ExtResource("2_lq5ot")
+[node name="test" type="Sprite2D"]
+editor_description = "
+Allow to select exported edited regions in 'Region Editor' through enumaration.
+"
+texture = ExtResource("1_ncyep")
 region_enabled = true
-script = SubResource("GDScript_74jsf")
+script = SubResource("GDScript_s6w7o")

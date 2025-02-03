@@ -13,6 +13,8 @@ signal region_names_visibility_changed(visibles: bool)
 const MINIMUM_PREVIEW_SIZE: int = 160
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 
+@export var description_edition_activated: bool = false
+
 var region_count: int = 0
 var selected_regions: PackedInt32Array = []
 var edited_region: int = -1
@@ -33,6 +35,7 @@ func add_regions(datas: Array[Dictionary]) -> void:
 		var preview: RegionEditorRegionPreviewer = REGION_PREVIEWER.instantiate()
 		%Container.add_child(preview)
 		region_count += 1
+		preview.can_edit_description = description_edition_activated
 		preview.selected.connect(_on_region_selected)
 		preview.data_updated.connect(_on_region_data_updated)
 		preview.edition_requested.connect(_on_region_edition_requested)
@@ -49,6 +52,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 	var preview: RegionEditorRegionPreviewer = REGION_PREVIEWER.instantiate()
 	%Container.add_child(preview)
 	region_count += 1
+	preview.can_edit_description = description_edition_activated
 	preview.selected.connect(_on_region_selected)
 	preview.data_updated.connect(_on_region_data_updated)
 	preview.edition_requested.connect(_on_region_edition_requested)

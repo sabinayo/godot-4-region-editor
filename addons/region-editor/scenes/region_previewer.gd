@@ -8,11 +8,17 @@ signal data_updated(data: Dictionary)
 signal deletion_request(index: int)
 signal edition_requested(data: Dictionary)
 
-var _data: Dictionary = {}
 var preview_name: String
+var can_edit_description: bool = false
+var _data: Dictionary = {}
 
 
 func set_data(new: Dictionary, display_name: bool = true, selected: bool = false) -> void:
+	if not can_edit_description:
+		%DescriptionEdit.queue_free()
+	else:
+		%Previewer.tooltip_text = "Edit Description."
+	
 	update_data(new.merged({
 		"display_name": display_name,
 		"selected": selected,
@@ -81,7 +87,11 @@ func _update_name_visibility(name_visible: bool) -> void:
 
 
 func _on_previewer_pressed() -> void:
-	edition_requested.emit(get_data())
+	if not can_edit_description:
+		edition_requested.emit(get_data())
+	else:
+		%DescriptionEdit.title = "Edit Description for: '%s'" % _data["name"]
+		%DescriptionEdit.popup_centered()
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
@@ -100,3 +110,7 @@ func _on_export_pressed() -> void:
 
 func export_to(dir: String) -> void:
 	pass
+
+
+func _on_description_edit_visibility_changed() -> void:
+	_data["description"] = %Description.text

@@ -41,7 +41,7 @@ stretch_mode = 5
 unique_name_in_owner = true
 custom_minimum_size = Vector2(130, 50)
 layout_mode = 2
-tooltip_text = "Edit Properties"
+tooltip_text = "Edit Properties."
 text_overrun_behavior = 3
 clip_text = true
 icon_alignment = 1
@@ -72,7 +72,22 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
+[node name="DescriptionEdit" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+disable_3d = true
+title = "Edit Description"
+size = Vector2i(800, 600)
+
+[node name="Description" type="TextEdit" parent="DescriptionEdit"]
+unique_name_in_owner = true
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 792.0
+offset_bottom = 551.0
+
 [connection signal="toggled" from="vbox/Selector" to="." method="_on_check_box_toggled"]
 [connection signal="pressed" from="vbox/Export" to="." method="_on_export_pressed"]
 [connection signal="pressed" from="vbox/Delete" to="." method="_on_delete_pressed"]
 [connection signal="pressed" from="Previewer" to="." method="_on_previewer_pressed"]
+[connection signal="visibility_changed" from="DescriptionEdit" to="." method="_on_description_edit_visibility_changed"]
