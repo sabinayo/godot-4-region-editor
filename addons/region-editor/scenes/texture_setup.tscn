@@ -147,6 +147,7 @@ popup/item_2/id = 2
 
 [node name="MaterialEditor" type="HBoxContainer" parent="mcont/pcont/scont/vbox"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="Label" type="Label" parent="mcont/pcont/scont/vbox/MaterialEditor"]

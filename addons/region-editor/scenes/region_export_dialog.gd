@@ -73,8 +73,7 @@ func simple_export(path: String) -> void:
 	var extension: String = path.get_extension()
 	
 	image.call(&"save_%s" % extension, path)
-	export_successful.emit(path)
-	queue_free()
+	set_export_as_success(path)
 
 
 func advanced_export() -> void:
@@ -139,7 +138,19 @@ func advanced_export() -> void:
 			compress_image.call()
 			image.save_exr(path, %ExrGrayscale.button_pressed)
 	
+	set_export_as_success(path)
+
+
+func set_export_as_success(path: String) -> void:
 	export_successful.emit(path)
+	%Info.display(RegionEditorInfo.Types.SUCCESS, "Image Region Exported.", 2.0)
+	
+	# Import the exported image if located in project directory
+	var localized_path: String = ProjectSettings.localize_path(path)
+	
+	if localized_path.begins_with("res://"):
+		var file_system: EditorFileSystem = EditorInterface.get_resource_filesystem()
+		file_system.scan()
 
 
 func set_export_success(succeed: bool) -> void:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4uxswx4h7fmm"]
+[gd_scene load_steps=13 format=3 uid="uid://c4uxswx4h7fmm"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_export_dialog.gd" id="1_ih2kt"]
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="1_xmojc"]
+[ext_resource type="PackedScene" uid="uid://bbrqenbg4yaq4" path="res://addons/region-editor/scenes/info.tscn" id="2_3rswa"]
 [ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="2_7bmnm"]
 [ext_resource type="Texture2D" uid="uid://b3r7gv1e1h8dc" path="res://addons/region-editor/icons/Instance.svg" id="2_dbocx"]
 [ext_resource type="Texture2D" uid="uid://b6b2dklmr7afr" path="res://addons/region-editor/icons/Unlinked.svg" id="3_7r2wx"]
@@ -16,12 +17,12 @@
 disable_3d = true
 title = "Export Options"
 position = Vector2i(0, 36)
-size = Vector2i(840, 329)
+size = Vector2i(840, 356)
 unresizable = true
 ok_button_text = "Export"
 dialog_hide_on_ok = false
 script = ExtResource("1_ih2kt")
-ADVANCED_SETTINGS = Array[NodePath]([NodePath("panel/mcont/hbox/LeftDock/RegionOptions"), NodePath("panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"), NodePath("panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets"), NodePath("panel/mcont/hbox/RightDock/hbox/vbox/FileOptions")])
+ADVANCED_SETTINGS = Array[NodePath]([NodePath("panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions"), NodePath("panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"), NodePath("panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets"), NodePath("panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions")])
 
 [node name="ExportViewport" type="SubViewport" parent="."]
 disable_3d = true
@@ -52,7 +53,7 @@ stretch_mode = 5
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 832.0
-offset_bottom = 280.0
+offset_bottom = 307.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -63,28 +64,36 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont"]
+[node name="VBoxContainer" type="VBoxContainer" parent="panel/mcont"]
 layout_mode = 2
 
-[node name="LeftDock" type="VBoxContainer" parent="panel/mcont/hbox"]
+[node name="Info" parent="panel/mcont/VBoxContainer" instance=ExtResource("2_3rswa")]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 1
+
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer"]
+layout_mode = 2
+
+[node name="LeftDock" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="panel/mcont/hbox/LeftDock"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock"]
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 stretch = true
 
-[node name="Preview" type="SubViewport" parent="panel/mcont/hbox/LeftDock/SubViewportContainer"]
+[node name="Preview" type="SubViewport" parent="panel/mcont/VBoxContainer/hbox/LeftDock/SubViewportContainer"]
 unique_name_in_owner = true
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(256, 256)
 render_target_update_mode = 0
 
-[node name="EmptyTexture" type="TextureRect" parent="panel/mcont/hbox/LeftDock/SubViewportContainer/Preview"]
+[node name="EmptyTexture" type="TextureRect" parent="panel/mcont/VBoxContainer/hbox/LeftDock/SubViewportContainer/Preview"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -93,7 +102,7 @@ grow_vertical = 2
 texture = ExtResource("2_7bmnm")
 stretch_mode = 1
 
-[node name="TextureBackgroundColor" type="ColorRect" parent="panel/mcont/hbox/LeftDock/SubViewportContainer/Preview"]
+[node name="TextureBackgroundColor" type="ColorRect" parent="panel/mcont/VBoxContainer/hbox/LeftDock/SubViewportContainer/Preview"]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -102,7 +111,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
-[node name="Texture" type="TextureRect" parent="panel/mcont/hbox/LeftDock/SubViewportContainer/Preview"]
+[node name="Texture" type="TextureRect" parent="panel/mcont/VBoxContainer/hbox/LeftDock/SubViewportContainer/Preview"]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -115,29 +124,29 @@ texture = ExtResource("1_xmojc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RegionOptions" type="PanelContainer" parent="panel/mcont/hbox/LeftDock"]
+[node name="RegionOptions" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/LeftDock/RegionOptions"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions"]
+[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="commands" type="HBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer"]
+[node name="commands" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CopyImage" type="TextureButton" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
+[node name="CopyImage" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 tooltip_text = "Copy Image to clipboard."
@@ -145,7 +154,7 @@ texture_normal = ExtResource("4_wce2v")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ImageRotateLeft" type="TextureButton" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
+[node name="ImageRotateLeft" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 tooltip_text = "Rotates the image by 90 degrees in Left Direction."
@@ -153,7 +162,7 @@ texture_normal = ExtResource("5_ngusj")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ImageRotateRight" type="TextureButton" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
+[node name="ImageRotateRight" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 tooltip_text = "Rotates the image by 90 degrees in Right Direction."
@@ -161,7 +170,7 @@ texture_normal = ExtResource("6_1atfc")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ImageFlipHorizontal" type="TextureButton" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
+[node name="ImageFlipHorizontal" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 tooltip_text = "Flips the image horizontally."
@@ -169,7 +178,7 @@ texture_normal = ExtResource("7_ew362")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="ImageFlipVertical" type="TextureButton" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
+[node name="ImageFlipVertical" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 tooltip_text = "Flips the image vertically."
@@ -177,17 +186,17 @@ texture_normal = ExtResource("8_vjt60")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="bcs" type="VBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer"]
+[node name="bcs" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="brightness" type="HBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
+[node name="brightness" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness"]
 layout_mode = 2
 text = "Brightness: "
 
-[node name="ImageBrightness" type="HSlider" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness"]
+[node name="ImageBrightness" type="HSlider" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
@@ -197,14 +206,14 @@ min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="contrast" type="HBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
+[node name="contrast" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast"]
 layout_mode = 2
 text = "Contrast: "
 
-[node name="ImageContrast" type="HSlider" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast"]
+[node name="ImageContrast" type="HSlider" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
@@ -214,14 +223,14 @@ min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="saturation" type="HBoxContainer" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
+[node name="saturation" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation"]
 layout_mode = 2
 text = "Saturation: "
 
-[node name="ImageSaturation" type="HSlider" parent="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation"]
+[node name="ImageSaturation" type="HSlider" parent="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
@@ -231,53 +240,53 @@ min_value = -1.0
 max_value = 1.0
 step = 0.01
 
-[node name="RightDock" type="VBoxContainer" parent="panel/mcont/hbox"]
+[node name="RightDock" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 
-[node name="pcont" type="PanelContainer" parent="panel/mcont/hbox/RightDock"]
+[node name="pcont" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/RightDock/pcont"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/hbox/RightDock/pcont"]
+[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Toggle Advanced Export Options."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox"]
 layout_mode = 2
 text = "Advanced: "
 
-[node name="AdvancedSettings" type="CheckButton" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox"]
+[node name="AdvancedSettings" type="CheckButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Toggle Advanced Export Options."
 
-[node name="compresion" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
+[node name="compresion" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 tooltip_text = "Compresses the image to use less memory.
 Can not directly access pixel data while the image is compressed.
 Returns error if the chosen compression mode is not available."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"]
 layout_mode = 2
 text = "Compression:"
 
-[node name="CompressionOptions" type="OptionButton" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"]
+[node name="CompressionOptions" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "● None
@@ -313,7 +322,7 @@ popup/item_4/id = 4
 popup/item_5/text = "ASTC"
 popup/item_5/id = 5
 
-[node name="compresionSource" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
+[node name="compresionSource" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -321,11 +330,11 @@ tooltip_text = "Helps to pick the best compression method for DXT and ETC2 forma
 
 See Image.compress()"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresionSource"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresionSource"]
 layout_mode = 2
 text = "Source:"
 
-[node name="CompressionSourceOptions" type="OptionButton" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresionSource"]
+[node name="CompressionSourceOptions" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresionSource"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "● COMPRESS_SOURCE_GENERIC = 0
@@ -346,7 +355,7 @@ popup/item_1/id = 1
 popup/item_2/text = "NORMAL"
 popup/item_2/id = 2
 
-[node name="ASTCFormat" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
+[node name="ASTCFormat" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -354,11 +363,11 @@ tooltip_text = "Helps to pick the best compression method for ASTC format.
 
 See Image.compress() and Image.ASTCFormat"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/ASTCFormat"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/ASTCFormat"]
 layout_mode = 2
 text = "ASTC format:"
 
-[node name="AstcFormatOptions" type="OptionButton" parent="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/ASTCFormat"]
+[node name="AstcFormatOptions" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/ASTCFormat"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "4x4: Indicate that high quality 4×4 ASTC compression format should be used.
@@ -372,61 +381,61 @@ popup/item_0/text = "4x4"
 popup/item_1/text = "8x8"
 popup/item_1/id = 1
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ImageSIze" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox"]
+[node name="ImageSIze" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze"]
 layout_mode = 2
 
-[node name="mcont" type="MarginContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze"]
+[node name="mcont" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox"]
 layout_mode = 2
 text = "Image Size:"
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox"]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox"]
 layout_mode = 2
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
 layout_mode = 2
 text = "New:"
 horizontal_alignment = 2
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Width:"
 
-[node name="TextureNewWidth" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
+[node name="TextureNewWidth" type="SpinBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -434,16 +443,16 @@ min_value = 2.0
 max_value = 16384.0
 value = 256.0
 
-[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "Height:"
 
-[node name="TextureNewHeight" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
+[node name="TextureNewHeight" type="SpinBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -451,13 +460,13 @@ min_value = 2.0
 max_value = 16384.0
 value = 256.0
 
-[node name="UseTextureOriginalSize" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
+[node name="UseTextureOriginalSize" type="CheckBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 button_pressed = true
 text = "Use Original Size"
 
-[node name="LockUnlockRatio" type="TextureButton" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox"]
+[node name="LockUnlockRatio" type="TextureButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -470,48 +479,48 @@ texture_pressed = ExtResource("3_7r2wx")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="vbox2" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox"]
+[node name="vbox2" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox"]
 layout_mode = 2
 
-[node name="TextureOriginalSize" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/vbox2"]
+[node name="TextureOriginalSize" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/vbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Original:
 w: 289
 h: 290"
 
-[node name="FileOptions" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox"]
+[node name="FileOptions" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox"]
 visible = false
 custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions"]
+[node name="MarginContainer" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer"]
 layout_mode = 2
 
-[node name="ExportFolder" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer"]
+[node name="ExportFolder" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 tooltip_text = "res://"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
 layout_mode = 2
 size_flags_vertical = 1
 text = "Folder: "
 vertical_alignment = 1
 
-[node name="ExportFolderLabel" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
+[node name="ExportFolderLabel" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -521,7 +530,7 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="GrabFolder" type="Button" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
+[node name="GrabFolder" type="Button" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -529,56 +538,56 @@ size_flags_vertical = 4
 tooltip_text = "Select Destination Folder."
 icon = ExtResource("7_nbrtf")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Name:"
 
-[node name="FileName" type="LineEdit" parent="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="FileName" type="LineEdit" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Region"
 
-[node name="vbox2" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox"]
+[node name="vbox2" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox"]
 layout_mode = 2
 
-[node name="ImageBackground" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2"]
+[node name="ImageBackground" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground"]
 layout_mode = 2
 
-[node name="mcont" type="MarginContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground"]
+[node name="mcont" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont"]
 layout_mode = 2
 tooltip_text = "Change the image background color."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox"]
 layout_mode = 2
 text = "Background"
 
-[node name="hbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox"]
+[node name="hbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox"]
 layout_mode = 2
 text = "Color: "
 
-[node name="TextureBackgroundColorPicker" type="ColorPickerButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox"]
+[node name="TextureBackgroundColorPicker" type="ColorPickerButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
@@ -586,44 +595,44 @@ size_flags_horizontal = 3
 tooltip_text = "Change the image background color.(Can be Transparent)"
 color = Color(1, 1, 1, 1)
 
-[node name="UseTransparentBackground" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox"]
+[node name="UseTransparentBackground" type="CheckBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Make Image Background Transparent."
 button_pressed = true
 text = "Transparent"
 
-[node name="ImagePresets" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2"]
+[node name="ImagePresets" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="Panel" type="Panel" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets"]
+[node name="Panel" type="Panel" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets"]
 layout_mode = 2
 
-[node name="mcont" type="MarginContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets"]
+[node name="mcont" type="MarginContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
 layout_mode = 2
 text = "Presets:"
 
-[node name="format" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
+[node name="format" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
 layout_mode = 2
 tooltip_text = "Image type."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format"]
 layout_mode = 2
 text = "Format: "
 
-[node name="ExportFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format"]
+[node name="ExportFormat" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
@@ -646,27 +655,27 @@ popup/item_2/id = 2
 popup/item_3/text = "EXR"
 popup/item_3/id = 3
 
-[node name="ExportPresets" type="TabContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
+[node name="ExportPresets" type="TabContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox"]
 layout_mode = 2
 current_tab = 0
 tabs_visible = false
 
-[node name="PNG" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
+[node name="PNG" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG"]
 layout_mode = 2
 
-[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox"]
 layout_mode = 2
 tooltip_text = "Color format"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="PngColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
+[node name="PngColorFormat" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/PNG/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -751,15 +760,15 @@ popup/item_37/id = 37
 popup/item_38/text = "ASTC_8x8_HDR"
 popup/item_38/id = 38
 
-[node name="JPG" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
+[node name="JPG" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox"]
 layout_mode = 2
 tooltip_text = "Higher quality values result in better-looking output at the cost of larger file sizes.
 Recommended quality values are between 0.75 and 0.90.
@@ -767,11 +776,11 @@ Even at quality 1.00, JPEG compression remains lossy.
 
 See Image.save_jpg in Godot Doc."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox"]
 layout_mode = 2
 text = "Quality: "
 
-[node name="JPGQuality" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox"]
+[node name="JPGQuality" type="SpinBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -779,7 +788,7 @@ min_value = 1.0
 value = 75.0
 suffix = "%"
 
-[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox"]
 layout_mode = 2
 tooltip_text = "Color Format
 
@@ -788,11 +797,11 @@ If the Image contains an alpha channel, the image will still be saved, but the r
 
 See Image.save_jpg in Godot Doc."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="JPGColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
+[node name="JPGColorFormat" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/JPG/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -877,56 +886,56 @@ popup/item_37/id = 37
 popup/item_38/text = "ASTC_8x8_HDR"
 popup/item_38/id = 38
 
-[node name="Webp" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
+[node name="Webp" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp"]
 layout_mode = 2
 
-[node name="hbox3" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
+[node name="hbox3" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
 layout_mode = 2
 tooltip_text = "If true, the image will be saved lossy, using the quality setting between 0% and 100% (inclusive).
 Lossless WebP offers more efficient compression than PNG.
 
 See \"Image.save_webp\" in Godot Doc."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
 layout_mode = 2
 text = "Lossy: "
 
-[node name="WEBPLossy" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
+[node name="WEBPLossy" type="CheckBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WEBPQualityDock" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
+[node name="WEBPQualityDock" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
 visible = false
 layout_mode = 2
 tooltip_text = "The image will be saved lossy, using the quality provided.
 Lossless WebP offers more efficient compression than PNG."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
 layout_mode = 2
 text = "Quality: "
 
-[node name="WebpQuality" type="SpinBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
+[node name="WebpQuality" type="SpinBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 value = 75.0
 suffix = "%"
 
-[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox"]
 layout_mode = 2
 tooltip_text = "Color Format"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="WEBPColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
+[node name="WEBPColorFormat" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1011,38 +1020,38 @@ popup/item_37/id = 37
 popup/item_38/text = "ASTC_8x8_HDR"
 popup/item_38/id = 38
 
-[node name="EXR" type="PanelContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
+[node name="EXR" type="PanelContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="vbox" type="VBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR"]
+[node name="vbox" type="VBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR"]
 layout_mode = 2
 
-[node name="hbox" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox"]
+[node name="hbox" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox"]
 layout_mode = 2
 tooltip_text = "If true and the image has only one channel, it will be saved explicitly as monochrome rather than one red channel.
 'ERR_UNAVAILABLE' will be  returned if your Godot version is not compiled with the TinyEXR module.
 TinyEXR module is included in the Official Godot Build."
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox"]
 layout_mode = 2
 text = "Grayscale: "
 
-[node name="ExrGrayscale" type="CheckBox" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox"]
+[node name="ExrGrayscale" type="CheckBox" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="hbox2" type="HBoxContainer" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox"]
+[node name="hbox2" type="HBoxContainer" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox"]
 layout_mode = 2
 tooltip_text = "Color Format"
 
-[node name="Label" type="Label" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
+[node name="Label" type="Label" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
 layout_mode = 2
 text = "Color:"
 
-[node name="EXRColorFormat" type="OptionButton" parent="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
+[node name="EXRColorFormat" type="OptionButton" parent="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/EXR/vbox/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1129,23 +1138,23 @@ popup/item_38/id = 38
 
 [connection signal="canceled" from="." to="." method="_on_canceled"]
 [connection signal="confirmed" from="." to="." method="_on_confirmed"]
-[connection signal="pressed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/CopyImage" to="." method="_on_copy_image_pressed"]
-[connection signal="pressed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageRotateLeft" to="." method="_on_image_rotate_left_pressed"]
-[connection signal="pressed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageRotateRight" to="." method="_on_image_rotate_right_pressed"]
-[connection signal="pressed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageFlipHorizontal" to="." method="_on_image_flip_horizontal_pressed"]
-[connection signal="pressed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageFlipVertical" to="." method="_on_image_flip_vertical_pressed"]
-[connection signal="value_changed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness/ImageBrightness" to="." method="_on_image_bcs_changed"]
-[connection signal="value_changed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast/ImageContrast" to="." method="_on_image_bcs_changed"]
-[connection signal="value_changed" from="panel/mcont/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation/ImageSaturation" to="." method="_on_image_bcs_changed"]
-[connection signal="toggled" from="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox/AdvancedSettings" to="." method="_on_advanced_settings_toggled"]
-[connection signal="item_selected" from="panel/mcont/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion/CompressionOptions" to="." method="_on_compression_options_item_selected"]
-[connection signal="value_changed" from="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox/TextureNewWidth" to="." method="_on_texture_new_width_value_changed"]
-[connection signal="value_changed" from="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2/TextureNewHeight" to="." method="_on_texture_new_height_value_changed"]
-[connection signal="toggled" from="panel/mcont/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/LockUnlockRatio" to="." method="_on_lock_unlock_ratio_toggled"]
-[connection signal="pressed" from="panel/mcont/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder/GrabFolder" to="." method="_on_grab_folder_pressed"]
-[connection signal="color_changed" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox/TextureBackgroundColorPicker" to="." method="_on_texture_background_color_picker_color_changed"]
-[connection signal="color_changed" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox/TextureBackgroundColorPicker" to="panel/mcont/hbox/LeftDock/SubViewportContainer/Preview/TextureBackgroundColor" method="set_color"]
-[connection signal="toggled" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/UseTransparentBackground" to="." method="_on_use_transparent_background_toggled"]
-[connection signal="item_selected" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="." method="_on_export_format_item_selected"]
-[connection signal="item_selected" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets" method="set_current_tab"]
-[connection signal="toggled" from="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3/WEBPLossy" to="panel/mcont/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock" method="set_visible"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/CopyImage" to="." method="_on_copy_image_pressed"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageRotateLeft" to="." method="_on_image_rotate_left_pressed"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageRotateRight" to="." method="_on_image_rotate_right_pressed"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageFlipHorizontal" to="." method="_on_image_flip_horizontal_pressed"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/commands/ImageFlipVertical" to="." method="_on_image_flip_vertical_pressed"]
+[connection signal="value_changed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/brightness/ImageBrightness" to="." method="_on_image_bcs_changed"]
+[connection signal="value_changed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/contrast/ImageContrast" to="." method="_on_image_bcs_changed"]
+[connection signal="value_changed" from="panel/mcont/VBoxContainer/hbox/LeftDock/RegionOptions/MarginContainer/VBoxContainer/bcs/saturation/ImageSaturation" to="." method="_on_image_bcs_changed"]
+[connection signal="toggled" from="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/hbox/AdvancedSettings" to="." method="_on_advanced_settings_toggled"]
+[connection signal="item_selected" from="panel/mcont/VBoxContainer/hbox/RightDock/pcont/MarginContainer/VBoxContainer/compresion/CompressionOptions" to="." method="_on_compression_options_item_selected"]
+[connection signal="value_changed" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox/TextureNewWidth" to="." method="_on_texture_new_width_value_changed"]
+[connection signal="value_changed" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/vbox/hbox2/TextureNewHeight" to="." method="_on_texture_new_height_value_changed"]
+[connection signal="toggled" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/ImageSIze/mcont/vbox/hbox/hbox/LockUnlockRatio" to="." method="_on_lock_unlock_ratio_toggled"]
+[connection signal="pressed" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox/FileOptions/MarginContainer/VBoxContainer/ExportFolder/GrabFolder" to="." method="_on_grab_folder_pressed"]
+[connection signal="color_changed" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox/TextureBackgroundColorPicker" to="." method="_on_texture_background_color_picker_color_changed"]
+[connection signal="color_changed" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/hbox/TextureBackgroundColorPicker" to="panel/mcont/VBoxContainer/hbox/LeftDock/SubViewportContainer/Preview/TextureBackgroundColor" method="set_color"]
+[connection signal="toggled" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImageBackground/mcont/vbox/hbox/UseTransparentBackground" to="." method="_on_use_transparent_background_toggled"]
+[connection signal="item_selected" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="." method="_on_export_format_item_selected"]
+[connection signal="item_selected" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/format/ExportFormat" to="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets" method="set_current_tab"]
+[connection signal="toggled" from="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/hbox3/WEBPLossy" to="panel/mcont/VBoxContainer/hbox/RightDock/hbox/vbox2/ImagePresets/mcont/vbox/ExportPresets/Webp/vbox/WEBPQualityDock" method="set_visible"]

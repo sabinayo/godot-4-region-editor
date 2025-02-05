@@ -213,6 +213,7 @@ popup/item_3/text = "Mirror"
 popup/item_3/id = 3
 
 [node name="Material" type="VBoxContainer" parent="mcont/scont/vbox/vbox2"]
+visible = false
 layout_mode = 2
 
 [node name="MaterialEditor" type="HBoxContainer" parent="mcont/scont/vbox/vbox2/Material"]

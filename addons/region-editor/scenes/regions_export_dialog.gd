@@ -18,10 +18,6 @@ const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 const DEFAULT_ENUN_EXPORT_TIP: String = "(Click Regions to edit their description)"
 const REGIONS_ENUM_EDITOR_DESCRIPTION: String = "Allow to select exported edited regions in 'Region Editor' through enumaration."
-const TIP_ICONS: Dictionary = {
-	TipTypes.IMPORTANT: preload("../icons/Warning.svg"),
-	TipTypes.VERY_IMPORTANT: preload("../icons/Error.svg"),
-}
 
 
 var can_be_deleted: bool = false
@@ -106,7 +102,7 @@ func _on_confirmed() -> void:
 					
 					if not current_scene:
 						var msg: String = "Attempt to add RegionsEnumNode to a null instance..."
-						show_tip(TipTypes.VERY_IMPORTANT, msg, 3.0)
+						%Info.display(RegionEditorInfo.Types.ERROR, msg, 3.0)
 						printerr("Region Editor: %s" % msg)
 						return
 					
@@ -121,13 +117,16 @@ func _on_confirmed() -> void:
 				
 				if not current_scene:
 					var msg: String = "Attempt to add RegionsEnumNode to a null instance..."
-					show_tip(TipTypes.VERY_IMPORTANT, msg, 3.0)
+					%Info.display(
+						RegionEditorInfo.Types.ERROR,
+						msg, 3.0)
 					printerr("Region Editor: %s" % msg)
 					return
 				
 				current_scene.add_child(regions_enum)
 				regions_enum.owner = current_scene
 				EditorInterface.mark_scene_as_unsaved()
+				%Info.display(RegionEditorInfo.Types.SUCCESS, "Enumaration added to the current scene.", 2.0)
 
 
 func add_built_in_script_to_regions_enum(regions_enum: Sprite2D) -> void:
@@ -286,32 +285,13 @@ func _on_add_enum_description_pressed() -> void:
 	%DescriptionEdit.popup_centered()
 
 
-func show_tip(type: TipTypes, text: String, time: float = 0.0) -> void:
-	%Tip.show()
-	%TipIcon.texture = TIP_ICONS[type]
-	%TipLabel.text = text
-	
-	if time > 0.0:
-		if not %TipTimer.is_stopped():
-			%TipTimer.stop()
-		
-		%TipTimer.start(time)
-
-
-func _on_tip_timer_timeout() -> void:
-	if %ExportType.selected == 1:
-		show_tip(TipTypes.IMPORTANT, DEFAULT_ENUN_EXPORT_TIP)
-	
-	else:
-		%Tip.hide()
-
-
 func _on_export_type_item_selected(index: int) -> void:
 	if index == 1:
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DESCRIPTION)
-		show_tip(TipTypes.IMPORTANT, DEFAULT_ENUN_EXPORT_TIP)
+		%Info.set_default_info(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
+		%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
 	else:
-		%Tip.hide()
+		%Info.hide()
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DISABLED)
 
 
