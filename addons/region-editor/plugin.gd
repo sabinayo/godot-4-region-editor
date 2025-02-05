@@ -1,11 +1,35 @@
 @tool
 extends EditorPlugin
 
+
+enum DragStates {
+	NONE,
+	RIGHT,
+	LEFT,
+	TOP,
+	BOTTOM,
+}
+
+const HANDLE_OFFSET: float = 8.0
+const GDRID_SIZE: float = 8.0
+
 var region_editor: Control = null
 var region_editor_btn: Button = null
 
 var inspector_plugin: EditorInspectorPlugin
 var undo_redo: EditorUndoRedoManager
+
+var img_handle_right: Texture2D = preload("icons/handle_right.svg") as Texture2D
+var img_handle_bottom: Texture2D = preload("icons/handle_bottom.svg") as Texture2D
+var img_handle_left: Texture2D = preload("icons/handle_left.svg") as Texture2D
+var img_handle_top: Texture2D = preload("icons/handle_top.svg") as Texture2D
+
+var current_object: Sprite2D
+var drag_state := DragStates.NONE
+var starting_mouse_pos_in_scene: Vector2
+var starting_current_object_global_rect: Rect2
+var starting_current_object_region_rect: Rect2
+var starting_current_object_global_pos: Vector2
 
 
 func _enter_tree() -> void:
@@ -35,16 +59,23 @@ func _exit_tree() -> void:
 	region_editor.queue_free()
 
 
+
 func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 	inspector_plugin.editor_plugin_texture_region_retrieved.connect(
 		func (edit_texture_region_func: Callable) -> void:
+			# Retrieve TextureRegionEditor closure.
 			edit_texture_region_func.call()
 			
-			# Retrieve TextureRegionEditor closure.
 			undo_redo.history_changed.connect(
 				func () -> void:
-					region_editor.set_texture_region_as_edited(sprite)
-			, CONNECT_ONE_SHOT)
+					var texture_region_editor: Object = edit_texture_region_func.get_object()
+					var undo_redo_id: int = undo_redo.get_object_history_id(texture_region_editor)
+					
+					if undo_redo.get_history_undo_redo(0).get_action_name(0) == &"Set Region Rect":
+						print("555s5")
+						print(undo_redo_id)
+						region_editor.set_texture_region_as_edited(sprite)
+			)
 	, CONNECT_ONE_SHOT)
 	
 	var last_edited_object: Object = EditorInterface.get_inspector().get_edited_object()
@@ -55,6 +86,11 @@ func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 		EditorInterface.edit_node(last_edited_object)
 	else:
 		EditorInterface.edit_node(null)
+
+
+func _on_texture_region_created_undo_redo_history_changed() -> void:
+	pass
+
 
 
 func _on_resource_picker_requested(sprite: Sprite2D, property: String) -> void:

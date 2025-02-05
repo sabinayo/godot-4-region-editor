@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c4uxswx4h7fmm"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_export_dialog.gd" id="1_ih2kt"]
-[ext_resource type="Texture2D" path="res://addons/region-editor/samples/exported/test.png" id="1_xmojc"]
+[ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="1_xmojc"]
 [ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="2_7bmnm"]
 [ext_resource type="Texture2D" uid="uid://b3r7gv1e1h8dc" path="res://addons/region-editor/icons/Instance.svg" id="2_dbocx"]
 [ext_resource type="Texture2D" uid="uid://b6b2dklmr7afr" path="res://addons/region-editor/icons/Unlinked.svg" id="3_7r2wx"]

@@ -152,9 +152,19 @@ func set_texture_region_as_edited(sprite: Sprite2D) -> void:
 	texture_region_edited.emit(sprite, _texture_region_editor_requester)
 	
 	if _texture_region_editor_requester == %TextureSetup.get_path():
-		%RegionPreviewerContainer.add_region_from(sprite)
+		if sprite.has_meta(&"new_region"):
+			var create_region: bool = sprite.get_meta(&"new_region")
+			
+			if create_region:
+				sprite.set_meta(&"new_region", false)
+				%RegionPreviewerContainer.add_region_from(sprite)
+			else:
+				%RegionPreviewerContainer.update_region_data({
+					"id": %RegionPreviewerContainer.region_count -1,
+					"region_rect": sprite.region_rect,
+				})
 	
-	_texture_region_editor_requester = ^""
+	#_texture_region_editor_requester = ^""
 
 
 func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:

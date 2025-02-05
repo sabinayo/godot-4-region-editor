@@ -102,6 +102,8 @@ func _on_add_region() -> void:
 	
 	_temp_sprite.texture_filter = %TextureFilter.selected
 	_temp_sprite.texture_repeat = %TextureRepeat.selected
+	_temp_sprite.set_meta(&"new_region", true)
+	# Doesn't duplicate the sprite to keep meta data track by "region_editor.gd" script.
 	texture_region_editor_requested.emit(_temp_sprite, get_path())
 
 

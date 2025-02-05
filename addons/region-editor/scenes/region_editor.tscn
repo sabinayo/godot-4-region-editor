@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c6kp61y0ycsji"]
+[gd_scene load_steps=27 format=3 uid="uid://c6kp61y0ycsji"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_editor.gd" id="1_ckiwb"]
 [ext_resource type="Texture2D" uid="uid://vflovc0o4aq6" path="res://addons/region-editor/icons/Remove.svg" id="1_ut1lj"]
@@ -13,8 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://dkc6oqbeijd2o" path="res://addons/region-editor/scenes/texture_setup.tscn" id="6_316gy"]
 [ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="6_krdmk"]
 [ext_resource type="PackedScene" uid="uid://dr6xso5j2umfq" path="res://addons/region-editor/scenes/region_previewer_container.tscn" id="7_2ci81"]
+[ext_resource type="Texture2D" uid="uid://dana0mx8i48p" path="res://addons/region-editor/icons/Heart.svg" id="7_qsv8n"]
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="8_8bmli"]
 [ext_resource type="PackedScene" uid="uid://cou3we204lm21" path="res://addons/region-editor/scenes/region_properties.tscn" id="8_1804p"]
+[ext_resource type="Texture2D" uid="uid://d14x00cbio3fm" path="res://addons/region-editor/icons/Help.svg" id="8_dyjgr"]
 [ext_resource type="Texture2D" uid="uid://lounnd68a2s5" path="res://addons/region-editor/icons/Close.svg" id="10_g6a71"]
 [ext_resource type="PackedScene" uid="uid://c7lefalft3kk8" path="res://addons/region-editor/scenes/regions_container_global_commands.tscn" id="12_flsac"]
 [ext_resource type="PackedScene" uid="uid://c4uxswx4h7fmm" path="res://addons/region-editor/scenes/region_export_dialog.tscn" id="17_85vun"]
@@ -141,6 +143,25 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 tooltip_text = "Select Next Texture"
 texture_normal = ExtResource("5_whobw")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="vbox/Hbox/TextureInfos/hbox"]
+layout_mode = 2
+
+[node name="Support" type="TextureButton" parent="vbox/Hbox/TextureInfos/hbox/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+tooltip_text = "Support Region Editor Development."
+texture_normal = ExtResource("7_qsv8n")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="OnlineDoc" type="TextureButton" parent="vbox/Hbox/TextureInfos/hbox/HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+tooltip_text = "Open Region Editor Online Documentation."
+texture_normal = ExtResource("8_dyjgr")
 ignore_texture_size = true
 stretch_mode = 5
 

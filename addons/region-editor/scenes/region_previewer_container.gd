@@ -80,6 +80,10 @@ func add_region_from(sprite: Sprite2D) -> void:
 	region_added.emit()
 
 
+func update_region_data(data: Dictionary) -> void:
+	%Container.get_child(data.get("id", -1)).update_data(data)
+
+
 func get_selected_regions_data() -> Array[Dictionary]:
 	var data: Array[Dictionary] = []
 	

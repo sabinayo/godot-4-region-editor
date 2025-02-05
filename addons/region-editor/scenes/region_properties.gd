@@ -85,11 +85,13 @@ func _on_name_text_submitted(new_text: String) -> void:
 
 func _on_update_rect_pressed() -> void:
 	_temp_sprite.texture = load(_data["base_texture"])
-	texture_region_editor_requested.emit(_temp_sprite, get_path())
+	# Duplicate the sprite to avoid data collisions
+	texture_region_editor_requested.emit(_temp_sprite.duplicate(), get_path())
 
 
 func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePath) -> void:
 	if requester == get_path():
+		print("hum????")
 		_data["region_rect"] = sprite.region_rect
 		%CopyRectData.tooltip_text = var_to_str(_data["region_rect"])
 		_set_properties_as_updated(["region_rect"])
