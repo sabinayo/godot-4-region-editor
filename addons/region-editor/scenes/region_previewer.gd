@@ -48,6 +48,7 @@ func set_data(new: Dictionary, display_name: bool = true, selected: bool = false
 
 
 func get_data() -> Dictionary:
+	_data["id"] = get_index()
 	return _data.duplicate()
 
 
@@ -93,6 +94,11 @@ func delete() -> void:
 
 func is_selected() -> bool:
 	return %Selector.button_pressed
+
+
+func _on_ids_reassigned() -> void:
+	_data["id"] = get_index()
+	data_updated.emit(get_data())
 
 
 func _on_text_visibility_toggled(toggled_on: bool) -> void:

@@ -72,6 +72,9 @@ func simple_export(path: String) -> void:
 	var image: Image = texture.get_image()
 	var extension: String = path.get_extension()
 	
+	if not extension:
+		extension = "png"
+	
 	image.call(&"save_%s" % extension, path)
 	set_export_as_success(path)
 

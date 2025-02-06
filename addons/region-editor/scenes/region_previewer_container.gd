@@ -6,6 +6,7 @@ extends PanelContainer
 signal region_selected(is_selected: bool, region_id: int)
 signal region_updated(data: Dictionary)
 signal region_added()
+signal regions_ids_reasigned()
 signal region_deleted(was_edited: bool, region_id: int)
 signal region_edition_requested(data: Dictionary)
 signal region_names_visibility_changed(visibles: bool)
@@ -46,6 +47,7 @@ func add_regions(datas: Array[Dictionary]) -> void:
 
 func _make_region_preview_usable(preview: RegionEditorRegionPreviewer, data: Dictionary) -> void:
 	edition_type_changed.connect(preview.change_edition_type)
+	regions_ids_reasigned.connect(preview._on_ids_reassigned)
 	
 	preview.edition_type = edition_type
 	preview.selected.connect(_on_region_selected)
@@ -103,7 +105,7 @@ func get_regions_data() -> Array[Dictionary]:
 
 
 func _on_selected_region_deletion_requested() -> void:
-	# Use NodePath instead of ids as ids will changes onde
+	# Use NodePath instead of ids as ids will changes once
 	# any region is deleted
 	var regions_to_delete: Array[NodePath] = []
 	
@@ -121,14 +123,25 @@ func _on_selected_region_deletion_requested() -> void:
 func _on_region_deletion_requested(region_id: int) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(region_id)
 	
-	if preview.is_selected():
-		_remove_selected_region(region_id)
-
+	#if preview.is_selected():
+		#_remove_selected_region(region_id)
+	
 	preview.queue_free()
+	await preview.tree_exited
+	regions_ids_reasigned.emit()
+	await get_tree().process_frame
+	
+	selected_regions.clear()
+	
+	for child: RegionEditorRegionPreviewer in %Container.get_children():
+		if child.is_selected():
+			selected_regions.append(child.get_index())
 	
 	region_count -= 1
 	region_deleted.emit(region_id == edited_region, region_id)
-	edited_region = -1
+	
+	if region_id == edited_region:
+		edited_region = -100
 
 
 func _set_region_as_selected(region_id: int) -> void:
@@ -137,10 +150,10 @@ func _set_region_as_selected(region_id: int) -> void:
 
 
 func _remove_selected_region(region_id: int) -> void:
-	var idx: int = selected_regions.find(region_id)
+	if not (region_id in selected_regions):
+		return
 	
-	if idx != -1:
-		selected_regions.remove_at(idx)
+	selected_regions.remove_at(selected_regions.find(region_id))
 
 
 func _on_region_selected(is_selected: bool, region_id: int) -> void:
@@ -162,8 +175,14 @@ func _on_region_data_updated(data: Dictionary) -> void:
 
 
 func _on_region_properties_property_updated(data: Dictionary) -> void:
-	var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
-	preview.set_data(data, _display_regions_names, _select_all_regions)
+	if "id" in data:
+		var preview: RegionEditorRegionPreviewer = %Container.get_child(data["id"])
+		preview.set_data(data, _display_regions_names, _select_all_regions)
+	
+	elif "ids" in data:
+		for id: int in data["ids"]:
+			var preview: RegionEditorRegionPreviewer = %Container.get_child(id)
+			preview.set_data(data, _display_regions_names, _select_all_regions)
 
 
 func _ready() -> void:

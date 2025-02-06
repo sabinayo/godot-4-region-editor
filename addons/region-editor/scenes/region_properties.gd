@@ -12,6 +12,7 @@ const REGIONS_EXPORT_DIALOG: PackedScene = preload("regions_export_dialog.tscn")
 
 var _data: Dictionary = {}
 var _edited_regions_data: Array[Dictionary] = []
+var _edited_regions_id: PackedInt32Array = []
 var _multiple_edition: bool = false:
 	set(value):
 		_multiple_edition = value
@@ -51,6 +52,11 @@ func set_data(new: Dictionary) -> void:
 func edit_multiple_regions(edit: bool, datas: Array[Dictionary], color: Color) -> void:
 	_multiple_edition = edit
 	_edited_regions_data = datas
+	_edited_regions_id.clear()
+	
+	for data: Dictionary in datas:
+		_edited_regions_id.append(data["id"])
+	
 	_updating = true
 	%Modulate.color = color
 	_updating = false
@@ -142,7 +148,12 @@ func _set_properties_as_updated(properties: PackedStringArray) -> void:
 		if property in _data:
 			update[property] = _data[property]
 	
-	update["id"] = _data["id"]
+	if _multiple_edition:
+		update["ids"] = _edited_regions_id
+	else:
+		update["id"] = _data["id"]
+	
+	print("%s updated - ids: %s" % [properties, _edited_regions_id])
 	property_updated.emit(update.duplicate())
 
 
@@ -195,3 +206,40 @@ func get_image_format_literal(format: Image.Format) -> String:
 		Image.FORMAT_ETC2_RGB8A1: return "ETC2_RGB8A1"
 		_:
 			return "Unknown Format"
+
+
+func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: int) -> void:
+	if _multiple_edition:
+		if region_id in _edited_regions_id:
+			_edited_regions_id.remove_at(_edited_regions_id.find(region_id))
+			
+			var removed_idx: int = 0
+			
+			for data: Dictionary in _edited_regions_data:
+				if data["id"] == region_id:
+					break
+				
+				removed_idx += 1
+			
+			_edited_regions_data.remove_at(removed_idx)
+			
+			var new_ids: PackedInt32Array = _edited_regions_id.duplicate()
+			
+			for id: int in _edited_regions_id:
+				if id >= removed_idx:
+					var idx: int = new_ids.find(id)
+					new_ids[idx] = id - 1
+			
+			_edited_regions_id = new_ids.duplicate()
+			
+			var dic_idx_to_remove: int = -1
+			
+			for data: Dictionary in _edited_regions_data:
+				if not (data["id"] in _edited_regions_id):
+					dic_idx_to_remove = _edited_regions_data.find(data)
+				else:
+					var idx: int = _edited_regions_id.find(data["id"])
+					data["id"] = new_ids[idx]
+			
+			_edited_regions_data.remove_at(dic_idx_to_remove)
+			_edited_regions_id = new_ids

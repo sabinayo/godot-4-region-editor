@@ -120,7 +120,7 @@ func break_all_connections() -> void:
 func _update_regions_data() -> void:
 	if not regions_container_path: return
 	
-	var regions_container =get_node(regions_container_path)
+	var regions_container = get_node(regions_container_path)
 	# Regions numb
 	%RegionsLabel.text = "Regions: %s" % regions_container.region_count
 	

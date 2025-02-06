@@ -139,13 +139,13 @@ func _on_all_regions_selection_requested(selected: bool) -> void:
 
 func _on_edit_multiple_regions_pressed() -> void:
 	editing_multiple_regions = true
-	%RegionPropertiesDock.show()
 	%RegionPropertiesLabel.text = "Regions Properties"
 	%RegionProperties.edit_multiple_regions(
 		true,
 		%RegionPreviewerContainer.get_selected_regions_data(),
 		%ChangeTextureModulate.color
 	)
+	%RegionPropertiesDock.show()
 
 
 func set_texture_region_as_edited(sprite: Sprite2D) -> void:
@@ -172,7 +172,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 		region_id == edited_region_id
 		or (
 			editing_multiple_regions
-			and %RegionPreviewerContainer.selected_regions.is_empty()
+			and %RegionPreviewerContainer.selected_regions.size() < 2
 		)
 	):
 		%RegionPropertiesDock.hide()
