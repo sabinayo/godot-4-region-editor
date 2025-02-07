@@ -17,7 +17,10 @@ const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 
 @export var edition_type: RegionEditorRegionPreviewer.EditionTypes = RegionEditorRegionPreviewer.EditionTypes.PROPERTIES
 
-var region_count: int = 0
+var region_count: int = 0:
+	get():
+		return %Container.get_child_count()
+
 var selected_regions: PackedInt32Array = []
 var edited_region: int = -1
 
@@ -122,47 +125,30 @@ func _on_selected_region_deletion_requested() -> void:
 
 func _on_region_deletion_requested(region_id: int) -> void:
 	var preview: RegionEditorRegionPreviewer = %Container.get_child(region_id)
-	
-	#if preview.is_selected():
-		#_remove_selected_region(region_id)
-	
 	preview.queue_free()
+	
 	await preview.tree_exited
 	regions_ids_reasigned.emit()
 	await get_tree().process_frame
-	
-	selected_regions.clear()
-	
-	for child: RegionEditorRegionPreviewer in %Container.get_children():
-		if child.is_selected():
-			selected_regions.append(child.get_index())
-	
-	region_count -= 1
+	_update_selected_regions_count()
+	region_count = %Container.get_child_count()
 	region_deleted.emit(region_id == edited_region, region_id)
 	
 	if region_id == edited_region:
 		edited_region = -100
 
 
-func _set_region_as_selected(region_id: int) -> void:
-	if not (region_id in selected_regions):
-		selected_regions.append(region_id)
-
-
-func _remove_selected_region(region_id: int) -> void:
-	if not (region_id in selected_regions):
-		return
-	
-	selected_regions.remove_at(selected_regions.find(region_id))
-
-
 func _on_region_selected(is_selected: bool, region_id: int) -> void:
-	if is_selected:
-		_set_region_as_selected(region_id)
-	else:
-		_remove_selected_region(region_id)
-	
+	_update_selected_regions_count()
 	region_selected.emit(is_selected, region_id)
+
+
+func _update_selected_regions_count() -> void:
+	selected_regions.clear()
+	
+	for child: RegionEditorRegionPreviewer in %Container.get_children():
+		if child.is_selected():
+			selected_regions.append(child.get_index())
 
 
 func _on_region_edition_requested(data: Dictionary) -> void:

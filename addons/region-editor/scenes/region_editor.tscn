@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c6kp61y0ycsji"]
+[gd_scene load_steps=22 format=3 uid="uid://c6kp61y0ycsji"]
 
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_editor.gd" id="1_ckiwb"]
 [ext_resource type="Texture2D" uid="uid://vflovc0o4aq6" path="res://addons/region-editor/icons/Remove.svg" id="1_ut1lj"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://d14x00cbio3fm" path="res://addons/region-editor/icons/Help.svg" id="8_dyjgr"]
 [ext_resource type="Texture2D" uid="uid://lounnd68a2s5" path="res://addons/region-editor/icons/Close.svg" id="10_g6a71"]
 [ext_resource type="PackedScene" uid="uid://c7lefalft3kk8" path="res://addons/region-editor/scenes/regions_container_global_commands.tscn" id="12_flsac"]
-[ext_resource type="PackedScene" uid="uid://c4uxswx4h7fmm" path="res://addons/region-editor/scenes/region_export_dialog.tscn" id="17_85vun"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc4oc"]
 
@@ -354,9 +353,6 @@ layout_mode = 2
 [node name="RegionProperties" parent="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox" instance=ExtResource("8_1804p")]
 unique_name_in_owner = true
 layout_mode = 2
-
-[node name="RegionExportDialog" parent="." instance=ExtResource("17_85vun")]
-unique_name_in_owner = true
 
 [connection signal="resource_picker_retrieved" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/TextureSetup" method="_on_region_editor_resource_picker_retrieved"]
 [connection signal="texture_region_edited" from="." to="vbox/HSplitContainer/TextureEditor/vbox/HSplitContainer/HSplitContainer/hbox/hsplitcont/RegionPropertiesDock/vbox/RegionProperties" method="_on_region_editor_texture_region_edited"]

@@ -43,7 +43,6 @@ func set_image(image: TextureRect) -> void:
 	popup_centered()
 
 
-
 func get_texture_to_export() -> ViewportTexture:
 	var export_size: Vector2 = _image_original_size
 	var export_background_color: Color = TRANSPARENT_COLOR
@@ -54,17 +53,27 @@ func get_texture_to_export() -> ViewportTexture:
 			%TextureNewHeight.value
 		)
 	
+	%ExportViewport.size = export_size
+	%ExportedBackgroundColor.set_anchors_preset(Control.PRESET_FULL_RECT)
+	%ExportedTexture.set_anchors_preset(Control.PRESET_FULL_RECT)
+	await get_tree().process_frame
+	
 	if not %UseTransparentBackground.button_pressed:
 		export_background_color = %TextureBackgroundColorPicker.color
+		%ExportedBackgroundColor.color = export_background_color
+	else:
+		%ExportViewport.transparent_bg = true
+		%ExportedBackgroundColor.hide()
 	
-	$ExportViewport.size = export_size
-	$ExportViewport/BackgrounColor.color = export_background_color
-	$ExportViewport/Texture.texture = %Texture.texture
-	
-	await get_tree().process_frame
+	%ExportedTexture.texture = %Texture.texture
+	%ExportedBackgroundColor.show()
+	%ExportedTexture.show()
 	await RenderingServer.frame_post_draw
+	var texture: ViewportTexture = %ExportViewport.get_texture()
+	%ExportedBackgroundColor.hide()
+	%ExportedTexture.hide()
 	
-	return $ExportViewport.get_texture()
+	return texture
 
 
 func simple_export(path: String) -> void:
@@ -295,6 +304,7 @@ func _on_confirmed() -> void:
 		file_dialog.file_selected.connect(
 			func (path: String) -> void:
 				simple_export(path)
+				file_dialog.queue_free()
 		, CONNECT_ONE_SHOT)
 		file_dialog.canceled.connect(
 			func () -> void:

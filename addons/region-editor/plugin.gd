@@ -72,8 +72,6 @@ func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 					var undo_redo_id: int = undo_redo.get_object_history_id(texture_region_editor)
 					
 					if undo_redo.get_history_undo_redo(0).get_action_name(0) == &"Set Region Rect":
-						print("555s5")
-						print(undo_redo_id)
 						region_editor.set_texture_region_as_edited(sprite)
 			)
 	, CONNECT_ONE_SHOT)
@@ -86,11 +84,6 @@ func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
 		EditorInterface.edit_node(last_edited_object)
 	else:
 		EditorInterface.edit_node(null)
-
-
-func _on_texture_region_created_undo_redo_history_changed() -> void:
-	pass
-
 
 
 func _on_resource_picker_requested(sprite: Sprite2D, property: String) -> void:

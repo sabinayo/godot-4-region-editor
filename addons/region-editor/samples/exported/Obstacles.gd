@@ -1,5 +1,5 @@
 @tool
-# Generated Script from RegionEditorPlugin. See https://sabinayo.github.com/
+# Generated Script from RegionEditorPlugin. See https://github.com/sabinayo/godot-4-region-editor
 
 extends Sprite2D
 

@@ -13,17 +13,18 @@ disable_3d = true
 handle_input_locally = false
 title = "Export Options"
 position = Vector2i(0, 36)
-size = Vector2i(671, 600)
+size = Vector2i(715, 600)
 ok_button_text = "Export"
 dialog_hide_on_ok = false
 script = ExtResource("1_rrdy8")
+ADVANCED_SETTINGS = Array[NodePath]([NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/Label"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets")])
 
 [node name="pcont" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(600, 400)
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 663.0
-offset_bottom = 408.0
+offset_right = 707.0
+offset_bottom = 551.0
 
 [node name="MarginContainer" type="MarginContainer" parent="pcont"]
 layout_mode = 2
@@ -37,6 +38,7 @@ layout_mode = 2
 
 [node name="Info" parent="pcont/MarginContainer/VBoxContainer" instance=ExtResource("2_deb2e")]
 unique_name_in_owner = true
+visible = true
 layout_mode = 2
 
 [node name="SplitContainer" type="VSplitContainer" parent="pcont/MarginContainer/VBoxContainer"]
@@ -126,11 +128,33 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Advanced Export"
 
+[node name="ImagesExportFolder" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+layout_mode = 2
+text = "Folder: "
+
+[node name="ImagesExportFolderLabel" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="SelectImageExportFolder" type="Button" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+layout_mode = 2
+icon = ExtResource("4_vycu1")
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="ImageBackground" type="PanelContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 0
 
@@ -182,6 +206,7 @@ text = "Transparent"
 layout_mode = 2
 
 [node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox"]
+visible = false
 layout_mode = 2
 text = "Presets:"
 
@@ -217,6 +242,7 @@ popup/item_3/text = "EXR"
 popup/item_3/id = 3
 
 [node name="ExportPresets" type="TabContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox"]
+visible = false
 layout_mode = 2
 current_tab = 0
 tabs_visible = false
@@ -811,7 +837,6 @@ size_flags_vertical = 4
 tooltip_text = "Select Destination Folder."
 icon = ExtResource("4_vycu1")
 flat = true
-expand_icon = true
 
 [node name="UseBuiltInScript" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer"]
 unique_name_in_owner = true
@@ -893,7 +918,8 @@ scroll_smooth = true
 [connection signal="region_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionPreviewerContainer" to="pcont/MarginContainer/VBoxContainer/SplitContainer/VBoxContainer/RegionsContainerGlobalCommands" method="_on_region_previewer_container_region_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="." method="_on_export_type_item_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer" method="set_current_tab"]
-[connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/AdvancedImageExport" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2" method="set_visible"]
+[connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/AdvancedImageExport" to="." method="_on_advanced_image_export_toggled"]
+[connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder/SelectImageExportFolder" to="." method="_on_select_image_export_folder_pressed"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/format/ExportFormat" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets" method="set_current_tab"]
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets/Webp/vbox/hbox3/WEBPLossy" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets/Webp/vbox/WEBPQualityDock" method="set_visible"]
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SaveEnumAsScene" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions" method="set_visible"]

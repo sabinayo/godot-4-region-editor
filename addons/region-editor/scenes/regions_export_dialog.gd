@@ -17,8 +17,10 @@ enum TipTypes {
 const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 const DEFAULT_ENUN_EXPORT_TIP: String = "(Click Regions to edit their description)"
+const DEFAULT_IMAGE_EXPORT_TIP: String = "Select a destination folder to export images..."
 const REGIONS_ENUM_EDITOR_DESCRIPTION: String = "Allow to select exported edited regions in 'Region Editor' through enumaration."
 
+@export var ADVANCED_SETTINGS: Array[NodePath] = []
 
 var can_be_deleted: bool = false
 var enum_base_texture: String = ""
@@ -136,11 +138,10 @@ func add_built_in_script_to_regions_enum(regions_enum: Sprite2D) -> void:
 	regions_enum.set_script(script)
 
 
-
 func get_region_enum_script_code() -> String:
 	var source_code: String = \
 """@tool
-# Generated Script from RegionEditorPlugin. See https://sabinayo.github.com/
+# Generated Script from RegionEditorPlugin. See https://github.com/sabinayo/godot-region-editor
 
 extends Sprite2D
 
@@ -285,13 +286,30 @@ func _on_add_enum_description_pressed() -> void:
 	%DescriptionEdit.popup_centered()
 
 
+func _ready() -> void:
+	get_ok_button().disabled = not %ImagesExportFolderLabel.text
+	
+	if %ExportType.selected == 1:
+		%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
+	else:
+		if not %ImagesExportFolderLabel.text:
+			%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_IMAGE_EXPORT_TIP)
+		else:
+			%Info.hide()
+
+
 func _on_export_type_item_selected(index: int) -> void:
 	if index == 1:
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DESCRIPTION)
 		%Info.set_default_info(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
 		%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
 	else:
-		%Info.hide()
+		if not %ImagesExportFolderLabel.text:
+			%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_IMAGE_EXPORT_TIP)
+		else:
+			%Info.hide()
+		
+		get_ok_button().disabled = not %ImagesExportFolderLabel.text
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DISABLED)
 
 
@@ -306,3 +324,29 @@ func _on_description_edit_visibility_changed() -> void:
 		%AddEnumDescription.text = "Edit Description"
 	else:
 		%AddEnumDescription.text = "Add Description"
+
+
+func _on_select_image_export_folder_pressed() -> void:
+	var file_dialog: EditorFileDialog = EditorFileDialog.new()
+	add_child(file_dialog)
+	file_dialog.access = EditorFileDialog.ACCESS_FILESYSTEM
+	file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_DIR
+	file_dialog.title = "Select Regions Destination Folder"
+	file_dialog.popup_file_dialog()
+	file_dialog.dir_selected.connect(
+		func (dir: String) -> void:
+			%ImagesExportFolder.tooltip_text = dir
+			%ImagesExportFolderLabel.text = dir
+			%Info.hide()
+			get_ok_button().disabled = false
+			file_dialog.queue_free()
+	, CONNECT_ONE_SHOT)
+	file_dialog.canceled.connect(
+		func () -> void:
+			file_dialog.queue_free()
+	)
+
+
+func _on_advanced_image_export_toggled(toggled_on: bool) -> void:
+	for node_path: NodePath in ADVANCED_SETTINGS:
+		get_node(node_path).visible = toggled_on
