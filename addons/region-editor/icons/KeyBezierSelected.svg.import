@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d4kp6clvyuk0b"
-path="res://.godot/imported/handle_left.svg-69071a408a090a12784578516d23bfc7.ctex"
+uid="uid://clroo2yi33p01"
+path="res://.godot/imported/KeyBezierSelected.svg-b54e249e1e3e6584d6634de07ae210b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/region-editor/icons/handle_left.svg"
-dest_files=["res://.godot/imported/handle_left.svg-69071a408a090a12784578516d23bfc7.ctex"]
+source_file="res://addons/region-editor/icons/KeyBezierSelected.svg"
+dest_files=["res://.godot/imported/KeyBezierSelected.svg-b54e249e1e3e6584d6634de07ae210b0.ctex"]
 
 [params]
 

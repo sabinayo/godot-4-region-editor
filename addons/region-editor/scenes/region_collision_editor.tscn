@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmi1ggol1j8am"]
+
+[ext_resource type="Texture2D" uid="uid://bj5p0hwn65qp0" path="res://addons/region-editor/icons/CurveCreate.svg" id="1_gtwqk"]
+[ext_resource type="Script" path="res://addons/region-editor/scenes/region_collision_editor.gd" id="1_vpyu1"]
+[ext_resource type="Texture2D" uid="uid://gyct80ee8b12" path="res://addons/region-editor/icons/CurveEdit.svg" id="2_iaqws"]
+[ext_resource type="Texture2D" uid="uid://j831jk32xnqs" path="res://addons/region-editor/icons/CurveDelete.svg" id="3_0aeo3"]
+[ext_resource type="Texture2D" uid="uid://dnsyr7duk4jyq" path="res://addons/region-editor/icons/GuiTabMenuHl.svg" id="4_47yly"]
+[ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="5_w81bb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3yh1l"]
+texture = ExtResource("5_w81bb")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -11.1875, 8.0625)
+
+[sub_resource type="TileSet" id="TileSet_xv7iw"]
+physics_layer_0/collision_layer = 1
+sources/1 = SubResource("TileSetAtlasSource_3yh1l")
+
+[node name="RegionCollisionEditor" type="VBoxContainer"]
+custom_minimum_size = Vector2(0, 360)
+offset_right = 362.0
+offset_bottom = 358.0
+script = ExtResource("1_vpyu1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Expand" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("5_w81bb")
+
+[node name="AddCollisionPoint" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+icon = ExtResource("1_gtwqk")
+
+[node name="EditCollisionPoint" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+icon = ExtResource("2_iaqws")
+
+[node name="RemoveCollisionPoint" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+icon = ExtResource("3_0aeo3")
+
+[node name="Options" type="MenuButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+icon = ExtResource("4_47yly")
+item_count = 1
+popup/item_0/text = "Clear"
+
+[node name="EditorView" type="GraphEdit" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+show_grid = false
+zoom_max = 12.8
+minimap_enabled = false
+show_zoom_label = true
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+
+[node name="Preview" type="TextureRect" parent="EditorView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Node2D" type="Node2D" parent="EditorView"]
+
+[node name="CollisionLine" type="Line2D" parent="EditorView/Node2D"]
+unique_name_in_owner = true
+position = Vector2(0, -28)
+width = 2.0
+
+[node name="CollisionPointHandlers" type="Node2D" parent="EditorView/Node2D"]
+unique_name_in_owner = true
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_set = SubResource("TileSet_xv7iw")
+
+[connection signal="pressed" from="HBoxContainer/AddCollisionPoint" to="." method="_on_add_collision_point_pressed"]
+[connection signal="pressed" from="HBoxContainer/EditCollisionPoint" to="." method="_on_edit_collision_point_pressed"]
+[connection signal="pressed" from="HBoxContainer/RemoveCollisionPoint" to="." method="_on_remove_collision_point_pressed"]

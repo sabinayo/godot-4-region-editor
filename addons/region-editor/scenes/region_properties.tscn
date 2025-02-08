@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cou3we204lm21"]
+[gd_scene load_steps=10 format=3 uid="uid://cou3we204lm21"]
 
 [ext_resource type="Texture2D" uid="uid://6higsk7ncjcr" path="res://addons/region-editor/icons/RegionEdit.svg" id="1_41hcm"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_properties.gd" id="1_tpmds"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c62i0is2oymqt" path="res://addons/region-editor/icons/Unlock.svg" id="3_q5ig0"]
 [ext_resource type="Texture2D" uid="uid://b2p3x6xdr1rmr" path="res://addons/region-editor/icons/Lock.svg" id="4_vnlnu"]
 [ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="7_e1sf7"]
+[ext_resource type="PackedScene" uid="uid://dmi1ggol1j8am" path="res://addons/region-editor/scenes/region_collision_editor.tscn" id="8_7gcga"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a2llg"]
 outline_size = 8
@@ -242,6 +243,10 @@ text = "4096 x 4096
 No MipMap
 Memory: 64 Mib"
 label_settings = SubResource("LabelSettings_a2llg")
+
+[node name="RegionCollisionEditor" parent="mcont/scont/vbox" instance=ExtResource("8_7gcga")]
+layout_mode = 2
+size_flags_vertical = 3
 
 [connection signal="text_changed" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
 [connection signal="text_submitted" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]

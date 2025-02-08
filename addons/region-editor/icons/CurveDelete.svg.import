@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dd07dokqwv03i"
-path="res://.godot/imported/handle_bottom.svg-f9a294a55339b989c180a08771d76724.ctex"
+uid="uid://j831jk32xnqs"
+path="res://.godot/imported/CurveDelete.svg-6bb67f4279927359467ed36300a1a19e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/region-editor/icons/handle_bottom.svg"
-dest_files=["res://.godot/imported/handle_bottom.svg-f9a294a55339b989c180a08771d76724.ctex"]
+source_file="res://addons/region-editor/icons/CurveDelete.svg"
+dest_files=["res://.godot/imported/CurveDelete.svg-6bb67f4279927359467ed36300a1a19e.ctex"]
 
 [params]
 

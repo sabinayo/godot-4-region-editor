@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl6i7lc0idqqx"
-path="res://.godot/imported/handle_right.svg-a1ac66ffe314d3f277d5e497d89fd052.ctex"
+uid="uid://bj5p0hwn65qp0"
+path="res://.godot/imported/CurveCreate.svg-513e7dac4e0945381ae357730afd59b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/region-editor/icons/handle_right.svg"
-dest_files=["res://.godot/imported/handle_right.svg-a1ac66ffe314d3f277d5e497d89fd052.ctex"]
+source_file="res://addons/region-editor/icons/CurveCreate.svg"
+dest_files=["res://.godot/imported/CurveCreate.svg-513e7dac4e0945381ae357730afd59b9.ctex"]
 
 [params]
 

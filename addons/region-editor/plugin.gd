@@ -1,40 +1,15 @@
 @tool
 extends EditorPlugin
 
-
-enum DragStates {
-	NONE,
-	RIGHT,
-	LEFT,
-	TOP,
-	BOTTOM,
-}
-
-const HANDLE_OFFSET: float = 8.0
-const GDRID_SIZE: float = 8.0
-
 var region_editor: Control = null
 var region_editor_btn: Button = null
-
 var inspector_plugin: EditorInspectorPlugin
 var undo_redo: EditorUndoRedoManager
-
-var img_handle_right: Texture2D = preload("icons/handle_right.svg") as Texture2D
-var img_handle_bottom: Texture2D = preload("icons/handle_bottom.svg") as Texture2D
-var img_handle_left: Texture2D = preload("icons/handle_left.svg") as Texture2D
-var img_handle_top: Texture2D = preload("icons/handle_top.svg") as Texture2D
-
-var current_object: Sprite2D
-var drag_state := DragStates.NONE
-var starting_mouse_pos_in_scene: Vector2
-var starting_current_object_global_rect: Rect2
-var starting_current_object_region_rect: Rect2
-var starting_current_object_global_pos: Vector2
 
 
 func _enter_tree() -> void:
 	undo_redo = get_undo_redo()
-	inspector_plugin = preload("scripts/inspector.gd").new(undo_redo)
+	inspector_plugin = preload("scripts/inspector.gd").new()
 	add_inspector_plugin(inspector_plugin)
 	
 	region_editor = preload("scenes/region_editor.tscn").instantiate() as Control
@@ -57,7 +32,6 @@ func _exit_tree() -> void:
 	region_editor_btn.queue_free()
 	remove_control_from_bottom_panel(region_editor)
 	region_editor.queue_free()
-
 
 
 func _on_texture_region_editor_requested(sprite: Sprite2D) -> void:
