@@ -17,7 +17,7 @@ var _multiple_edition: bool = false:
 	set(value):
 		_multiple_edition = value
 		
-		for node_path: NodePath in _hidden_on_multiple_edition:
+		for node_path in _hidden_on_multiple_edition:
 			get_node(node_path).visible = not _multiple_edition
 
 var _temp_sprite: Sprite2D = Sprite2D.new()
@@ -54,7 +54,7 @@ func edit_multiple_regions(edit: bool, datas: Array[Dictionary], color: Color) -
 	_edited_regions_data = datas
 	_edited_regions_id.clear()
 	
-	for data: Dictionary in datas:
+	for data in datas:
 		_edited_regions_id.append(data["id"])
 	
 	_updating = true
@@ -144,7 +144,7 @@ func _update_preview() -> void:
 func _set_properties_as_updated(properties: PackedStringArray) -> void:
 	var update: Dictionary = {}
 	
-	for property: String in properties:
+	for property in properties:
 		if property in _data:
 			update[property] = _data[property]
 	
@@ -215,7 +215,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 			
 			var removed_idx: int = 0
 			
-			for data: Dictionary in _edited_regions_data:
+			for data in _edited_regions_data:
 				if data["id"] == region_id:
 					break
 				
@@ -225,7 +225,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 			
 			var new_ids: PackedInt32Array = _edited_regions_id.duplicate()
 			
-			for id: int in _edited_regions_id:
+			for id in _edited_regions_id:
 				if id >= removed_idx:
 					var idx: int = new_ids.find(id)
 					new_ids[idx] = id - 1
@@ -234,7 +234,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 			
 			var dic_idx_to_remove: int = -1
 			
-			for data: Dictionary in _edited_regions_data:
+			for data in _edited_regions_data:
 				if not (data["id"] in _edited_regions_id):
 					dic_idx_to_remove = _edited_regions_data.find(data)
 				else:

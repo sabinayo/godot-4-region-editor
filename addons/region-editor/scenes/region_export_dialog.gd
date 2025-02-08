@@ -220,7 +220,7 @@ func _on_texture_background_color_picker_color_changed(color: Color) -> void:
 
 
 func _on_advanced_settings_toggled(toggled_on: bool) -> void:
-	for node_path: NodePath in ADVANCED_SETTINGS:
+	for node_path in ADVANCED_SETTINGS:
 		get_node(node_path).visible = toggled_on
 	
 	_force_size_update()

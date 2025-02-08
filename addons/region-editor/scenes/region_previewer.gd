@@ -138,8 +138,59 @@ func _on_export_pressed() -> void:
 	export_options.set_image(%Preview.duplicate())
 
 
-func export_to(dir: String) -> void:
-	pass
+func export(opts: Dictionary) -> void:
+	await RenderingServer.frame_post_draw
+	var image: Image = %DragPreview.get_texture().get_image()
+	
+	var path: String = opts["path"]
+	
+	if not path.ends_with("/"):
+		path += "/"
+	
+	path += preview_name
+	
+	var compress_image: Callable = func () -> void:
+		if  "compression" in opts:
+			image.compress(
+				opts["compression"],
+				opts["compression_source"],
+				opts["astc_format"]
+			)
+	
+	match opts["export_format"]:
+		0:
+			if not path.ends_with(".png"):
+				path += ".png"
+			
+			image.convert(opts["color_format"])
+			compress_image.call()
+			image.save_png(path)
+		
+		1:
+			if not path.ends_with(".jpg"):
+				path += ".jpg"
+			
+			image.convert(opts["color_format"])
+			compress_image.call()
+			image.save_jpg(path, opts["jpg_quality"])
+		
+		2:
+			if not path.ends_with(".webp"):
+				path += ".webp"
+			
+			image.convert(opts["color_format"])
+			compress_image.call()
+			image.save_webp(path, opts["webp_lossy"], opts["webp_quality"])
+		
+		3:
+			if not path.ends_with(".exr"):
+				path += ".exr"
+			
+			image.convert(opts["color_format"])
+			compress_image.call()
+			image.save_exr(path, opts["exr_grayscale"])
+	
+	#set_export_as_success(path)
 
 
 func _on_description_edit_visibility_changed() -> void:

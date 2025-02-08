@@ -17,7 +17,7 @@ size = Vector2i(715, 600)
 ok_button_text = "Export"
 dialog_hide_on_ok = false
 script = ExtResource("1_rrdy8")
-ADVANCED_SETTINGS = Array[NodePath]([NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/Label"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets")])
+ADVANCED_SETTINGS = Array[NodePath]([NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/Label"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets"), NodePath("pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression")])
 
 [node name="pcont" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(600, 400)
@@ -120,24 +120,29 @@ layout_mode = 2
 [node name="ExportSelectedRegionsAsImages" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 disabled = true
 text = "Only Export Selected Regions"
 
 [node name="AdvancedImageExport" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 4
 text = "Advanced Export"
 
-[node name="ImagesExportFolder" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="ImagesExportFolder" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ImagesExportFolder"]
 layout_mode = 2
 text = "Folder: "
 
-[node name="ImagesExportFolderLabel" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+[node name="ImagesExportFolderLabel" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ImagesExportFolder"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -146,61 +151,33 @@ vertical_alignment = 1
 clip_text = true
 text_overrun_behavior = 3
 
-[node name="SelectImageExportFolder" type="Button" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder"]
+[node name="SelectImageExportFolder" type="Button" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ImagesExportFolder"]
+layout_mode = 2
+icon = ExtResource("4_vycu1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="OpenFolderAfterExport" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Open Folder After Export"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Open Export Folder: "
+
+[node name="OpenExportFolder" type="Button" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 icon = ExtResource("4_vycu1")
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="ImageBackground" type="PanelContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="Panel" type="Panel" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground"]
-layout_mode = 2
-
-[node name="mcont" type="MarginContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="vbox" type="VBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont"]
-layout_mode = 2
-tooltip_text = "Change the image background color."
-
-[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox"]
-layout_mode = 2
-text = "Background"
-
-[node name="hbox" type="VBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox"]
-layout_mode = 2
-
-[node name="hbox" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox/hbox"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox/hbox/hbox"]
-layout_mode = 2
-text = "Color: "
-
-[node name="TextureBackgroundColorPicker" type="ColorPickerButton" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox/hbox/hbox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Change the image background color.(Can be Transparent)"
-color = Color(1, 1, 1, 1)
-
-[node name="UseTransparentBackground" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/ImageBackground/mcont/vbox/hbox"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Make Image Background Transparent."
-button_pressed = true
-text = "Transparent"
 
 [node name="vbox" type="VBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -225,7 +202,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "PNG: Saves the image as a PNG file
 
-JPG: Saves the image as a JPEG file to path with the specified quality between 0.01 and 1.0 (inclusive).
+JPG: Saves the image as a JPEG file to path with the specified quality between 1% and 100% (inclusive).
 
 WEBP: Saves the image as a WebP (Web Picture) file to the file
 The WebP format is limited to a size of 16383×16383 pixels, while PNG can save larger images.
@@ -723,6 +700,116 @@ popup/item_37/id = 37
 popup/item_38/text = "ASTC_8x8_HDR"
 popup/item_38/id = 38
 
+[node name="compression" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="compresion" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression"]
+layout_mode = 2
+tooltip_text = "Compresses the image to use less memory.
+Can not directly access pixel data while the image is compressed.
+Returns error if the chosen compression mode is not available."
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/compresion"]
+layout_mode = 2
+text = "Compression:"
+
+[node name="CompressionOptions" type="OptionButton" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/compresion"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "● None
+Image is not compressed.
+
+● S3TC = 0
+Use S3TC compression.
+
+● ETC = 1
+Use ETC compression.
+
+● ETC2 = 2
+Use ETC2 compression.
+
+● BPTC = 3
+Use BPTC compression.
+
+● ASTC = 4
+Use ASTC compression.
+
+See Image.CompressMode"
+selected = 0
+item_count = 6
+popup/item_0/text = "None"
+popup/item_1/text = "S3TC"
+popup/item_1/id = 1
+popup/item_2/text = "ETC"
+popup/item_2/id = 2
+popup/item_3/text = "ETC2"
+popup/item_3/id = 3
+popup/item_4/text = "BPTC"
+popup/item_4/id = 4
+popup/item_5/text = "ASTC"
+popup/item_5/id = 5
+
+[node name="compresionSource" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Helps to pick the best compression method for DXT and ETC2 formats.
+
+See Image.compress()"
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/compresionSource"]
+layout_mode = 2
+text = "Source:"
+
+[node name="CompressionSourceOptions" type="OptionButton" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/compresionSource"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "● COMPRESS_SOURCE_GENERIC = 0
+Source texture (before compression) is a regular texture. Default for all textures.
+
+● COMPRESS_SOURCE_SRGB = 1
+Source texture (before compression) is in sRGB space.
+
+● COMPRESS_SOURCE_NORMAL = 2
+Source texture (before compression) is a normal texture (e.g. it can be compressed into two channels).
+
+See: Image.CompressionSource"
+selected = 0
+item_count = 3
+popup/item_0/text = "GENERIC"
+popup/item_1/text = "SRGB"
+popup/item_1/id = 1
+popup/item_2/text = "NORMAL"
+popup/item_2/id = 2
+
+[node name="ASTCFormat" type="HBoxContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Helps to pick the best compression method for ASTC format.
+
+See Image.compress() and Image.ASTCFormat"
+
+[node name="Label" type="Label" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/ASTCFormat"]
+layout_mode = 2
+text = "ASTC format:"
+
+[node name="AstcFormatOptions" type="OptionButton" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/ASTCFormat"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "4x4: Indicate that high quality 4×4 ASTC compression format should be used.
+
+8x8:  Indicate that the low quality 8×8 ASTC compression format should be used.
+
+See Image.ASTCFormat"
+selected = 0
+item_count = 2
+popup/item_0/text = "4x4"
+popup/item_1/text = "8x8"
+popup/item_1/id = 1
+
 [node name="Enumaration" type="PanelContainer" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
@@ -919,9 +1006,11 @@ scroll_smooth = true
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="." method="_on_export_type_item_selected"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/HBoxContainer/ExportType" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer" method="set_current_tab"]
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/AdvancedImageExport" to="." method="_on_advanced_image_export_toggled"]
-[connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/ImagesExportFolder/SelectImageExportFolder" to="." method="_on_select_image_export_folder_pressed"]
+[connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/ImagesExportFolder/SelectImageExportFolder" to="." method="_on_select_image_export_folder_pressed"]
+[connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer/OpenExportFolder" to="." method="_on_open_export_folder_pressed"]
 [connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/format/ExportFormat" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets" method="set_current_tab"]
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets/Webp/vbox/hbox3/WEBPLossy" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/vbox/ExportPresets/Webp/vbox/WEBPQualityDock" method="set_visible"]
+[connection signal="item_selected" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Images/MarginContainer/VBoxContainer/HBoxContainer2/compression/compresion/CompressionOptions" to="." method="_on_compression_options_item_selected"]
 [connection signal="toggled" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/SaveEnumAsScene" to="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions" method="set_visible"]
 [connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/AddEnumDescription" to="." method="_on_add_enum_description_pressed"]
 [connection signal="pressed" from="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/SceneOptions/HBoxContainer/ScenePathCont/SelectEnumarationScenePath" to="." method="_on_select_enumaration_scene_path_pressed"]

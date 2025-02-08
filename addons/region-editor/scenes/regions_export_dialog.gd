@@ -14,7 +14,6 @@ enum TipTypes {
 	IMPORTANT, VERY_IMPORTANT,
 }
 
-const REGIONS_ENUM: PackedScene = preload("region_editor_regions_enum.tscn")
 const REGION_PREVIEWER: PackedScene = preload("region_previewer.tscn")
 const DEFAULT_ENUN_EXPORT_TIP: String = "(Click Regions to edit their description)"
 const DEFAULT_IMAGE_EXPORT_TIP: String = "Select a destination folder to export images..."
@@ -32,29 +31,51 @@ func set_data(regions_data: Array[Dictionary]) -> void:
 	popup_centered()
 
 
-func export_images(dir: String) -> void:
-	pass
-
-
 func _on_confirmed() -> void:
 	match %ExportType.selected:
 		0:
-			var file_dialog: EditorFileDialog = EditorFileDialog.new()
-			add_child(file_dialog)
-			file_dialog.access = EditorFileDialog.ACCESS_RESOURCES
-			file_dialog.file_mode = EditorFileDialog.FILE_MODE_OPEN_ANY
-			file_dialog.title = "Select Regions Destination Folder"
-			file_dialog.popup_file_dialog()
-			file_dialog.dir_selected.connect(
-				func (dir: String) -> void:
-					export_images(dir)
-					file_dialog.queue_free()
-			, CONNECT_ONE_SHOT)
-			file_dialog.canceled.connect(
-				func () -> void:
-					file_dialog.queue_free()
-			)
-		
+			var opts: Dictionary = {
+				"path": %ImagesExportFolderLabel.text,
+				"export_format": %ExportFormat.selected,
+			}
+			
+			if %CompressionOptions.selected != 0:
+				opts["compression"] = %CompressionOptions.selected - 1
+				opts["compression_source"] = %CompressionSourceOptions.selected
+				opts["astc_format"] = %AstcFormatOptions.selected
+			
+			match %ExportFormat.selected:
+				0:
+					opts["color_format"] = %PngColorFormat.selected
+				
+				1:
+					opts["color_format"] = %JPGColorFormat.selected
+					opts["jpg_quality"] = %JPGQuality.value / 100.0
+				
+				2:
+					opts["color_format"] = %WEBPColorFormat.selected
+					opts["webp_lossy"] = %WEBPLossy.button_pressed
+					
+					opts["webp_quality"] = 0.75
+					
+					if opts["webp_lossy"]:
+						opts["webp_quality"] = opts["webp_quality"] / 100.0
+				
+				3:
+					opts["color_format"] = %EXRColorFormat.selected
+					opts["exr_grayscale"] = %ExrGrayscale.button_pressed
+			
+			var only_selected: bool = false
+			
+			if not %ExportSelectedRegionsAsImages.disabled:
+				only_selected = %ExportSelectedRegionsAsImages.button_pressed
+			
+			%RegionPreviewerContainer.export_regions(opts, only_selected)
+			%Info.display(RegionEditorInfo.Types.SUCCESS, "Images exported", 3.0)
+			
+			if %OpenFolderAfterExport.button_pressed:
+				_on_open_export_folder_pressed()
+	
 		1:
 			var regions_enum: Sprite2D = Sprite2D.new()
 			regions_enum.editor_description = REGIONS_ENUM_EDITOR_DESCRIPTION
@@ -186,7 +207,7 @@ const REGIONS: Dictionary = {
 	
 	var enum_value_id: int = 0
 	
-	for data: Dictionary in regions_data:
+	for data in regions_data:
 		# convert each name to: THIS_FORMAT
 		var enum_value: String = data["name"]
 		
@@ -348,5 +369,16 @@ func _on_select_image_export_folder_pressed() -> void:
 
 
 func _on_advanced_image_export_toggled(toggled_on: bool) -> void:
-	for node_path: NodePath in ADVANCED_SETTINGS:
+	for node_path in ADVANCED_SETTINGS:
 		get_node(node_path).visible = toggled_on
+
+
+func _on_compression_options_item_selected(index: int) -> void:
+	# Ignore Compresion NONE and ASTC
+	%compresionSource.visible = not (index in [0, 5])
+	%ASTCFormat.visible = index == 5
+
+
+func _on_open_export_folder_pressed() -> void:
+	if %ImagesExportFolderLabel.text:
+		OS.shell_open(%ImagesExportFolderLabel.text)

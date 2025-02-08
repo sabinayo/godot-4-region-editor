@@ -43,7 +43,7 @@ func _on_search_applied(new_text: String) -> void:
 	var will_be_visible: bool = new_text == ""
 	
 	if not will_be_visible:
-		for c: String in new_text:
+		for c in new_text:
 			if c in _data["texture_name"]:
 				will_be_visible = true
 				break

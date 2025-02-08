@@ -662,7 +662,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "PNG: Saves the image as a PNG file
 
-JPG: Saves the image as a JPEG file to path with the specified quality between 0.01 and 1.0 (inclusive).
+JPG: Saves the image as a JPEG file to path with the specified quality between 1% and 100% (inclusive).
 
 WEBP: Saves the image as a WebP (Web Picture) file to the file
 The WebP format is limited to a size of 16383×16383 pixels, while PNG can save larger images.

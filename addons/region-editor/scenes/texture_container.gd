@@ -35,7 +35,7 @@ func _drop_data(at_position: Vector2, data: Variant) -> void:
 
 
 func add_textures(files: PackedStringArray) -> void:
-	for file_path: String in files:
+	for file_path in files:
 		if not (file_path.get_extension() in recognized_extensions):
 			continue
 		

@@ -172,7 +172,7 @@ func _on_self_modulate_color_changed(color: Color) -> void:
 func _set_properties_as_updated(properties: PackedStringArray) -> void:
 	var update: Dictionary = {}
 	
-	for property: String in properties:
+	for property in properties:
 		if property in _texture_data:
 			update[property] = _texture_data[property]
 	

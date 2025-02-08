@@ -22,7 +22,7 @@ func _on_add_texture() -> void:
 	var recognized_extensions: PackedStringArray = ResourceLoader.get_recognized_extensions_for_type("Image")
 	var extensions: PackedStringArray = []
 	
-	for extension: String in recognized_extensions:
+	for extension in recognized_extensions:
 		extensions.append("*.%s" % extension)
 	
 	var file_dialog: EditorFileDialog = EditorFileDialog.new()

@@ -31,7 +31,7 @@ var _select_all_regions: bool = false
 
 
 func delete_regions() -> void:
-	for region: RegionEditorRegionPreviewer in %Container.get_children():
+	for region in %Container.get_children():
 		region._on_delete_pressed()
 
 
@@ -40,7 +40,7 @@ func change_region_edition_type(to: RegionEditorRegionPreviewer.EditionTypes) ->
 
 
 func add_regions(datas: Array[Dictionary]) -> void:
-	for data: Dictionary in datas:
+	for data in datas:
 		var preview: RegionEditorRegionPreviewer = REGION_PREVIEWER.instantiate()
 		%Container.add_child(preview)
 		region_count += 1
@@ -92,7 +92,7 @@ func update_region_data(data: Dictionary) -> void:
 func get_selected_regions_data() -> Array[Dictionary]:
 	var data: Array[Dictionary] = []
 	
-	for region_id: int in selected_regions:
+	for region_id in selected_regions:
 		data.append(%Container.get_child(region_id).get_data())
 	
 	return data
@@ -101,7 +101,7 @@ func get_selected_regions_data() -> Array[Dictionary]:
 func get_regions_data() -> Array[Dictionary]:
 	var data: Array[Dictionary] = []
 	
-	for region: RegionEditorRegionPreviewer in %Container.get_children():
+	for region in %Container.get_children():
 		data.append(region.get_data())
 	
 	return data
@@ -112,11 +112,11 @@ func _on_selected_region_deletion_requested() -> void:
 	# any region is deleted
 	var regions_to_delete: Array[NodePath] = []
 	
-	for region_id: int in selected_regions:
+	for region_id in selected_regions:
 		var region: RegionEditorRegionPreviewer = %Container.get_child(region_id) as RegionEditorRegionPreviewer
 		regions_to_delete.append(region.get_path())
 	
-	for region_path: NodePath in regions_to_delete:
+	for region_path in regions_to_delete:
 		var region: RegionEditorRegionPreviewer = get_node_or_null(region_path)
 		
 		if region:
@@ -146,7 +146,7 @@ func _on_region_selected(is_selected: bool, region_id: int) -> void:
 func _update_selected_regions_count() -> void:
 	selected_regions.clear()
 	
-	for child: RegionEditorRegionPreviewer in %Container.get_children():
+	for child in %Container.get_children():
 		if child.is_selected():
 			selected_regions.append(child.get_index())
 
@@ -166,7 +166,7 @@ func _on_region_properties_property_updated(data: Dictionary) -> void:
 		preview.set_data(data, _display_regions_names, _select_all_regions)
 	
 	elif "ids" in data:
-		for id: int in data["ids"]:
+		for id in data["ids"]:
 			var preview: RegionEditorRegionPreviewer = %Container.get_child(id)
 			preview.set_data(data, _display_regions_names, _select_all_regions)
 
@@ -220,14 +220,23 @@ func _on_toggle_regions_names_visibility(toggled_on: bool) -> void:
 func _on_select_all_regions(are_selected: bool) -> void:
 	_select_all_regions = are_selected
 	
-	for region: RegionEditorRegionPreviewer in %Container.get_children():
+	for region in %Container.get_children():
 		region.select(are_selected)
 
 
 func set_data_from_texture_setup(data: Dictionary) -> void:
-	for region: RegionEditorRegionPreviewer in %Container.get_children():
+	for region in %Container.get_children():
 		region.update_data(data)
 
 
 func _on_resized() -> void:
 	update_previewers_display()
+
+
+func export_regions(opts: Dictionary, only_selected: bool) -> void:
+	if only_selected:
+		for region_id in selected_regions:
+			%Container.get_child(region_id).export(opts)
+	else:
+		for region in %Container.get_children():
+			region.export(opts)

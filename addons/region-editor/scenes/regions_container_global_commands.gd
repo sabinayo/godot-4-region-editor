@@ -48,7 +48,7 @@ func add_connections() -> void:
 	if not regions_container:
 		return
 	
-	for connection: StringName in INCOMMING_CONNECTIONS:
+	for connection in INCOMMING_CONNECTIONS:
 		var connection_established: bool = regions_container.is_connected(
 			connection,
 			Callable(self, INCOMMING_CONNECTIONS[connection])
@@ -65,7 +65,7 @@ func add_connections() -> void:
 			Callable(self, INCOMMING_CONNECTIONS[connection])
 		, CONNECT_PERSIST)
 	
-	for connection: StringName in OUTGOING_CONNECTIONS:
+	for connection in OUTGOING_CONNECTIONS:
 		var connection_established: bool = is_connected(
 			connection,
 			Callable(regions_container, OUTGOING_CONNECTIONS[connection])
@@ -91,7 +91,7 @@ func break_all_connections() -> void:
 	if not regions_container:
 		return
 	
-	for connection: StringName in INCOMMING_CONNECTIONS:
+	for connection in INCOMMING_CONNECTIONS:
 		var connection_established: bool = regions_container.is_connected(
 			connection,
 			Callable(self, INCOMMING_CONNECTIONS[connection])
@@ -103,7 +103,7 @@ func break_all_connections() -> void:
 				Callable(self, INCOMMING_CONNECTIONS[connection])
 			)
 	
-	for connection: StringName in OUTGOING_CONNECTIONS:
+	for connection in OUTGOING_CONNECTIONS:
 		var connection_established: bool = is_connected(
 			connection,
 			Callable(regions_container, OUTGOING_CONNECTIONS[connection])
