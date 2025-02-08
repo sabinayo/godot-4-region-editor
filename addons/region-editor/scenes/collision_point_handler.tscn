@@ -1,21 +1,33 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdkbfd2nqia33"]
 
-[ext_resource type="Texture2D" uid="uid://dlijga03tbekw" path="res://addons/region-editor/icons/KeyBezierPoint.svg" id="1_bse8x"]
 [ext_resource type="Texture2D" uid="uid://clroo2yi33p01" path="res://addons/region-editor/icons/KeyBezierSelected.svg" id="2_27svl"]
+[ext_resource type="Texture2D" uid="uid://dbevq4uudjd1g" path="res://addons/region-editor/icons/EditorPathSharpHandle.svg" id="2_rwdam"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/collision_point_handler.gd" id="3_c3e37"]
 
-[node name="CollisionPointHandler" type="TextureButton"]
-offset_right = 16.0
-offset_bottom = 16.0
-pivot_offset = Vector2(8, 8)
+[node name="CollisionPointHandler" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+tooltip_text = "id: 0"
+script = ExtResource("3_c3e37")
+
+[node name="Handler" type="TextureButton" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 action_mode = 0
-texture_normal = ExtResource("1_bse8x")
+texture_normal = ExtResource("2_rwdam")
 texture_pressed = ExtResource("2_27svl")
 ignore_texture_size = true
 stretch_mode = 5
-script = ExtResource("3_c3e37")
 
-[connection signal="button_down" from="." to="." method="_on_button_down"]
-[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="button_down" from="Handler" to="." method="_on_handler_button_down"]
+[connection signal="button_up" from="Handler" to="." method="_on_handler_button_up"]

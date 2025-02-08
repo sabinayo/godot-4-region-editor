@@ -139,6 +139,7 @@ func _update_preview() -> void:
 		"No Mipmaps" if not image.has_mipmaps() else "Has Mipmaps",
 		get_image_real_size(image.get_data_size())
 	]
+	%RegionCollisionEditor.set_texture_preview(%Preview.duplicate())
 
 
 func _set_properties_as_updated(properties: PackedStringArray) -> void:
@@ -243,3 +244,7 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 			
 			_edited_regions_data.remove_at(dic_idx_to_remove)
 			_edited_regions_id = new_ids
+
+
+func _on_region_collision_editor_distraction_free_changed(enabled: bool) -> void:
+	%Distractions.visible = not enabled

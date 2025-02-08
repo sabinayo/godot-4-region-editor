@@ -1,20 +1,103 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmi1ggol1j8am"]
+[gd_scene load_steps=17 format=3 uid="uid://dmi1ggol1j8am"]
 
 [ext_resource type="Texture2D" uid="uid://bj5p0hwn65qp0" path="res://addons/region-editor/icons/CurveCreate.svg" id="1_gtwqk"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_collision_editor.gd" id="1_vpyu1"]
 [ext_resource type="Texture2D" uid="uid://gyct80ee8b12" path="res://addons/region-editor/icons/CurveEdit.svg" id="2_iaqws"]
+[ext_resource type="Texture2D" uid="uid://cpgbrbfusyowm" path="res://addons/region-editor/icons/DistractionFree.svg" id="2_maviq"]
 [ext_resource type="Texture2D" uid="uid://j831jk32xnqs" path="res://addons/region-editor/icons/CurveDelete.svg" id="3_0aeo3"]
 [ext_resource type="Texture2D" uid="uid://dnsyr7duk4jyq" path="res://addons/region-editor/icons/GuiTabMenuHl.svg" id="4_47yly"]
-[ext_resource type="Texture2D" uid="uid://djxxy1wy14mhc" path="res://addons/region-editor/icons/ActionCopy.svg" id="5_w81bb"]
+[ext_resource type="Texture2D" uid="uid://dxw452uvut4se" path="res://addons/region-editor/icons/SnapDisable.svg" id="7_dxvn2"]
+[ext_resource type="Texture2D" uid="uid://dnqg346m3ws2l" path="res://addons/region-editor/icons/Snap.svg" id="8_1ntmj"]
+[ext_resource type="Texture2D" uid="uid://vrveasw5jjce" path="res://addons/region-editor/icons/SnapGrid.svg" id="9_ft7hg"]
+[ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="10_hy8u0"]
+[ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="11_wnpu2"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3yh1l"]
-texture = ExtResource("5_w81bb")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvy47"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0gj3w"]
+
+[sub_resource type="Theme" id="Theme_6srvm"]
+HScrollBar/styles/grabber = SubResource("StyleBoxEmpty_wvy47")
+HScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_wvy47")
+HScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_wvy47")
+HScrollBar/styles/scroll = SubResource("StyleBoxEmpty_wvy47")
+HScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_wvy47")
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_0gj3w")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_0gj3w")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_0gj3w")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_0gj3w")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_0gj3w")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vname"]
+texture = ExtResource("11_wnpu2")
+texture_region_size = Vector2i(512, 512)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -11.1875, 8.0625)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_xv7iw"]
+tile_size = Vector2i(512, 512)
 physics_layer_0/collision_layer = 1
-sources/1 = SubResource("TileSetAtlasSource_3yh1l")
+sources/0 = SubResource("TileSetAtlasSource_vname")
 
 [node name="RegionCollisionEditor" type="VBoxContainer"]
 custom_minimum_size = Vector2(0, 360)
@@ -22,42 +105,94 @@ offset_right = 362.0
 offset_bottom = 358.0
 script = ExtResource("1_vpyu1")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Expand" type="Button" parent="HBoxContainer"]
+[node name="DistractionFree" type="Button" parent="HBoxContainer"]
 layout_mode = 2
-icon = ExtResource("5_w81bb")
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Expand editor"
+toggle_mode = true
+icon = ExtResource("2_maviq")
 
 [node name="AddCollisionPoint" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Add polygon tool"
 icon = ExtResource("1_gtwqk")
 
 [node name="EditCollisionPoint" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Edit points tool"
 icon = ExtResource("2_iaqws")
 
 [node name="RemoveCollisionPoint" type="Button" parent="HBoxContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Remove points tool"
 icon = ExtResource("3_0aeo3")
 
 [node name="Options" type="MenuButton" parent="HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
 icon = ExtResource("4_47yly")
 item_count = 1
 popup/item_0/text = "Clear"
+
+[node name="SnapOptions" type="OptionButton" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Toggle grid snap"
+text_overrun_behavior = 4
+clip_text = true
+selected = 0
+fit_to_longest_item = false
+item_count = 3
+popup/item_0/text = "Snap Disabled"
+popup/item_0/icon = ExtResource("7_dxvn2")
+popup/item_1/text = "Half-Pixel Snap"
+popup/item_1/icon = ExtResource("8_1ntmj")
+popup/item_1/id = 1
+popup/item_2/text = "Grid Snap"
+popup/item_2/icon = ExtResource("9_ft7hg")
+popup/item_2/id = 2
+
+[node name="GridSnap" type="SpinBox" parent="HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = 2.0
+value = 2.0
 
 [node name="EditorView" type="GraphEdit" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-mouse_filter = 1
-show_grid = false
+theme = SubResource("Theme_6srvm")
+snapping_enabled = false
+snapping_distance = 100
 zoom_max = 12.8
 minimap_enabled = false
 show_zoom_label = true
@@ -65,39 +200,52 @@ show_grid_buttons = false
 show_minimap_button = false
 show_arrange_button = false
 
-[node name="Preview" type="TextureRect" parent="EditorView"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(300, 300)
+[node name="GraphElement" type="GraphElement" parent="EditorView"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+offset_left = -125.0
+offset_top = -58.5
+offset_right = 211.0
+offset_bottom = 296.5
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+position_offset = Vector2(56, 102)
+
+[node name="Control" type="Control" parent="EditorView/GraphElement"]
+layout_mode = 2
+
+[node name="Preview" type="TextureRect" parent="EditorView/GraphElement/Control"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+offset_right = 300.0
+offset_bottom = 300.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Node2D" type="Node2D" parent="EditorView"]
+[node name="Node2D" type="Node2D" parent="EditorView/GraphElement"]
 
-[node name="CollisionLine" type="Line2D" parent="EditorView/Node2D"]
+[node name="CollisionLine" type="Line2D" parent="EditorView/GraphElement/Node2D"]
 unique_name_in_owner = true
-position = Vector2(0, -28)
 width = 2.0
+texture = ExtResource("10_hy8u0")
 
-[node name="CollisionPointHandlers" type="Node2D" parent="EditorView/Node2D"]
+[node name="CollisionPointHandlers" type="Node2D" parent="EditorView/GraphElement/Node2D"]
 unique_name_in_owner = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
+modulate = Color(0.690196, 0.192157, 0.192157, 1)
 tile_set = SubResource("TileSet_xv7iw")
 
+[connection signal="toggled" from="HBoxContainer/DistractionFree" to="." method="_on_distraction_free_toggled"]
 [connection signal="pressed" from="HBoxContainer/AddCollisionPoint" to="." method="_on_add_collision_point_pressed"]
 [connection signal="pressed" from="HBoxContainer/EditCollisionPoint" to="." method="_on_edit_collision_point_pressed"]
 [connection signal="pressed" from="HBoxContainer/RemoveCollisionPoint" to="." method="_on_remove_collision_point_pressed"]
+[connection signal="item_selected" from="HBoxContainer/SnapOptions" to="." method="_on_snap_options_item_selected"]
+[connection signal="value_changed" from="HBoxContainer/GridSnap" to="." method="_on_grid_snap_value_changed"]

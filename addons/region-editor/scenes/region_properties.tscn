@@ -19,7 +19,7 @@ offset_right = 346.0
 offset_bottom = 353.0
 size_flags_vertical = 3
 script = ExtResource("1_tpmds")
-_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/hbox"), NodePath("mcont/scont/vbox/UpdateRect"), NodePath("mcont/scont/vbox/commands"), NodePath("mcont/scont/vbox/PreviewBackground")])
+_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/Distractions/hbox"), NodePath("mcont/scont/vbox/Distractions/UpdateRect"), NodePath("mcont/scont/vbox/Distractions/commands"), NodePath("mcont/scont/vbox/Distractions/PreviewBackground")])
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -40,42 +40,46 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox"]
+[node name="Distractions" type="VBoxContainer" parent="mcont/scont/vbox"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/hbox"]
+[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/Distractions"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/hbox"]
 layout_mode = 2
 text = "Name: "
 
-[node name="Name" type="LineEdit" parent="mcont/scont/vbox/hbox"]
+[node name="Name" type="LineEdit" parent="mcont/scont/vbox/Distractions/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Export" type="Button" parent="mcont/scont/vbox"]
+[node name="Export" type="Button" parent="mcont/scont/vbox/Distractions"]
 layout_mode = 2
 text = "Export"
 icon = ExtResource("2_13fl6")
 icon_alignment = 2
 expand_icon = true
 
-[node name="vbox2" type="VBoxContainer" parent="mcont/scont/vbox"]
+[node name="vbox2" type="VBoxContainer" parent="mcont/scont/vbox/Distractions"]
 layout_mode = 2
 
-[node name="hbox2" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+[node name="hbox2" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox2"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/vbox2/hbox2"]
 layout_mode = 2
 text = "Modulate: "
 
-[node name="Modulate" type="ColorPickerButton" parent="mcont/scont/vbox/vbox2/hbox2"]
+[node name="Modulate" type="ColorPickerButton" parent="mcont/scont/vbox/Distractions/vbox2/hbox2"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 1)
 
-[node name="LockModulate" type="TextureButton" parent="mcont/scont/vbox/vbox2/hbox2"]
+[node name="LockModulate" type="TextureButton" parent="mcont/scont/vbox/Distractions/vbox2/hbox2"]
 visible = false
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -85,18 +89,18 @@ texture_pressed = ExtResource("4_vnlnu")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="hbox3" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+[node name="hbox3" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2"]
 layout_mode = 2
 tooltip_text = "See CanvasItem.TextureFilter"
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox3"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/vbox2/hbox3"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Filter: "
 vertical_alignment = 1
 
-[node name="TextureFilter" type="OptionButton" parent="mcont/scont/vbox/vbox2/hbox3"]
+[node name="TextureFilter" type="OptionButton" parent="mcont/scont/vbox/Distractions/vbox2/hbox3"]
 layout_mode = 2
 size_flags_horizontal = 3
 text_overrun_behavior = 3
@@ -117,18 +121,18 @@ popup/item_5/id = 5
 popup/item_6/text = "Linear Mipmap Anisotropic"
 popup/item_6/id = 6
 
-[node name="hbox5" type="HBoxContainer" parent="mcont/scont/vbox/vbox2"]
+[node name="hbox5" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2"]
 layout_mode = 2
 tooltip_text = "See CanvasItem.TextureRepeat"
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/hbox5"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/vbox2/hbox5"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Repeat: "
 vertical_alignment = 1
 
-[node name="TextureRepeat" type="OptionButton" parent="mcont/scont/vbox/vbox2/hbox5"]
+[node name="TextureRepeat" type="OptionButton" parent="mcont/scont/vbox/Distractions/vbox2/hbox5"]
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
@@ -141,47 +145,47 @@ popup/item_2/id = 2
 popup/item_3/text = "Mirror"
 popup/item_3/id = 3
 
-[node name="Material" type="VBoxContainer" parent="mcont/scont/vbox/vbox2"]
+[node name="Material" type="VBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2"]
 visible = false
 layout_mode = 2
 
-[node name="MaterialEditor" type="HBoxContainer" parent="mcont/scont/vbox/vbox2/Material"]
+[node name="MaterialEditor" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2/Material"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/Material/MaterialEditor"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/vbox2/Material/MaterialEditor"]
 layout_mode = 2
 text = "Material: "
 
-[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/vbox2/Material"]
+[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/vbox2/Material"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="mcont/scont/vbox/vbox2/Material/hbox"]
+[node name="Label" type="Label" parent="mcont/scont/vbox/Distractions/vbox2/Material/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "Use Parent Material: "
 vertical_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="mcont/scont/vbox/vbox2/Material/hbox"]
+[node name="CheckBox" type="CheckBox" parent="mcont/scont/vbox/Distractions/vbox2/Material/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="UpdateRect" type="Button" parent="mcont/scont/vbox"]
+[node name="UpdateRect" type="Button" parent="mcont/scont/vbox/Distractions"]
 layout_mode = 2
 text = "Update"
 icon = ExtResource("1_41hcm")
 expand_icon = true
 
-[node name="commands" type="ScrollContainer" parent="mcont/scont/vbox"]
+[node name="commands" type="ScrollContainer" parent="mcont/scont/vbox/Distractions"]
 custom_minimum_size = Vector2(0, 31)
 layout_mode = 2
 follow_focus = true
 
-[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/commands"]
+[node name="hbox" type="HBoxContainer" parent="mcont/scont/vbox/Distractions/commands"]
 layout_mode = 2
 
-[node name="CopyRectData" type="Button" parent="mcont/scont/vbox/commands/hbox"]
+[node name="CopyRectData" type="Button" parent="mcont/scont/vbox/Distractions/commands/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
@@ -189,7 +193,7 @@ text = "Rect"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="CopyResourcePath" type="Button" parent="mcont/scont/vbox/commands/hbox"]
+[node name="CopyResourcePath" type="Button" parent="mcont/scont/vbox/Distractions/commands/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 0
@@ -197,7 +201,7 @@ text = "Texture Path"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="CopyImage" type="Button" parent="mcont/scont/vbox/commands/hbox"]
+[node name="CopyImage" type="Button" parent="mcont/scont/vbox/Distractions/commands/hbox"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -206,14 +210,15 @@ text = "Image"
 icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
-[node name="PreviewBackground" type="TextureRect" parent="mcont/scont/vbox"]
+[node name="PreviewBackground" type="TextureRect" parent="mcont/scont/vbox/Distractions"]
+visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("7_e1sf7")
 stretch_mode = 1
 
-[node name="Preview" type="TextureRect" parent="mcont/scont/vbox/PreviewBackground"]
+[node name="Preview" type="TextureRect" parent="mcont/scont/vbox/Distractions/PreviewBackground"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 1
@@ -227,7 +232,7 @@ size_flags_vertical = 3
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PreviewInfos" type="Label" parent="mcont/scont/vbox/PreviewBackground"]
+[node name="PreviewInfos" type="Label" parent="mcont/scont/vbox/Distractions/PreviewBackground"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 3
@@ -245,14 +250,16 @@ Memory: 64 Mib"
 label_settings = SubResource("LabelSettings_a2llg")
 
 [node name="RegionCollisionEditor" parent="mcont/scont/vbox" instance=ExtResource("8_7gcga")]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[connection signal="text_changed" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_changed"]
-[connection signal="text_submitted" from="mcont/scont/vbox/hbox/Name" to="." method="_on_name_text_submitted"]
-[connection signal="pressed" from="mcont/scont/vbox/Export" to="." method="_on_export_pressed"]
-[connection signal="color_changed" from="mcont/scont/vbox/vbox2/hbox2/Modulate" to="." method="_on_modulate_color_changed"]
-[connection signal="pressed" from="mcont/scont/vbox/UpdateRect" to="." method="_on_update_rect_pressed"]
-[connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
-[connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]
-[connection signal="pressed" from="mcont/scont/vbox/commands/hbox/CopyImage" to="." method="_on_copy_image_pressed"]
+[connection signal="text_changed" from="mcont/scont/vbox/Distractions/hbox/Name" to="." method="_on_name_text_changed"]
+[connection signal="text_submitted" from="mcont/scont/vbox/Distractions/hbox/Name" to="." method="_on_name_text_submitted"]
+[connection signal="pressed" from="mcont/scont/vbox/Distractions/Export" to="." method="_on_export_pressed"]
+[connection signal="color_changed" from="mcont/scont/vbox/Distractions/vbox2/hbox2/Modulate" to="." method="_on_modulate_color_changed"]
+[connection signal="pressed" from="mcont/scont/vbox/Distractions/UpdateRect" to="." method="_on_update_rect_pressed"]
+[connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
+[connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]
+[connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyImage" to="." method="_on_copy_image_pressed"]
+[connection signal="distraction_free_changed" from="mcont/scont/vbox/RegionCollisionEditor" to="." method="_on_region_collision_editor_distraction_free_changed"]

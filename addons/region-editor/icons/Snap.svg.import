@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlijga03tbekw"
-path="res://.godot/imported/KeyBezierPoint.svg-ad0963dd9ff2be787e4f37a13bed35e6.ctex"
+uid="uid://dnqg346m3ws2l"
+path="res://.godot/imported/Snap.svg-0917b1e63e00c07e34d8e345c4bf2827.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/region-editor/icons/KeyBezierPoint.svg"
-dest_files=["res://.godot/imported/KeyBezierPoint.svg-ad0963dd9ff2be787e4f37a13bed35e6.ctex"]
+source_file="res://addons/region-editor/icons/Snap.svg"
+dest_files=["res://.godot/imported/Snap.svg-0917b1e63e00c07e34d8e345c4bf2827.ctex"]
 
 [params]
 
