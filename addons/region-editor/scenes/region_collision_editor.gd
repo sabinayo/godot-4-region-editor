@@ -46,6 +46,7 @@ func set_texture_preview(preview: TextureRect) -> void:
 	%Preview.texture_repeat = preview.texture_repeat
 	%Preview.modulate = preview.modulate
 	%Preview.size = %Preview.texture.get_image().get_size()
+	%PreviewBackground.size = %Preview.size
 
 
 func _on_options_index_pressed(idx: int) -> void:
@@ -95,7 +96,6 @@ func _input(event: InputEvent) -> void:
 					action_changed.connect(point_handler._on_collision_editor_action_changed)
 					point_handler.selected.connect(_on_collision_point_handler_selected)
 					point_handler.collision_point_updated.connect(_on_collision_point_updated)
-					point_handler.close_collision_polygon.connect(_on_close_collision_polygon)
 
 
 func _on_add_collision_point_pressed() -> void:
@@ -131,33 +131,6 @@ func _on_collision_point_updated(handler_id: int, deleted: bool, point: Vector2,
 		
 		var handler = %CollisionPointHandlers.get_child(handler_id)
 		handler.collision_point = local_point_position
-
-
-func close_polygon() -> void:
-	pass
-
-
-func _on_close_collision_polygon() -> void:
-	pass
-	#%CollisionLine.closed = true
-
-
-func is_point_on_segment(point: Vector2, a: Vector2, b: Vector2) -> bool:
-	# Vérifie si le point est colinéaire au segment
-	var cross_product = (point - a).cross(b - a)
-	if abs(cross_product) > 0.00001:
-		return false  # Pas colinéaire, donc pas sur le segment
-	
-	# Vérifie si le point est dans les limites du segment
-	var dot_product = (point - a).dot(b - a)
-	if dot_product < 0:
-		return false  # Le point est en dehors du segment du côté de A
-	
-	var squared_length = (b - a).length_squared()
-	if dot_product > squared_length:
-		return false  # Le point est en dehors du segment du côté de B
-	
-	return true  # Le point est colinéaire et dans les limites du segment
 
 
 func _on_snap_options_item_selected(index: int) -> void:

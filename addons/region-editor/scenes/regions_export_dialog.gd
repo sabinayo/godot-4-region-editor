@@ -324,6 +324,7 @@ func _on_export_type_item_selected(index: int) -> void:
 		%RegionPreviewerContainer.change_region_edition_type(RegionEditorRegionPreviewer.EditionTypes.DESCRIPTION)
 		%Info.set_default_info(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
 		%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_ENUN_EXPORT_TIP)
+		get_ok_button().disabled = false
 	else:
 		if not %ImagesExportFolderLabel.text:
 			%Info.display(RegionEditorInfo.Types.WARNING, DEFAULT_IMAGE_EXPORT_TIP)

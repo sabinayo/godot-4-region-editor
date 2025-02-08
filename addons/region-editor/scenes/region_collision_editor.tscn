@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dmi1ggol1j8am"]
+[gd_scene load_steps=18 format=3 uid="uid://dmi1ggol1j8am"]
 
 [ext_resource type="Texture2D" uid="uid://bj5p0hwn65qp0" path="res://addons/region-editor/icons/CurveCreate.svg" id="1_gtwqk"]
 [ext_resource type="Script" path="res://addons/region-editor/scenes/region_collision_editor.gd" id="1_vpyu1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dnqg346m3ws2l" path="res://addons/region-editor/icons/Snap.svg" id="8_1ntmj"]
 [ext_resource type="Texture2D" uid="uid://vrveasw5jjce" path="res://addons/region-editor/icons/SnapGrid.svg" id="9_ft7hg"]
 [ext_resource type="Texture2D" uid="uid://gp34kffxjyqd" path="res://addons/region-editor/icons/Checkerboard.svg" id="10_hy8u0"]
+[ext_resource type="Texture2D" uid="uid://dplhi4nx626wq" path="res://addons/region-editor/icons/CenterView.svg" id="10_trutp"]
 [ext_resource type="Texture2D" uid="uid://b0pfgggo445x6" path="res://addons/region-editor/samples/Mossy - Decorations&Hazards.png" id="11_wnpu2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvy47"]
@@ -184,15 +185,25 @@ layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 min_value = 2.0
-value = 2.0
+value = 8.0
+
+[node name="CenterView" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+tooltip_text = "Remove points tool"
+icon = ExtResource("10_trutp")
 
 [node name="EditorView" type="GraphEdit" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_6srvm")
+show_grid = false
 snapping_enabled = false
-snapping_distance = 100
+snapping_distance = 8
+zoom_min = 0.01
 zoom_max = 12.8
 minimap_enabled = false
 show_zoom_label = true
@@ -207,21 +218,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -58.5
-offset_right = 211.0
-offset_bottom = 296.5
+offset_left = -165.0
+offset_top = -117.5
+offset_right = 171.0
+offset_bottom = 237.5
 grow_horizontal = 2
 grow_vertical = 2
-position_offset = Vector2(56, 102)
+position_offset = Vector2(16, 43)
 
 [node name="Control" type="Control" parent="EditorView/GraphElement"]
 layout_mode = 2
 
-[node name="Preview" type="TextureRect" parent="EditorView/GraphElement/Control"]
+[node name="PreviewBackground" type="TextureRect" parent="EditorView/GraphElement/Control"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 300)
-layout_mode = 2
+offset_right = 300.0
+offset_bottom = 300.0
+size_flags_vertical = 3
+texture = ExtResource("10_hy8u0")
+stretch_mode = 1
+
+[node name="Preview" type="TextureRect" parent="EditorView/GraphElement/Control/PreviewBackground"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 1
 offset_right = 300.0
 offset_bottom = 300.0
 size_flags_horizontal = 4
@@ -233,7 +253,6 @@ stretch_mode = 5
 
 [node name="CollisionLine" type="Line2D" parent="EditorView/GraphElement/Node2D"]
 unique_name_in_owner = true
-width = 2.0
 texture = ExtResource("10_hy8u0")
 
 [node name="CollisionPointHandlers" type="Node2D" parent="EditorView/GraphElement/Node2D"]
@@ -249,3 +268,4 @@ tile_set = SubResource("TileSet_xv7iw")
 [connection signal="pressed" from="HBoxContainer/RemoveCollisionPoint" to="." method="_on_remove_collision_point_pressed"]
 [connection signal="item_selected" from="HBoxContainer/SnapOptions" to="." method="_on_snap_options_item_selected"]
 [connection signal="value_changed" from="HBoxContainer/GridSnap" to="." method="_on_grid_snap_value_changed"]
+[connection signal="pressed" from="HBoxContainer/CenterView" to="EditorView" method="set_scroll_offset" binds= [Vector2(0, 0)]]

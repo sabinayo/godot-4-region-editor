@@ -2,7 +2,6 @@
 extends Control
 
 signal collision_point_updated(deleted: bool, point: Vector2, pos: Vector2)
-signal close_collision_polygon()
 signal selected(id: int, is_selected: bool)
 
 var covered_area: Rect2
@@ -59,10 +58,6 @@ func _on_handler_button_down() -> void:
 	selected.emit(get_index(), true)
 	
 	match action:
-		RegionEditorCollisionEditor.Actions.ADD_COLLISION_POINTS:
-			close_collision_polygon.emit()
-			return
-		
 		RegionEditorCollisionEditor.Actions.REMOVE_COLLISION_POINTS:
 			collision_point_updated.emit(get_index(), true, collision_point, global_position)
 			queue_free()

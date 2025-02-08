@@ -97,7 +97,6 @@ func _on_update_rect_pressed() -> void:
 
 func _on_region_editor_texture_region_edited(sprite: Sprite2D, requester: NodePath) -> void:
 	if requester == get_path():
-		print("hum????")
 		_data["region_rect"] = sprite.region_rect
 		%CopyRectData.tooltip_text = var_to_str(_data["region_rect"])
 		_set_properties_as_updated(["region_rect"])
@@ -154,7 +153,7 @@ func _set_properties_as_updated(properties: PackedStringArray) -> void:
 	else:
 		update["id"] = _data["id"]
 	
-	print("%s updated - ids: %s" % [properties, _edited_regions_id])
+	#print("%s updated - ids: %s" % [properties, _edited_regions_id])
 	property_updated.emit(update.duplicate())
 
 

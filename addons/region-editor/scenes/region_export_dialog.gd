@@ -170,10 +170,8 @@ func set_export_success(succeed: bool) -> void:
 		title = "File Succesfully Exported..."
 		await get_tree().create_timer(TITLE_ANIM_TIME).timeout
 		title = DEFAULT_TITLE
-		print("Region Editor: " + title)
 	else:
 		title = "Error while exporting file..."
-		printerr("Region Editor: " + title)
 		await get_tree().create_timer(TITLE_ANIM_TIME).timeout
 		title = DEFAULT_TITLE
 
