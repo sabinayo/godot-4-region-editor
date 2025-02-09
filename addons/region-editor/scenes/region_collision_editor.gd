@@ -7,6 +7,7 @@ signal distraction_free_changed(enabled: bool)
 signal action_changed(new: Actions)
 signal snap_distance_changed(new: float)
 signal snap_type_changed(type: SnapTypes)
+signal collision_polygon_changed(polygon: PackedVector2Array)
 
 enum Actions {
 	NONE,
@@ -60,6 +61,36 @@ func _on_options_index_pressed(idx: int) -> void:
 			%CollisionLine.clear_points()
 
 
+func set_polygon(polygon: PackedVector2Array) -> void:
+	%CollisionLine.clear_points()
+	
+	for handler in %CollisionPointHandlers.get_children():
+		handler.queue_free()
+	
+	for point in polygon:
+		add_collision_point(point)
+
+
+func add_collision_point(point: Vector2) -> void:
+	var point_handler = COLLISION_POINT_HANDLER.instantiate()
+	point_handler.position = point#%CollisionPointHandlers.to_local(point)
+	point_handler.covered_area = %EditorView.get_global_rect()
+	point_handler.snap_type = snap_type
+	point_handler.snap_step = %GridSnap.value
+	point_handler.collision_point = point
+	point_handler.snap_offset = Vector2(56, 141)
+	point_handler.action == Actions.ADD_COLLISION_POINTS
+	%CollisionPointHandlers.add_child(point_handler)
+	%CollisionLine.add_point(point)
+	
+	snap_type_changed.connect(point_handler._on_snap_type_changed)
+	snap_distance_changed.connect(point_handler._on_snap_distance_changed)
+	action_changed.connect(point_handler._on_collision_editor_action_changed)
+	point_handler.selected.connect(_on_collision_point_handler_selected)
+	point_handler.collision_point_updated.connect(_on_collision_point_updated)
+
+
+
 func _input(event: InputEvent) -> void:
 	if (
 		event is InputEventMouseButton
@@ -80,6 +111,8 @@ func _input(event: InputEvent) -> void:
 						closing_polygon = false
 						return
 					
+					add_collision_point(point)
+					return
 					var point_handler = COLLISION_POINT_HANDLER.instantiate()
 					point_handler.position = %CollisionPointHandlers.to_local(event.global_position)
 					point_handler.covered_area = %EditorView.get_global_rect()
@@ -96,6 +129,7 @@ func _input(event: InputEvent) -> void:
 					action_changed.connect(point_handler._on_collision_editor_action_changed)
 					point_handler.selected.connect(_on_collision_point_handler_selected)
 					point_handler.collision_point_updated.connect(_on_collision_point_updated)
+					collision_polygon_changed.emit(%CollisionLine.points)
 
 
 func _on_add_collision_point_pressed() -> void:
@@ -119,9 +153,9 @@ func _on_collision_point_handler_selected(id: int, is_selected: bool) -> void:
 		%CollisionLine.default_color = Color.RED
 		set_process_input(true)
 
+
 func _on_collision_point_updated(handler_id: int, deleted: bool, point: Vector2, point_position: Vector2) -> void:
 	var point_idx: int = %CollisionLine.points.find(point)
-	
 	
 	if deleted:
 		%CollisionLine.remove_point(point_idx)
@@ -131,6 +165,8 @@ func _on_collision_point_updated(handler_id: int, deleted: bool, point: Vector2,
 		
 		var handler = %CollisionPointHandlers.get_child(handler_id)
 		handler.collision_point = local_point_position
+	
+	collision_polygon_changed.emit(%CollisionLine.points)
 
 
 func _on_snap_options_item_selected(index: int) -> void:

@@ -950,6 +950,12 @@ layout_mode = 2
 tooltip_text = "Add the Enumeration to the current scene."
 text = "Add To Current Scene"
 
+[node name="ExportCollisions" type="CheckBox" parent="pcont/MarginContainer/VBoxContainer/SplitContainer/PanelContainer2/mcont/VBoxContainer/TabContainer/Enumaration/MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Add StaticBody2D to the exported Node/Scene with the specified collisions."
+text = "Export Collisions"
+
 [node name="DescriptionEdit" type="AcceptDialog" parent="."]
 unique_name_in_owner = true
 disable_3d = true

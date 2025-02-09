@@ -79,6 +79,7 @@ func add_region_from(sprite: Sprite2D) -> void:
 		"modulate": sprite.modulate,
 		"texture_filter": sprite.texture_filter,
 		"texture_repeat": sprite.texture_repeat,
+		"collision_polygon": PackedVector2Array([]),
 	}
 	
 	_make_region_preview_usable(preview, data)

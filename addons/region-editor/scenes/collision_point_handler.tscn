@@ -12,7 +12,7 @@ script = ExtResource("3_c3e37")
 
 [node name="Handler" type="TextureButton" parent="."]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(16, 16)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -27,6 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+tooltip_text = "id: 0"
 action_mode = 0
 texture_normal = ExtResource("2_rwdam")
 texture_pressed = ExtResource("2_27svl")

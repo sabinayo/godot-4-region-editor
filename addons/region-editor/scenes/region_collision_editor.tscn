@@ -232,6 +232,7 @@ layout_mode = 2
 [node name="PreviewBackground" type="TextureRect" parent="EditorView/GraphElement/Control"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 300)
+layout_mode = 0
 offset_right = 300.0
 offset_bottom = 300.0
 size_flags_vertical = 3

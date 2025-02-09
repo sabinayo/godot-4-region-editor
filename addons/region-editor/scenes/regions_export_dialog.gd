@@ -78,6 +78,16 @@ func _on_confirmed() -> void:
 	
 		1:
 			var regions_enum: Sprite2D = Sprite2D.new()
+			var static_body: StaticBody2D = StaticBody2D.new()
+			var collision: CollisionPolygon2D = CollisionPolygon2D.new()
+			
+			if %ExportCollisions.button_pressed:
+				static_body.add_child(collision)
+				regions_enum.add_child(static_body)
+				static_body.name = "StaticBody2D"
+				collision.name = "CollisionPolygon2D"
+				regions_enum.centered = false
+			
 			regions_enum.editor_description = REGIONS_ENUM_EDITOR_DESCRIPTION
 			regions_enum.region_enabled = true
 			
@@ -90,6 +100,10 @@ func _on_confirmed() -> void:
 			regions_enum.texture = load(enum_base_texture)
 			
 			if %SaveEnumAsScene.button_pressed:
+				if %ExportCollisions.button_pressed:
+					static_body.owner = regions_enum
+					collision.owner = regions_enum
+				
 				var scene_name: String = %SceneName.text
 				
 				if not scene_name:
@@ -148,6 +162,11 @@ func _on_confirmed() -> void:
 				
 				current_scene.add_child(regions_enum)
 				regions_enum.owner = current_scene
+				
+				if %ExportCollisions.button_pressed:
+					static_body.owner = regions_enum.owner
+					collision.owner = regions_enum.owner
+				
 				EditorInterface.mark_scene_as_unsaved()
 				%Info.display(RegionEditorInfo.Types.SUCCESS, "Enumaration added to the current scene.", 2.0)
 
@@ -185,6 +204,7 @@ enum RegionProperties {
 		region_enabled = true
 		region_rect = REGIONS[{EnumVarName}][RegionProperties.RECT]
 		self_modulate = REGIONS[{EnumVarName}][RegionProperties.COLOR]
+		{CollisionDetection}
 
 # Contain the properties to be applied to the sprite for each value of "{EnumName}".
 # If you add a new value to "{EnumName}", be sure to add here the properties to be applied to the sprite.
@@ -238,16 +258,28 @@ const REGIONS: Dictionary = {
 		
 		enum_data += new_enum_data
 		
-		regions_enum_data += \
+		var region_enum_data: String = \
 """{EnumName}.{EnumValue}: {
 		RegionProperties.COLOR: {RegionColor},
 		RegionProperties.RECT: {RegionRect},
+		{CollisionInfos}
 	},
 	""".format({
 			"EnumValue": enum_value,
 			"RegionColor": var_to_str(data["modulate"]),
 			"RegionRect": var_to_str(data["region_rect"])
 		})
+		
+		if %ExportCollisions.button_pressed:
+			region_enum_data = region_enum_data.format({
+				"CollisionInfos": "RegionProperties.COLLISION: %s," % var_to_str(Array(data["collision_polygon"]))
+			})
+		else:
+			region_enum_data = region_enum_data.format({
+				"CollisionInfos": ""
+			})
+		
+		regions_enum_data += region_enum_data
 		enum_value_id += 1
 	
 	var enum_name: String = %EnumName.text
@@ -270,6 +302,17 @@ const REGIONS: Dictionary = {
 		"EnumFirstValue": enum_first_value,
 		"RegionsData": regions_enum_data,
 	}).format({"EnumName": enum_name,})
+	
+	if %ExportCollisions.button_pressed:
+		source_code = source_code.format({
+			"CollisionDetection": "$StaticBody2D/CollisionPolygon2D.set_polygon(REGIONS[{EnumVarName}][RegionProperties.COLLISION])"
+		}).format({
+			"EnumVarName": enum_var_name,
+		})
+	else:
+		source_code = source_code.format({
+			"CollisionDetection": ""
+		})
 	
 	return source_code
 

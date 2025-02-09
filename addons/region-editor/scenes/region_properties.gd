@@ -45,6 +45,7 @@ func set_data(new: Dictionary) -> void:
 	%Modulate.color = _data["modulate"]
 	%CopyRectData.tooltip_text = var_to_str(_data["region_rect"])
 	%CopyResourcePath.tooltip_text = _data["base_texture"]
+	%RegionCollisionEditor.set_polygon(_data["collision_polygon"])
 	_update_preview()
 	_updating = false
 
@@ -60,6 +61,9 @@ func edit_multiple_regions(edit: bool, datas: Array[Dictionary], color: Color) -
 	_updating = true
 	%Modulate.color = color
 	_updating = false
+	
+	if edit:
+		%Distractions.show()
 
 
 func _on_copy_rect_data_pressed() -> void:
@@ -247,3 +251,8 @@ func _on_region_previewer_container_region_deleted(was_edited: bool, region_id: 
 
 func _on_region_collision_editor_distraction_free_changed(enabled: bool) -> void:
 	%Distractions.visible = not enabled
+
+
+func _on_collision_polygon_changed(polygon: PackedVector2Array) -> void:
+	_data["collision_polygon"] = polygon
+	_set_properties_as_updated(["collision_polygon"])

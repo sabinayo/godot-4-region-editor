@@ -19,7 +19,7 @@ offset_right = 346.0
 offset_bottom = 353.0
 size_flags_vertical = 3
 script = ExtResource("1_tpmds")
-_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/Distractions/hbox"), NodePath("mcont/scont/vbox/Distractions/UpdateRect"), NodePath("mcont/scont/vbox/Distractions/commands"), NodePath("mcont/scont/vbox/Distractions/PreviewBackground")])
+_hidden_on_multiple_edition = Array[NodePath]([NodePath("mcont/scont/vbox/Distractions/hbox"), NodePath("mcont/scont/vbox/Distractions/UpdateRect"), NodePath("mcont/scont/vbox/Distractions/commands"), NodePath("mcont/scont/vbox/Distractions/PreviewBackground"), NodePath("mcont/scont/vbox/RegionCollisionEditor")])
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 2
@@ -211,7 +211,6 @@ icon = ExtResource("2_v37xj")
 icon_alignment = 2
 
 [node name="PreviewBackground" type="TextureRect" parent="mcont/scont/vbox/Distractions"]
-visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_vertical = 3
@@ -251,7 +250,6 @@ label_settings = SubResource("LabelSettings_a2llg")
 
 [node name="RegionCollisionEditor" parent="mcont/scont/vbox" instance=ExtResource("8_7gcga")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -263,4 +261,5 @@ size_flags_vertical = 3
 [connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyRectData" to="." method="_on_copy_rect_data_pressed"]
 [connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyResourcePath" to="." method="_on_copy_resource_path_pressed"]
 [connection signal="pressed" from="mcont/scont/vbox/Distractions/commands/hbox/CopyImage" to="." method="_on_copy_image_pressed"]
+[connection signal="collision_polygon_changed" from="mcont/scont/vbox/RegionCollisionEditor" to="." method="_on_collision_polygon_changed"]
 [connection signal="distraction_free_changed" from="mcont/scont/vbox/RegionCollisionEditor" to="." method="_on_region_collision_editor_distraction_free_changed"]
