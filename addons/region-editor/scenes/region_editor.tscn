@@ -138,6 +138,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="vbox/Hbox/TextureInfos/hbox"]
+visible = false
 layout_mode = 2
 alignment = 2
 
