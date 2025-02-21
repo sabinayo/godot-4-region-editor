@@ -1,5 +1,5 @@
 # Region Editor
-A plugin for Godot 4.0 and above that lets you create and edit regions from an image.  
+A plugin for Godot 4.3 that lets you create and edit regions from an image.  
 You can export regions as separate images or use them in a scene where you can easily switch between regions using an enumeration.  
 Collision support is also available.
 
